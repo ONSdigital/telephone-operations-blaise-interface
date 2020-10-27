@@ -10,9 +10,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
     steps:
       - uses: actions/checkout@v2
-      - name: eslint + fix
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - uses: actions/checkout@v2
+      - name: Formatting Code to eslint standards
         uses: getsentry/action-eslint-fix@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
