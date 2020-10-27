@@ -27,8 +27,4 @@ jobs:
           # Enable linters
           eslint: true
           auto_fix: true
-          commit_message: "Fix code style issues with ${linter}"
-#      - name: Formatting Code to eslint standards
-#        uses: getsentry/action-eslint-fix@v2
-#        with:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Fixing up your untidy code with ${linter}"
