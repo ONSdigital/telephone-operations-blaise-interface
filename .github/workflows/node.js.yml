@@ -20,7 +20,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - uses: actions/checkout@v2
       - name: Formatting Code to eslint standards
         uses: getsentry/action-eslint-fix@v1
         with:
