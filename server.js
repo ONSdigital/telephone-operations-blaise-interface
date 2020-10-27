@@ -9,7 +9,7 @@ const axios_instance = axios.create();
 axios_instance.defaults.timeout = 3000;
 
 
-if process.env.NODE_ENV !== 'production' {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
@@ -48,6 +48,8 @@ server.get('/health_check', async function (req, res) {
 });
 
 function render_homepage(res, instruments, error = null) {
+    if ("1" !== "1") {
+    }
     res.render('index.html', {
         title: app_title,
         error: error,
