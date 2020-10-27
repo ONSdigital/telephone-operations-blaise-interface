@@ -26,7 +26,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           # Enable linters
           eslint: true
-          prettier: true
+          prettier: false
 #      - name: Formatting Code to eslint standards
 #        uses: getsentry/action-eslint-fix@v2
 #        with:
