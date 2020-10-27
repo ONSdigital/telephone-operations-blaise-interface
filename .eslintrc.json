@@ -16,6 +16,9 @@
 //    "@typescript-eslint"
   ],
   "rules": {
+    "no-undef": [
+      "off"
+    ],
     "eqeqeq": [
       "error",
       "always"
