@@ -14,13 +14,13 @@ jobs:
       matrix:
         node-version: [ 15.x ]
     steps:
-#      - uses: actions/checkout@v2
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#      - run: yarn
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
       - name: Formatting Code to eslint standards
-        uses: getsentry/action-eslint-fix@v1
+        uses: getsentry/action-eslint-fix@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
