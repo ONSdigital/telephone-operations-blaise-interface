@@ -48,9 +48,6 @@ server.get("/health_check", async function (req, res) {
 });
 
 function render_homepage(res, instruments, error = null) {
-    if (instruments == "1") {
-        console.error("sdd");
-    }
     res.render("index.html", {
         title: app_title,
         error: error,
