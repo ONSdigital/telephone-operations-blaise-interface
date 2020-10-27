@@ -1,12 +1,12 @@
-const Functions = require("./Functions");
-const express = require("express");
-const axios = require("axios");
-const nunjucks = require("nunjucks");
+const Functions = require("./Functions")
+const express = require("express")
+const axios = require("axios")
+const nunjucks = require("nunjucks")
 
-const server = express();
+const server = express()
 
-const axios_instance = axios.create();
-axios_instance.defaults.timeout = 3000;
+const axios_instance = axios.create()
+axios_instance.defaults.timeout = 3000
 
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
@@ -28,9 +28,9 @@ function getInstruments() {
             })
             .catch(function (error) {
                 // handle error
-                console.error("Failed to retrieve instrument list");
-                console.error(error);
-                reject(error);
+                console.error("Failed to retrieve instrument list")
+                console.error(error)
+                reject(error)
             });
     });
 }
@@ -63,8 +63,8 @@ server.get("/", async function (req, res) {
             render_homepage(res, instruments);
         })
         .catch((error) => {
-            console.log("Rendering page index.html with error");
-            render_homepage(res, [], error);
+            console.log("Rendering page index.html with error")
+            render_homepage(res, [], error)
         });
 });
 
