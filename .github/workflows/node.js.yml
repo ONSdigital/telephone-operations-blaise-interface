@@ -27,5 +27,7 @@ jobs:
       - run: yarn
       #     - run: npm run build --if-present
       #     - run: npm test
-      - name: eslint + fix
-        uses: getsentry/action-eslint-fix@v2
+      - name: Use current action
+        uses: getsentry/action-eslint-fix@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
