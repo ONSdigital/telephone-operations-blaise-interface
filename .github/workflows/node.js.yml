@@ -29,6 +29,3 @@ jobs:
       #     - run: npm test
       - name: Run ESLint
         run: ./node_modules/eslint/bin/eslint.js --fix-dry-run -c .eslintrc.json .
-      - run: git add *
-      - run: git commit -m "test fix eslint"
-      - run: git push

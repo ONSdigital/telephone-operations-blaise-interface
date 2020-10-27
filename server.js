@@ -9,7 +9,7 @@ const axios_instance = axios.create();
 axios_instance.defaults.timeout = 3000;
 
 if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
+    require('dotenv").config();
 }
 
 const app_title = "Blaise Survey Manager Lite";
@@ -42,12 +42,12 @@ nunjucks.configure("views", {
 
 
 server.get("/health_check", async function (req, res) {
-    console.log("Heath Check endpoint called");
-    res.status(200).json({status: 200});
+    console.log("Heath Check endpoint called")
+    res.status(200).json({status: 200})
 });
 
 function render_homepage(res, instruments, error = null) {
-    res.render("index.html", {
+    res.render('index.html', {
         title: app_title,
         error: error,
         instruments: instruments,
