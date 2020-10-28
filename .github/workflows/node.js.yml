@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# This workflow will do a clean install of node dependencies, build the source code environment and then run EsLinter to check and then fix any issues with the code.
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Formatting Code to eslint standards
@@ -27,4 +27,4 @@ jobs:
           # Enable linters
           eslint: true
           auto_fix: true
-          commit_message: "Fixing up your untidy code with ${linter}"
+          commit_message: "Fixing up your untidy code 👇 with ${linter}"
