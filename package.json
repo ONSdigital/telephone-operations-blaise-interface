@@ -10,7 +10,8 @@
     "test-react": "react-scripts test",
     "test-react-coverage": "react-scripts test --coverage --watchAll=false",
     "test": "jest",
-    "test-coverage": "jest --coverage --watchAll=false"
+    "test-coverage": "jest --coverage --watchAll=false",
+    "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5000",
   "keywords": [],
@@ -21,6 +22,9 @@
       "/node_modules/"
     ]
   },
+  "pre-commit": [
+    "lint-fix"
+  ],
   "dependencies": {
     "@testing-library/dom": "^4.2.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -45,6 +49,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "cross-env": "^7.0.2",
+    "eslint": "^7.12.1",
     "ejs": "^3.1.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.1",
