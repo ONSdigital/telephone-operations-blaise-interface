@@ -63,4 +63,9 @@ server.get("*", function (req, res) {
     });
 });
 
+server.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.render("../views/500.html", {});
+});
+
 module.exports = server;
