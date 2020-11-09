@@ -8,5 +8,5 @@ updates:
       prefix: chore
   - package-ecosystem: "docker"
     directory: "/"
-      schedule:
-        interval: "daily"
+    schedule:
+      interval: "daily"
