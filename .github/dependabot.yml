@@ -6,3 +6,7 @@ updates:
       interval: "daily"
     commit-message:
       prefix: chore
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"

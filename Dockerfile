@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:15
 
 RUN apt-get --yes update && apt-get --yes upgrade
 
