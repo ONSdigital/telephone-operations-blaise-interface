@@ -9,20 +9,20 @@ describe("Header Test", () => {
 
     const Props = {
         title: "App Title"
-    }
+    };
 
     it("matches Snapshot", () => {
-        const wrapper = render(<Header title={Props.title}/>)
-        expect(wrapper).toMatchSnapshot()
+        const wrapper = render(<Header title={Props.title}/>);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it("should render correctly", () => {
-        const wrapper = shallow(<Header title={Props.title}/>)
-        expect(wrapper.exists()).toEqual(true)
+        const wrapper = shallow(<Header title={Props.title}/>);
+        expect(wrapper.exists()).toEqual(true);
     });
 
     it("should render with the title displayed", () => {
-        const wrapper = shallow(<Header title={Props.title}/>)
+        const wrapper = shallow(<Header title={Props.title}/>);
         expect(wrapper.html()).toContain(Props.title);
-    })
+    });
 });

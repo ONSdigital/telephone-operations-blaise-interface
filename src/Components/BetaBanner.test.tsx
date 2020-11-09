@@ -8,8 +8,8 @@ describe("ONS In Dev Banner Test", () => {
     Enzyme.configure({ adapter: new Adapter() });
 
     it("matches Snapshot", () => {
-        expect(render(<BetaBanner/>)).toMatchSnapshot()
+        expect(render(<BetaBanner/>)).toMatchSnapshot();
     });
 
     it("should render correctly", () => expect(shallow(<BetaBanner/>).exists()).toEqual(true));
-})
+});

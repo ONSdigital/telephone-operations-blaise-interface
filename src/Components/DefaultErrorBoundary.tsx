@@ -1,9 +1,17 @@
-import React, {ErrorInfo} from 'react';
+import React, {ErrorInfo} from "react";
 
-export class DefaultErrorBoundary extends React.Component {
+interface Props {
+    children: any
+}
+
+interface State {
+    error: any
+    errorInfo: any
+}
+export class DefaultErrorBoundary extends React.Component <Props,State>  {
     state = { error: null, errorInfo: null };
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): any {
         this.setState({
             error: error,
             errorInfo: errorInfo
