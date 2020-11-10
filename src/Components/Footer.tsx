@@ -1,11 +1,11 @@
-import React from "react";
+import React, {ReactElement} from "react";
 
 interface Props {
     external_client_url: string
 }
 
 
-function Footer(props: Props) {
+function Footer(props: Props): ReactElement {
     return (
         <>
             <footer className="footer">

@@ -1,23 +1,28 @@
-import React, {ErrorInfo} from "react";
+import React, {ErrorInfo, ReactNode} from "react";
 
 interface Props {
     errorMessageText: string,
-    children: any
+    children: ReactNode
+}
+
+interface State {
+    error?: Error
+    errorInfo: ErrorInfo
 }
 
 
-export class ErrorBoundary extends React.Component<Props>  {
-    state = { error: null, errorInfo: null };
+export class ErrorBoundary extends React.Component<Props,State>  {
+    state = { errorInfo: {componentStack: "Fine"} };
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         this.setState({
             error: error,
             errorInfo: errorInfo
         });
     }
 
-    render() {
-        if (this.state.errorInfo) {
+    render(): ReactNode {
+        if (this.state.errorInfo.componentStack !== "Fine") {
             return (
                 <>
                     <div className="panel panel--error panel--simple u-mt-m">

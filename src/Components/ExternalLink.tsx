@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactElement} from "react";
 
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 
-function ExternalLink(props: Props) {
+function ExternalLink(props: Props): ReactElement {
     return (
         <>
             <a href={props.link}
