@@ -63,7 +63,7 @@ server.get("*", function (req, res) {
     });
 });
 
-server.use(function (err, req, res, next) {
+server.use(function (err, req, res) {
     console.error(err.stack);
     res.render("../views/500.html", {});
 });
