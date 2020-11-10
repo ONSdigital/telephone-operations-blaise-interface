@@ -10,7 +10,8 @@
     "test-react": "react-scripts test",
     "test-react-coverage": "react-scripts test --coverage --watchAll=false",
     "test": "jest",
-    "test-coverage": "jest --coverage --watchAll=false"
+    "test-coverage": "jest --coverage --watchAll=false",
+    "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5000",
   "keywords": [],
@@ -21,38 +22,45 @@
       "/node_modules/"
     ]
   },
+  "pre-commit": [
+    "lint-fix"
+  ],
   "dependencies": {
-    "@testing-library/dom": "^4.2.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
+    "@testing-library/dom": "^7.26.5",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/user-event": "^12.2.0",
+    "@types/jest": "26.0.15",
+    "@types/node": "^14.14.6",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "nunjucks": "^3.2.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-scripts": "3.4.4",
-    "typescript": "~3.7.2"
+    "react-scripts": "4.0.0",
+    "typescript": "~4.0.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.1",
     "@babel/plugin-transform-react-jsx": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
     "cross-env": "^7.0.2",
     "ejs": "^3.1.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-async-helpers": "^0.9.1",
     "enzyme-to-json": "^3.4.4",
+    "eslint": "^7.13.0",
+    "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "jest": "^24.9.0",
-    "supertest": "^5.0.0"
+    "supertest": "^6.0.1"
   },
   "browserslist": {
     "production": [

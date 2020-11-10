@@ -1,4 +1,4 @@
-import React, {ErrorInfo} from 'react';
+import React, {ErrorInfo} from "react";
 
 interface Props {
     errorMessageText: string,

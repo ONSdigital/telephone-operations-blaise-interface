@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import Header from "./Components/Header";
 import BetaBanner from "./Components/BetaBanner";
 import ExternalLink from "./Components/ExternalLink";
@@ -31,48 +31,48 @@ interface window {
 
 function App() {
 
-    let [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
-    let [externalCATIUrl, setExternalCATIUrl] = useState<string>("/Blaise");
+    const [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
+    const [externalCATIUrl, setExternalCATIUrl] = useState<string>("/Blaise");
 
 
     useEffect(function retrieveVariables() {
         setExternalClientUrl(isDevEnv() ?
-            process.env.REACT_APP_VM_EXTERNAL_CLIENT_URL || externalClientUrl : (window as any).VM_EXTERNAL_CLIENT_URL)
+            process.env.REACT_APP_VM_EXTERNAL_CLIENT_URL || externalClientUrl : (window as any).VM_EXTERNAL_CLIENT_URL);
         setExternalCATIUrl(isDevEnv() ?
-            process.env.REACT_APP_CATI_DASHBOARD_URL || externalCATIUrl : (window as any).CATI_DASHBOARD_URL)
+            process.env.REACT_APP_CATI_DASHBOARD_URL || externalCATIUrl : (window as any).CATI_DASHBOARD_URL);
     }, [externalClientUrl, externalCATIUrl]);
 
-    let [list, setList] = useState<ListItem[]>([]);
-    let [listError, setListError] = useState<listError>({error: false, message: "Loading ..."});
+    const [list, setList] = useState<ListItem[]>([]);
+    const [listError, setListError] = useState<listError>({error: false, message: "Loading ..."});
 
     useEffect(() => {
-        getList()
+        getList();
     }, []);
 
     function getList() {
-        fetch('/api/instruments')
+        fetch("/api/instruments")
             .then((r: Response) => {
                 if (r.status === 200) {
                     r.json()
                         .then((json: ListItem[]) => {
-                                console.log("Retrieved instrument list, " + json.length + " items/s")
-                                isDevEnv() && console.log(json)
-                                setList(json)
+                                console.log("Retrieved instrument list, " + json.length + " items/s");
+                                isDevEnv() && console.log(json);
+                                setList(json);
                                 setListError({error: false, message: ""});
                             }
                         ).catch(() => {
                         console.error("Unable to read json from response");
                         setListError({error: true, message: "Unable to load surveys"});
-                    })
+                    });
                 } else {
-                    console.error("Failed to retrieve instrument list, status " + r.status)
+                    console.error("Failed to retrieve instrument list, status " + r.status);
                     setListError({error: true, message: "Unable to load surveys"});
                 }
             }).catch(() => {
-                console.error("Failed to retrieve instrument list")
+                console.error("Failed to retrieve instrument list");
                 setListError({error: true, message: "Unable to load surveys"});
             }
-        )
+        );
     }
 
 
@@ -132,7 +132,7 @@ function App() {
                                                                       ariaLabel={"Launch interview for instrument " + item.name + " " + item.date}/>
                                                     </td>
                                                 </tr>
-                                            )
+                                            );
                                         })
                                         :
                                         <tr>

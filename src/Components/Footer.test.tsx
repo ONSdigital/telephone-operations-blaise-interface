@@ -9,20 +9,20 @@ describe("Footer Test", () => {
 
     const Props = {
         external_client_url: "localhost"
-    }
+    };
 
     it("matches Snapshot", () => {
-        const wrapper = render(<Footer external_client_url={Props.external_client_url}/>)
-        expect(wrapper).toMatchSnapshot()
+        const wrapper = render(<Footer external_client_url={Props.external_client_url}/>);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it("should render correctly", () => {
-        const wrapper = shallow(<Footer external_client_url={Props.external_client_url}/>)
-        expect(wrapper.exists()).toEqual(true)
+        const wrapper = shallow(<Footer external_client_url={Props.external_client_url}/>);
+        expect(wrapper.exists()).toEqual(true);
     });
 
     it("should render with the external_client_url displayed", () => {
-        const wrapper = shallow(<Footer external_client_url={Props.external_client_url}/>)
+        const wrapper = shallow(<Footer external_client_url={Props.external_client_url}/>);
         expect(wrapper.html()).toContain(Props.external_client_url);
-    })
+    });
 });
