@@ -1,25 +1,25 @@
-import React, {ErrorInfo} from "react";
+import React, {ErrorInfo, ReactNode} from "react";
 
 interface Props {
-    children: any
+    children: React.ReactNode
 }
 
 interface State {
-    error: any
-    errorInfo: any
+    error?: Error
+    errorInfo: ErrorInfo
 }
 export class DefaultErrorBoundary extends React.Component <Props,State>  {
-    state = { error: null, errorInfo: null };
+    state = { errorInfo: {componentStack: "Fine"} };
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): any {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         this.setState({
             error: error,
             errorInfo: errorInfo
         });
     }
 
-    render() {
-        if (this.state.errorInfo) {
+    render(): ReactNode {
+        if (this.state.errorInfo.componentStack !== "Fine") {
             return (
                 <>
                     <h1>Sorry, there is a problem with the service</h1>

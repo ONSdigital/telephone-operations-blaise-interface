@@ -1,6 +1,6 @@
-import React from "react";
+import React, {ReactElement} from "react";
 
-function ONSErrorPanel() {
+function ONSErrorPanel(): ReactElement {
     return (
         <>
             <div className="panel panel--error panel--simple">

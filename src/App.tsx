@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import Header from "./Components/Header";
 import BetaBanner from "./Components/BetaBanner";
 import ExternalLink from "./Components/ExternalLink";
@@ -24,12 +24,12 @@ interface listError {
     message: string
 }
 
-interface window {
+interface window extends Window {
     VM_EXTERNAL_CLIENT_URL: string
     CATI_DASHBOARD_URL: string
 }
 
-function App() {
+function App() : ReactElement {
 
     const [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
     const [externalCATIUrl, setExternalCATIUrl] = useState<string>("/Blaise");
@@ -37,9 +37,9 @@ function App() {
 
     useEffect(function retrieveVariables() {
         setExternalClientUrl(isDevEnv() ?
-            process.env.REACT_APP_VM_EXTERNAL_CLIENT_URL || externalClientUrl : (window as any).VM_EXTERNAL_CLIENT_URL);
+            process.env.REACT_APP_VM_EXTERNAL_CLIENT_URL || externalClientUrl : (window as unknown as window).VM_EXTERNAL_CLIENT_URL);
         setExternalCATIUrl(isDevEnv() ?
-            process.env.REACT_APP_CATI_DASHBOARD_URL || externalCATIUrl : (window as any).CATI_DASHBOARD_URL);
+            process.env.REACT_APP_CATI_DASHBOARD_URL || externalCATIUrl : (window as unknown as window).CATI_DASHBOARD_URL);
     }, [externalClientUrl, externalCATIUrl]);
 
     const [list, setList] = useState<ListItem[]>([]);

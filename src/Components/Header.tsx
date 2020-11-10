@@ -1,16 +1,11 @@
-import React from "react";
-
-
-interface State {
-    list: string[]
-}
+import React, {ReactElement} from "react";
 
 interface Props {
     title: string
 }
 
 
-function Header(props: Props) {
+function Header(props: Props): ReactElement {
     return (
         <>
             <header className="header header--internal">

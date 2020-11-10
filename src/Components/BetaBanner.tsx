@@ -1,6 +1,6 @@
-import React from "react";
+import React, {ReactElement} from "react";
 
-function BetaBanner() {
+function BetaBanner(): ReactElement {
     return (
         <>
             <div className="phase-banner">
