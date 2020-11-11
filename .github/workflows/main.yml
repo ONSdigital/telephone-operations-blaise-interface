@@ -28,11 +28,12 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            return github.repos.getRelease({
+            const release = github.repos.getRelease({
                'ONSdigital',
                'design-system',
                '27.0.1'
              });
+             console.log(release)
           result-encoding: string
       - name: Get result
         run: echo "${{steps.get-release.outputs.result}}"
