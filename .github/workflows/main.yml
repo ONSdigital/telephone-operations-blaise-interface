@@ -17,26 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
+        id: set-result
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const query = `query GetRelease($owner: String!, $name: String!, $cursor: String) {
-            repository(owner: 'ONSdigital', name: 'design-system') {
-            releases(before: $cursor,
-            last: 1,
-            orderBy: {field: CREATED_AT, order: DESC}) {
-            pageInfo { hasPreviousPage, startCursor }
-            nodes {
-            isPrerelease
-            ...OtherReleaseData
-            }
-            }
-            }
-            }`;
-            const variables = {
-              owner: context.repo.owner,
-              name: context.repo.repo,
-              label: 'wontfix'
-            }
-            const result = await github.graphql(query, variables)
-            console.log(result)
+           script: return "Hello!"
+           result-encoding: string
+      - name: Get result
+        run: echo "${{steps.set-result.outputs.result}}"
+
+            
