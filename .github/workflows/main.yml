@@ -37,9 +37,9 @@ jobs:
                tag,
             });
             console.log(release)
-          result-encoding: string
-      - name: Get result
-        run: echo "${{steps.get-release.outputs.result}}"
+          # result-encoding: string
+     # - name: Get result
+     #    run: echo "${{steps.get-release.outputs.result}}"
         
 
             
