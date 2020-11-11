@@ -29,9 +29,9 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             return github.repos.getRelease({
-               owner,
-               repo,
-               release_id,
+               'ONSdigital',
+               'design-system',
+               '27.0.1',
              });
           result-encoding: string
       - name: Get result
