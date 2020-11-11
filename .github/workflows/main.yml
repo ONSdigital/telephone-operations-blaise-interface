@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '* * * * *'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  list-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const query = `query GetRelease($owner: String!, $name: String!, $cursor: String) {
+            repository(owner: 'ONSdigital', name: 'design-system') {
+            releases(before: $cursor,
+            last: 1,
+            orderBy: {field: CREATED_AT, order: DESC}) {
+            pageInfo { hasPreviousPage, startCursor }
+            nodes {
+            isPrerelease
+            ...OtherReleaseData
+            }
+            }
+            }
+            }`;
+            const variables = {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              label: 'wontfix'
+            }
+            const result = await github.graphql(query, variables)
+            console.log(result)
