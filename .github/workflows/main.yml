@@ -31,7 +31,7 @@ jobs:
             return github.repos.getRelease({
                'ONSdigital',
                'design-system',
-               '27.0.1',
+               '27.0.1'
              });
           result-encoding: string
       - name: Get result
