@@ -17,11 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      - run: yarn run test-coverage
-      - name: Monitor coverage
-        uses: slavcodev/coverage-monitor-action@1.2.0
+      - run: yarn run test-coverage-json
+      - name: Codecov
+        uses: codecov/codecov-action@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: "coverage/clover.xml"
-          threshold_alert: 10
-          threshold_warning: 50
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/coverage-final.json
+          fail_ci_if_error: true
