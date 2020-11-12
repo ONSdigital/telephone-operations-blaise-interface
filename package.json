@@ -11,7 +11,6 @@
     "test-react-coverage": "react-scripts test --coverage --watchAll=false",
     "test": "jest",
     "test-coverage": "jest --coverage --watchAll=false",
-    "test-coverage-json": "jest --coverage --watchAll=false --json --outputFile=./coverage/coverage-final.json",
     "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5000",
