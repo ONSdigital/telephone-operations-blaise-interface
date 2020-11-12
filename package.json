@@ -10,7 +10,7 @@
     "test-react": "react-scripts test",
     "test-react-coverage": "react-scripts test --coverage --watchAll=false",
     "test": "jest",
-    "test-coverage": "jest --coverage --watchAll=false --coverageReporters="json-summary"",
+    "test-coverage": "jest --coverage --watchAll=false --coverageReporters='json-summary'",
     "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5000",
