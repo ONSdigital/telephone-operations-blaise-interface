@@ -1,5 +1,8 @@
 # Blaise Survey Manager Lite
 
+[![codecov](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite)
+
+
 Blaise Dashboard for accessing active surveys and CATI dashboard.
 
 This project is a React application which when build is rendered by a Node.js express server.  
