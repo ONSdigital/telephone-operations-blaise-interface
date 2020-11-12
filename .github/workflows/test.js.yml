@@ -25,10 +25,9 @@ jobs:
           clover_file: "coverage/clover.xml"
           threshold_alert: 10
           threshold_warning: 50
-      - uses: tanmen/jest-reporter@v1
-        if: always()
+      - name: Hello world action step
+        id: hello
+        uses: raulanatol/jest-coverage-comment-action@v1.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: raulanatol/jest-coverage-comment-action@v1.0.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}'
+          jest-command: 'yarn run test-coverage'
