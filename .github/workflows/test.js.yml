@@ -17,17 +17,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      # - run: yarn run test-coverage
-      # - name: Monitor coverage
-      #   uses: slavcodev/coverage-monitor-action@1.2.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     clover_file: "coverage/clover.xml"
-      #     threshold_alert: 10
-      #     threshold_warning: 50
-      - name: TestCoverage
-        id: testCovergae
-        uses: anuraag016/Jest-Coverage-Diff@master
+      - run: yarn run test-coverage
+      - name: Monitor coverage
+        uses: slavcodev/coverage-monitor-action@1.2.0
         with:
-          fullCoverageDiff: false // defaults to false, if made true whole coverage report is commented with the diff
-  
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clover_file: "coverage/clover.xml"
+          threshold_alert: 10
+          threshold_warning: 50
