@@ -22,10 +22,6 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
         "quotes": [
             "error",
             "double"
