@@ -35,7 +35,7 @@ const instrumentListReturned = [
 
 
 describe("Get list of instruments endpoint", () => {
-    beforeEach(() => {
+    beforeAll(() => {
         mock.onGet("http://" + process.env.BLAISE_INSTRUMENT_CHECKER_URL + "/api/instruments?vm_name=internal-url").reply(200,
             instrumentList,
         );
@@ -49,14 +49,17 @@ describe("Get list of instruments endpoint", () => {
         expect(response.body).toStrictEqual(instrumentListReturned);
         done();
     });
+
+    afterAll(() => {
+        mock.reset();
+    });
 });
 
 
 
 describe("Get list of instruments endpoint fails", () => {
-    beforeEach(() => {
+    beforeAll(() => {
         mock.onGet("http://" + process.env.BLAISE_INSTRUMENT_CHECKER_URL + "/api/instruments?vm_name=internal-url").networkError();
-
     });
 
     it("should return a 500 status and an error message", async done => {
@@ -65,5 +68,9 @@ describe("Get list of instruments endpoint fails", () => {
         expect(response.statusCode).toEqual(500);
         expect(JSON.stringify(response.body)).toMatch(/(Network Error)/i);
         done();
+    });
+
+    afterAll(() => {
+        mock.reset();
     });
 });

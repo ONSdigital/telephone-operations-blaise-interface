@@ -4,7 +4,6 @@ import BetaBanner from "./Components/BetaBanner";
 import ExternalLink from "./Components/ExternalLink";
 import {DefaultErrorBoundary} from "./Components/DefaultErrorBoundary";
 import {ErrorBoundary} from "./Components/ErrorBoundary";
-import "./App.css";
 import Footer from "./Components/Footer";
 import ONSErrorPanel from "./Components/ONSErrorPanel";
 import {isDevEnv} from "./Functions";
@@ -29,6 +28,10 @@ interface window extends Window {
     CATI_DASHBOARD_URL: string
 }
 
+const divStyle = {
+    minHeight: "calc(67vh)"
+};
+
 function App() : ReactElement {
 
     const [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
@@ -52,6 +55,7 @@ function App() : ReactElement {
     function getList() {
         fetch("/api/instruments")
             .then((r: Response) => {
+                console.log(r);
                 if (r.status === 200) {
                     r.json()
                         .then((json: ListItem[]) => {
@@ -80,7 +84,7 @@ function App() : ReactElement {
         <>
             <BetaBanner/>
             <Header title={"Blaise Survey Manager Lite"}/>
-            <div id={"body"} className="page__container container">
+            <div style={divStyle} className="page__container container">
                 <main id="main-content" className="page__main">
                     <DefaultErrorBoundary>
                         <h1>Interviewing</h1>
