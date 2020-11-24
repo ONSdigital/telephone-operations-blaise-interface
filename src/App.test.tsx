@@ -5,6 +5,8 @@ import {render, waitFor,screen} from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./App";
 import "@testing-library/jest-dom";
+import flushPromises from "./test/util/flushPromises";
+import {act} from "react-dom/test-utils";
 
 const instrumentListReturned = [
     {
@@ -31,6 +33,11 @@ describe("React homepage", () => {
 
     it("matches Snapshot", async () => {
         const wrapper = render(<App/>);
+
+        await act(async () => {
+            await flushPromises();
+        });
+
         await waitFor(() => {
             expect(wrapper).toMatchSnapshot();
         });
