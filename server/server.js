@@ -1,12 +1,9 @@
 const Functions = require("./Functions");
 const express = require("express");
 const axios = require("axios");
-// const nunjucks = require('nunjucks');
 const path = require("path");
 
 const server = express();
-
-// const axios_instance = axios.create();
 axios.defaults.timeout = 10000;
 
 if (process.env.NODE_ENV !== "production") {
