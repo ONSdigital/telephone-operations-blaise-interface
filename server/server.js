@@ -6,8 +6,8 @@ const path = require("path");
 
 const server = express();
 
-const axios_instance = axios.create();
-axios_instance.defaults.timeout = 10000;
+// const axios_instance = axios.create();
+axios.defaults.timeout = 10000;
 
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
@@ -33,7 +33,7 @@ server.use(
 server.get("/api/instruments", (req, res) => {
     console.log("get list of items");
 
-    axios_instance.get("http://" + BLAISE_INSTRUMENT_CHECKER_URL + "/api/instruments?vm_name=" + VM_INTERNAL_URL)
+    axios.get("http://" + BLAISE_INSTRUMENT_CHECKER_URL + "/api/instruments?vm_name=" + VM_INTERNAL_URL)
         .then(function (response) {
             // Add interviewing link and date of instrument to array objects
             response.data.forEach(function (element) {
