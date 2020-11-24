@@ -5,7 +5,7 @@ import {render, waitFor,screen} from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./App";
 import "@testing-library/jest-dom";
-import flushPromises from "./test/util/flushPromises";
+import flushPromises from "./tests/util/flushPromises";
 import {act} from "react-dom/test-utils";
 
 const instrumentListReturned = [
