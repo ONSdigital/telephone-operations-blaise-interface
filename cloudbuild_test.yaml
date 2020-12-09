@@ -5,11 +5,7 @@ steps:
     args:
       - '-c'
       - |
-        versions=$(gcloud app versions list \
-          --service tobi-ui \
-          --sort-by '~version' \
-          --format 'value(VERSION.ID)' \
-          --project ${PROJECT_ID} | tail -n +10)
+        versions=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(VERSION.ID)' --project ${PROJECT_ID} | tail -n +11)
 
         if [ -n "$versions" ]; then
           gcloud app versions delete "$versions"
