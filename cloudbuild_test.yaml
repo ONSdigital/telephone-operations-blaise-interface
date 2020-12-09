@@ -23,3 +23,12 @@ steps:
     id: Deploy service for testing
     args: ["app", "deploy", "--version", "pull-request-number-$_PR_NUMBER-test", "--no-promote"]
     timeout: "1600s"
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Clean Up Old Versions
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install appengine-clean
+        appengine-clean ${_PROJECT_ID} 15 --dry-run
