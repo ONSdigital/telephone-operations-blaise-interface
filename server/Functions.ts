@@ -1,8 +1,8 @@
-function isNumber(n) {
+function isNumber(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function field_period_to_text(instrument_name: string): string {
+function OPN_field_period_generation(instrument_name: string): string {
     const month_number_str: string = instrument_name.substr(5, 2);
     let month_number_int = -1;
     let month = "Unknown";
@@ -23,7 +23,7 @@ function field_period_to_text(instrument_name: string): string {
 }
 
 function field_period_to_text(instrument_name: string) {
-    let survey_tla = instrument_name.substr(0, 3);
+    const survey_tla: string = instrument_name.substr(0, 3);
 
     if (survey_tla === "OPN") {
         return OPN_field_period_generation(instrument_name);

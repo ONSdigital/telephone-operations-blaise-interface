@@ -21,7 +21,7 @@ interface Instrument {
     "server-park": string
     status: string
     link: string
-    date: string
+    fieldPeriod: string
 }
 
 // where ever the react built package is
@@ -49,7 +49,7 @@ server.get("/api/instruments", (req: Request, res: Response) => {
             // Add interviewing link and date of instrument to array objects
             response.data.forEach(function (element: Instrument) {
                 element.link = "https://" + VM_EXTERNAL_WEB_URL + "/" + element.name + "?LayoutSet=CATI-Interviewer_Large";
-                element.date = Functions.field_period_to_text(element.name);
+                element.fieldPeriod = Functions.field_period_to_text(element.name);
             });
             console.log("Retrieved instrument list, " + response.data.length + " item/s");
             return res.json(response.data);
