@@ -1,6 +1,6 @@
 # Telephone Operations Blaise Interface
 
-[![codecov](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite)
+[![codecov](https://codecov.io/gh/ONSdigital/telephone-operations-blaise-interface/branch/main/graph/badge.svg)](https://codecov.io/gh/ONSdigital/telephone-operations-blaise-interface)
 
 
 Blaise Dashboard for accessing active surveys and CATI dashboard.
