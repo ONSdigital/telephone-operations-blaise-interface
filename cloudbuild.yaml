@@ -30,12 +30,11 @@ steps:
     args:
       - '-c'
       - |
-        <<-EOF
-          VERSIONS=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
-          if [ ${#VERSIONS} -gt 0 ]
-          then
-            gcloud app versions delete --service tobi-ui $VERSIONS -q
-          else
-            echo "No Versions to Clean Up"
-          fi
-        EOF
+        VERSIONS=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
+        if [ ${#VERSIONS} -gt 0 ]
+        then
+          gcloud app versions delete --service tobi-ui $VERSIONS -q
+        else
+          echo "No Versions to Clean Up"
+        fi
+        
