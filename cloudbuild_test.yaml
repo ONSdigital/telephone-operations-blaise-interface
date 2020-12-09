@@ -5,11 +5,12 @@ steps:
     args:
       - '-c'
       - |
+        gcloud app versions list --service 'tobi-ui' --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -
         VERSIONS=$(gcloud app versions list --service 'tobi-ui' --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
         echo $VERSIONS
         if [ ${#VERSIONS} -gt 0 ]
         then
-          echo "We Trigger this statement"
+          gcloud app versions delete --service 'tobi-ui' $VERSIONS -q
         else
           echo "No Versions to Clean Up"
         fi
