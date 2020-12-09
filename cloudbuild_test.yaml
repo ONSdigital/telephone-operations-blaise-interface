@@ -31,6 +31,7 @@ steps:
       - '-c'
       - |
         VERSIONS=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
+        echo $VERSIONS
         if [ ${#VERSIONS} -gt 0 ]
         then
           gcloud app versions delete --service tobi-ui $VERSIONS -q
