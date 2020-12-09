@@ -26,9 +26,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     id: Clean Up Old Versions
-    entrypoint: 'bash'
+    entrypoint: 'python3'
     args:
-      - '-c'
-      - |
         pip install appengine-clean
         appengine-clean ${_PROJECT_ID} 15 --dry-run
