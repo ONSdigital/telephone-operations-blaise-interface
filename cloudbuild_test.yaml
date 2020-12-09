@@ -5,6 +5,17 @@ steps:
     args:
       - '-c'
       - |
-        gcloud app versions list --service 'tobi-ui' --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -
-        VERSIONS=$(gcloud app versions list --service 'tobi-ui' --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
-        echo $VERSIONS
+        VERSIONS=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(version.id)')
+        COUNT=0
+        echo "Keeping the 10 latest versions of the tobi-ui service"
+        for VERSION in $VERSIONS
+        do
+          ((COUNT++))
+          if [ $COUNT -gt 10 ]
+          then
+            echo "Going to delete version $VERSION of the tobi-ui service."
+            gcloud app versions delete $VERSION --service tobi-ui -q
+          else
+            echo "Going to keep version $VERSION of the tobi-ui service."
+          fi
+        done
