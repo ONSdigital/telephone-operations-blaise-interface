@@ -50,7 +50,7 @@ describe("React homepage", () => {
         expect(queryByText(/Loading/i)).toBeInTheDocument();
 
         await waitFor(() => {
-            expect(getByText(/Blaise Survey Manager Lite/i)).toBeDefined();
+            expect(getByText(/Telephone Operations Blaise Interface/i)).toBeDefined();
             expect(getByText(/OPN2101A/i)).toBeDefined();
             expect(queryByText(/Loading/i)).not.toBeInTheDocument();
         });
