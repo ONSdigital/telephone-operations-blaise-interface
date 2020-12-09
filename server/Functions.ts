@@ -22,7 +22,7 @@ function OPN_field_period_generation(instrument_name: string): string {
     return month + " 20" + instrument_name.substr(3, 2);
 }
 
-function field_period_to_text(instrument_name: string) {
+function field_period_to_text(instrument_name: string) : string {
     const survey_tla: string = instrument_name.substr(0, 3);
 
     if (survey_tla === "OPN") {
