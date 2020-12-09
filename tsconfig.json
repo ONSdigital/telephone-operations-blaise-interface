@@ -9,7 +9,7 @@
     ],
     "outDir": "build",
     "sourceMap": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

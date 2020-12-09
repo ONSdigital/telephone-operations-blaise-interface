@@ -1,13 +1,13 @@
 # Telephone Operations Blaise Interface
 
-[![codecov](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/ONSdigital/blaise-survey-manager-lite)
+[![codecov](https://codecov.io/gh/ONSdigital/telephone-operations-blaise-interface/branch/main/graph/badge.svg)](https://codecov.io/gh/ONSdigital/telephone-operations-blaise-interface)
 
 
 Blaise Dashboard for accessing active surveys and CATI dashboard.
 
 This project is a React application which when build is rendered by a Node.js express server.
 
-![Diagram of Blaise Survey Manager Lite sertup](.github/Diagram.png)
+![Diagram of Telephone Operations Blaise Interface sertup](.github/Diagram.png)
 
 ### Setup
 

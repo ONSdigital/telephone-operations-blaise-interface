@@ -1,9 +1,9 @@
-function isNumber(n) {
+function isNumber(n: any): boolean {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function field_period_to_text(field_period) {
-    let month_number_str = field_period.substr(5, 2);
+function field_period_to_text(field_period: string): string {
+    const month_number_str: string = field_period.substr(5, 2);
     let month_number_int = -1;
     let month = "Unknown";
 
@@ -23,3 +23,5 @@ function field_period_to_text(field_period) {
 }
 
 module.exports = { field_period_to_text };
+
+export default {field_period_to_text};

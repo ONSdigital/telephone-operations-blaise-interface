@@ -16,7 +16,7 @@ initialize {
             "attribs": Object {},
             "children": Array [
               Object {
-                "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                 "next": Object {
                   "attribs": Object {},
                   "children": Array [
@@ -69,7 +69,7 @@ initialize {
                 },
                 "parent": [Circular],
                 "prev": Object {
-                  "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                  "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                   "next": [Circular],
                   "parent": [Circular],
                   "prev": null,
@@ -99,7 +99,7 @@ initialize {
                   "next": [Circular],
                   "parent": [Circular],
                   "prev": Object {
-                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                     "next": [Circular],
                     "parent": [Circular],
                     "prev": null,
@@ -395,7 +395,7 @@ initialize {
               "attribs": Object {},
               "children": Array [
                 Object {
-                  "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                  "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                   "next": Object {
                     "attribs": Object {},
                     "children": Array [
@@ -448,7 +448,7 @@ initialize {
                   },
                   "parent": [Circular],
                   "prev": Object {
-                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                     "next": [Circular],
                     "parent": [Circular],
                     "prev": null,
@@ -478,7 +478,7 @@ initialize {
                     "next": [Circular],
                     "parent": [Circular],
                     "prev": Object {
-                      "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                      "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                       "next": [Circular],
                       "parent": [Circular],
                       "prev": null,
@@ -637,7 +637,7 @@ initialize {
                 "attribs": Object {},
                 "children": Array [
                   Object {
-                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                    "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                     "next": Object {
                       "attribs": Object {},
                       "children": Array [
@@ -690,7 +690,7 @@ initialize {
                     },
                     "parent": [Circular],
                     "prev": Object {
-                      "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                      "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                       "next": [Circular],
                       "parent": [Circular],
                       "prev": null,
@@ -720,7 +720,7 @@ initialize {
                       "next": [Circular],
                       "parent": [Circular],
                       "prev": Object {
-                        "data": "Telephone Operations Blaise Interface is unable to verify or display current active survey instruments. You may try resolving this by ",
+                        "data": "Telephone Operations Blaise Interface is unable to verify or display current active questionnaires. You may try resolving this by ",
                         "next": [Circular],
                         "parent": [Circular],
                         "prev": null,

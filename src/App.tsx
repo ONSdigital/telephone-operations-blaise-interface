@@ -83,17 +83,17 @@ function App() : ReactElement {
     return (
         <>
             <BetaBanner/>
-            <Header title={"Blaise Survey Manager Lite"}/>
+            <Header title={"Telephone Operations Blaise Interface"}/>
             <div style={divStyle} className="page__container container">
                 <main id="main-content" className="page__main">
                     <DefaultErrorBoundary>
                         <h1>Interviewing</h1>
                         <p>
-                            This page provides information on active survey instruments with corresponding links that
+                            This page provides information on active questionnaires with corresponding links that
                             redirect to specific areas of CATI dashboard.
                         </p>
                         <p>
-                            Please note, the table containing information on active survey instrument information may
+                            Please note, the table containing information on active questionnaires information may
                             take a few seconds to load
                         </p>
                         {listError.error && <ONSErrorPanel/>}
@@ -101,13 +101,13 @@ function App() : ReactElement {
                             <ExternalLink text={"Link to CATI dashboard"}
                                           link={externalCATIUrl}/>
                         </p>
-                        <h3>Active surveys table</h3>
+                        <h3>Active questionnaires table</h3>
                         <table id="basic-table" className="table ">
                             <ErrorBoundary errorMessageText={"Unable to load survey table correctly"}>
                                 <thead className="table__head u-mt-m">
                                 <tr className="table__row">
                                     <th scope="col" className="table__header ">
-                                        <span>Instrument</span>
+                                        <span>Questionnaire</span>
                                     </th>
                                     <th scope="col" className="table__header ">
                                         <span>Date</span>
