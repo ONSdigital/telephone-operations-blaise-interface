@@ -9,7 +9,7 @@ steps:
         echo $VERSIONS
         if [ ${#VERSIONS} -gt 0 ]
         then
-          gcloud app versions delete --service 'tobi-ui' $VERSIONS -q
+          echo "We Trigger this statement"
         else
           echo "No Versions to Clean Up"
         fi
