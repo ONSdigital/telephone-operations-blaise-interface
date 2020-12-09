@@ -23,3 +23,19 @@ steps:
     id: Deploy service for testing
     args: ["app", "deploy", "--version", "pull-request-number-$_PR_NUMBER-test", "--no-promote"]
     timeout: "1600s"
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Clean up old Versions
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        <<-EOF
+          VERSIONS=$(gcloud app versions list --service tobi-ui --sort-by '~version' --format 'value(version.id)' | sort -r | tail -n +10 | paste -sd " " -)
+          if [ ${#VERSIONS} -gt 0 ]
+          then
+            gcloud app versions delete --service tobi-ui $VERSIONS -q
+          else
+            echo "No Versions to Clean Up"
+          fi
+        EOF
