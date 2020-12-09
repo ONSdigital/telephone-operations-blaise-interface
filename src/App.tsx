@@ -79,7 +79,7 @@ function App() : ReactElement {
     return (
         <>
             <BetaBanner/>
-            <Header title={"Blaise Survey Manager Lite"}/>
+            <Header title={"Telephone Operations Blaise Interface"}/>
             <div id={"body"} className="page__container container">
                 <main id="main-content" className="page__main">
                     <DefaultErrorBoundary>
