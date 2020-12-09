@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./server/index.js",
     "start-server": "node server/index.js",
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
@@ -11,6 +12,7 @@
     "test-react-coverage": "react-scripts test --coverage --watchAll=false",
     "test": "jest",
     "test-coverage": "jest --coverage --watchAll=false",
+    "gcp-build": "react-scripts build",
     "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5000",
@@ -30,7 +32,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^12.2.0",
-    "@types/jest": "26.0.17",
+    "@types/jest": "26.0.18",
     "@types/node": "^14.14.6",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -41,7 +43,8 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-scripts": "4.0.1",
-    "typescript": "~4.1.2"
+    "typescript": "~4.1.2",
+    "ejs": "^3.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.1",
@@ -53,7 +56,6 @@
     "@typescript-eslint/parser": "^4.6.1",
     "axios-mock-adapter": "^1.19.0",
     "cross-env": "^7.0.2",
-    "ejs": "^3.1.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-async-helpers": "^0.9.1",
