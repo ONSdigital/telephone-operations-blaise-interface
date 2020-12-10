@@ -9,11 +9,11 @@ steps:
         --service "tobi-ui" \
         --sort-by '~version' \
         --format 'value(VERSION.ID)' \
-        --project ${_PROJECT_ID} | tail -n +6)
+        --project "${_PROJECT_ID}" | tail -n +6)
 
         if [ -n "$versions" ]; then
           gcloud app versions delete "$versions"
             --service "tobi-ui"
-            --project ${_PROJECT_ID}
+            --project "${_PROJECT_ID}"
             --quiet
         fi
