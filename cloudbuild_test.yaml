@@ -13,7 +13,7 @@ steps:
 
         if [ -n "$versions" ]; then
           gcloud app versions delete "$versions"
-            --service default
+            --service "tobi-ui"
             --project ${PROJECT_ID}
             --quiet
         fi
