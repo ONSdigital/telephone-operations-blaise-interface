@@ -9,3 +9,7 @@ env_variables:
   VM_EXTERNAL_WEB_URL: _VM_EXTERNAL_WEB_URL
   VM_EXTERNAL_CLIENT_URL: _VM_EXTERNAL_CLIENT_URL
   BLAISE_API_URL: _BLAISE_API_URL
+
+basic_scaling:
+  idle_timeout: 60s
+  max_instances: 10

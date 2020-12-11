@@ -15,7 +15,7 @@ interface ListItem {
     id: string
     status: string
     "server-park": string
-    date: string
+    fieldPeriod: string
     "install-date": string
 }
 
@@ -106,7 +106,7 @@ function App() : ReactElement {
                                         <span>Questionnaire</span>
                                     </th>
                                     <th scope="col" className="table__header ">
-                                        <span>Date</span>
+                                        <span>Field period</span>
                                     </th>
                                     <th scope="col" className="table__header ">
                                         <span>Link to interview</span>
@@ -124,12 +124,12 @@ function App() : ReactElement {
                                                         {item.name}
                                                     </td>
                                                     <td className="table__cell ">
-                                                        {item.date}
+                                                        {item.fieldPeriod}
                                                     </td>
                                                     <td className="table__cell ">
                                                         <ExternalLink text={"Interview"}
                                                                       link={item.link}
-                                                                      ariaLabel={"Launch interview for instrument " + item.name + " " + item.date}/>
+                                                                      ariaLabel={"Launch interview for instrument " + item.name + " " + item.fieldPeriod}/>
                                                     </td>
                                                 </tr>
                                             );

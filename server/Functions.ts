@@ -1,9 +1,9 @@
-function isNumber(n: any): boolean {
+function isNumber(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function field_period_to_text(field_period: string): string {
-    const month_number_str: string = field_period.substr(5, 2);
+function OPN_field_period_generation(instrument_name: string): string {
+    const month_number_str: string = instrument_name.substr(5, 2);
     let month_number_int = -1;
     let month = "Unknown";
 
@@ -11,17 +11,26 @@ function field_period_to_text(field_period: string): string {
         "July", "August", "September", "October", "November", "December"
     ];
 
-    if(isNumber(month_number_str)) {
-        month_number_int = parseInt(month_number_str);
+    if (isNumber(month_number_str)) {
+        month_number_int = parseInt(month_number_str)-1;
     }
 
-    if(month_number_int > 0 && month_number_int < 13) {
+    if (month_number_int >= 0 && month_number_int < 12) {
         month = monthNames[month_number_int];
     }
 
-    return month + " 20" + field_period.substr(3, 2);
+    return month + " 20" + instrument_name.substr(3, 2);
 }
 
-module.exports = { field_period_to_text };
+function field_period_to_text(instrument_name: string) : string {
+    const survey_tla: string = instrument_name.substr(0, 3);
+
+    if (survey_tla === "OPN") {
+        return OPN_field_period_generation(instrument_name);
+    } else {
+        return "Field period unknown";
+    }
+
+}
 
 export default {field_period_to_text};
