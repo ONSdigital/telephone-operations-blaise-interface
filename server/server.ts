@@ -5,6 +5,7 @@ import path from "path";
 import ejs from "ejs";
 import dotenv from "dotenv";
 import _ from "lodash";
+import {Instrument, Survey} from "../Interfaces";
 
 const server = express();
 
@@ -12,22 +13,6 @@ axios.defaults.timeout = 10000;
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
-}
-
-interface Survey {
-    survey: string
-    instruments: Instrument[]
-}
-
-interface Instrument {
-    installDate: string
-    name: string
-    serverParkName: string
-    activeToday: boolean
-    surveyDays: string[]
-    link: string
-    fieldPeriod: string
-    surveyTLA: string
 }
 
 // where ever the react built package is
