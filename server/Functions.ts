@@ -12,10 +12,10 @@ function OPN_field_period_generation(instrument_name: string): string {
     ];
 
     if (isNumber(month_number_str)) {
-        month_number_int = parseInt(month_number_str);
+        month_number_int = parseInt(month_number_str)-1;
     }
 
-    if (month_number_int > 0 && month_number_int < 13) {
+    if (month_number_int >= 0 && month_number_int < 12) {
         month = monthNames[month_number_int];
     }
 
