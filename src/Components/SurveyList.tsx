@@ -1,4 +1,3 @@
-import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
 import React, {ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {Survey} from "../../Interfaces";

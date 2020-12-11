@@ -1,4 +1,3 @@
-import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
 import ExternalLink from "./ONSDesignSystem/ExternalLink";
 import React, {ReactElement} from "react";
 import {Link, useParams} from "react-router-dom";
