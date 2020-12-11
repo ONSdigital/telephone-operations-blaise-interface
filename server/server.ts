@@ -7,19 +7,18 @@ import dotenv from "dotenv";
 
 const server = express();
 
-const axios_instance = axios.create();
-axios_instance.defaults.timeout = 10000;
+axios.defaults.timeout = 10000;
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
 }
 
 interface Instrument {
-    id: string
-    "install-date": string
+    installDate: string
     name: string
-    "server-park": string
-    status: string
+    serverParkName: string
+    activeToday: boolean
+    surveyDays: string[]
     link: string
     date: string
 }
@@ -28,7 +27,7 @@ interface Instrument {
 const buildFolder = "../build";
 
 // load the .env variables in the server
-const {VM_EXTERNAL_CLIENT_URL, VM_EXTERNAL_WEB_URL, BLAISE_INSTRUMENT_CHECKER_URL, VM_INTERNAL_URL} = process.env;
+const {VM_EXTERNAL_CLIENT_URL, VM_EXTERNAL_WEB_URL, BLAISE_API_URL, VM_INTERNAL_URL} = process.env;
 const CATI_DASHBOARD_URL = "https://" + VM_EXTERNAL_WEB_URL + "/Blaise";
 
 // treat the index.html as a template and substitute the value
@@ -40,19 +39,29 @@ server.use(
     express.static(path.join(__dirname, `${buildFolder}/static`)),
 );
 
+
+
 // An api endpoint that returns list of installed instruments
 server.get("/api/instruments", (req: Request, res: Response) => {
     console.log("get list of items");
 
-    axios_instance.get("http://" + BLAISE_INSTRUMENT_CHECKER_URL + "/api/instruments?vm_name=" + VM_INTERNAL_URL)
+    function activeDay(instrument: Instrument) {
+        return instrument.activeToday === true;
+    }
+
+    axios.get("http://" + BLAISE_API_URL + "/api/v1/cati/instruments")
         .then(function (response: AxiosResponse) {
+            let instruments: Instrument[] = response.data;
             // Add interviewing link and date of instrument to array objects
-            response.data.forEach(function (element: Instrument) {
+            instruments.forEach(function (element: Instrument) {
                 element.link = "https://" + VM_EXTERNAL_WEB_URL + "/" + element.name + "?LayoutSet=CATI-Interviewer_Large";
                 element.date = Functions.field_period_to_text(element.name);
             });
-            console.log("Retrieved instrument list, " + response.data.length + " item/s");
-            return res.json(response.data);
+            console.log(instruments)
+            instruments = instruments.filter(activeDay);
+            console.log(instruments)
+            console.log("Retrieved instrument list, " + instruments.length + " item/s");
+            return res.json(instruments);
         })
         .catch(function (error) {
             // handle error
