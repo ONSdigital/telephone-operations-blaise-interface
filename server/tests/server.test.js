@@ -11,29 +11,6 @@ const request = supertest(app);
 // This sets the mock adapter on the default instance
 const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 
-// Mocked list returned from BLAISE_INSTRUMENT_CHECKER_URL
-const instrumentList = [
-    {
-        activeToday: true,
-        expired: false,
-        installDate: "2020-12-11T11:53:55.5612856+00:00",
-        name: "OPN2007T",
-        serverParkName: "LocalDevelopment"
-    }
-];
-
-// Expected result from /api/instruments with link and date appended.
-const instrumentListReturned = [
-    {
-        activeToday: true,
-        date: "August 2020",
-        expired: false,
-        installDate: "2020-12-11T11:53:55.5612856+00:00",
-        link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
-        name: "OPN2007T",
-        serverParkName: "LocalDevelopment"
-    }
-];
 
 // Mock any GET request to /api/instruments
 // arguments for reply are (status, data, headers)
@@ -65,14 +42,21 @@ describe("Given the API returns 2 instruments with only one that is active", () 
 
     const instrumentListReturned = [
         {
-            activeToday: true,
-            date: "August 2020",
-            expired: false,
-            installDate: "2020-12-11T11:53:55.5612856+00:00",
-            link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
-            name: "OPN2007T",
-            serverParkName: "LocalDevelopment"
+            survey: "OPN",
+            instruments: [
+                {
+                    activeToday: true,
+                    fieldPeriod: "July 2020",
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
+                    name: "OPN2007T",
+                    serverParkName: "LocalDevelopment",
+                    "surveyTLA": "OPN",
+                }
+            ]
         }
+
     ];
 
     it("should return a 200 status and a list with the one active instrument", async done => {
@@ -80,6 +64,7 @@ describe("Given the API returns 2 instruments with only one that is active", () 
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveLength(1);
+        expect(response.body[0].instruments).toHaveLength(1);
         expect(response.body).toStrictEqual(instrumentListReturned);
         done();
     });
@@ -89,19 +74,66 @@ describe("Given the API returns 2 instruments with only one that is active", () 
     });
 });
 
-
-describe("Get list of instruments endpoint with an inactive", () => {
+describe("Given the API returns 2 active instruments for the survey OPN", () => {
     beforeAll(() => {
         mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/cati/instruments").reply(200,
-            instrumentList,
+            apiInstrumentList,
         );
     });
 
-    it("should return a 200 status and a list with one instrument", async done => {
+    const apiInstrumentList = [
+        {
+            activeToday: true,
+            expired: false,
+            installDate: "2020-12-11T11:53:55.5612856+00:00",
+            name: "OPN2007T",
+            serverParkName: "LocalDevelopment"
+        },
+        {
+            activeToday: true,
+            expired: false,
+            installDate: "2020-12-11T11:53:55.5612856+00:00",
+            name: "OPN2004A",
+            serverParkName: "LocalDevelopment"
+        }
+    ];
+
+    const instrumentListReturned = [
+        {
+            survey: "OPN",
+            instruments: [
+                {
+                    activeToday: true,
+                    fieldPeriod: "July 2020",
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
+                    name: "OPN2007T",
+                    serverParkName: "LocalDevelopment",
+                    "surveyTLA": "OPN",
+                },
+                {
+                    activeToday: true,
+                    fieldPeriod: "April 2020",
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    link: "https://external-web-url/OPN2004A?LayoutSet=CATI-Interviewer_Large",
+                    name: "OPN2004A",
+                    serverParkName: "LocalDevelopment",
+                    "surveyTLA": "OPN",
+                }
+            ]
+        }
+
+    ];
+
+    it("should return a list with one survey with 2 instrument objects", async done => {
         const response = await request.get("/api/instruments");
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveLength(1);
+
+        expect(response.body[0].instruments).toHaveLength(2);
         expect(response.body).toStrictEqual(instrumentListReturned);
         done();
     });
@@ -110,6 +142,82 @@ describe("Get list of instruments endpoint with an inactive", () => {
         mock.reset();
     });
 });
+
+
+describe("Given the API returns 2 active instruments for 2 separate surveys ", () => {
+    beforeAll(() => {
+        mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/cati/instruments").reply(200,
+            apiInstrumentList,
+        );
+    });
+
+    const apiInstrumentList = [
+        {
+            activeToday: true,
+            expired: false,
+            installDate: "2020-12-11T11:53:55.5612856+00:00",
+            name: "IPS2007T",
+            serverParkName: "LocalDevelopment"
+        },
+        {
+            activeToday: true,
+            expired: false,
+            installDate: "2020-12-11T11:53:55.5612856+00:00",
+            name: "OPN2004A",
+            serverParkName: "LocalDevelopment"
+        }
+    ];
+
+    const instrumentListReturned = [
+        {
+            survey: "IPS",
+            instruments: [
+                {
+                    activeToday: true,
+                    fieldPeriod: "Field period unknown",
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    link: "https://external-web-url/IPS2007T?LayoutSet=CATI-Interviewer_Large",
+                    name: "IPS2007T",
+                    serverParkName: "LocalDevelopment",
+                    "surveyTLA": "IPS",
+                }],
+        },
+        {
+            survey: "OPN",
+            instruments: [
+                {
+                    activeToday: true,
+                    fieldPeriod: "April 2020",
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    link: "https://external-web-url/OPN2004A?LayoutSet=CATI-Interviewer_Large",
+                    name: "OPN2004A",
+                    serverParkName: "LocalDevelopment",
+                    "surveyTLA": "OPN",
+                }
+            ]
+        }
+
+    ];
+
+    it("should return a list with 2 surveys with  instrument object in each", async done => {
+        const response = await request.get("/api/instruments");
+
+        expect(response.statusCode).toEqual(200);
+        expect(response.body).toHaveLength(2);
+
+        expect(response.body[0].instruments).toHaveLength(1);
+        expect(response.body[1].instruments).toHaveLength(1);
+        expect(response.body).toStrictEqual(instrumentListReturned);
+        done();
+    });
+
+    afterAll(() => {
+        mock.reset();
+    });
+});
+
 
 describe("Get list of instruments endpoint fails", () => {
     beforeAll(() => {
