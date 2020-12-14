@@ -31,7 +31,7 @@ defineFeature(feature, test => {
      **/
     test("View live survey list in TOBI", ({given, when, then}) => {
 
-        given("I am a Telephone Operations (TO) Interviewer", () => {
+        given("I am a Telephone Operations TO Interviewer", () => {
             global.fetch = jest.fn(() =>
                 Promise.resolve({
                     status: 200,
@@ -52,7 +52,7 @@ defineFeature(feature, test => {
             });
         });
 
-        then("I will be able to view all live surveys with questionnaires loaded in Blaise, identified by their three letter acronym (TLA), i.e. OPN, LMS", async () => {
+        then("I will be able to view all live surveys with questionnaires loaded in Blaise, identified by their three letter acronym TLA, i.e. OPN, LMS", async () => {
             await waitFor(() => {
                 expect(screen.getByText(/OPN/i)).toBeDefined();
                 expect(screen.getByText(/LMS/i)).toBeDefined();

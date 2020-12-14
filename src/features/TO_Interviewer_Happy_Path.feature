@@ -2,9 +2,9 @@ Feature: TOBI UI
 
   # Scenario 1
   Scenario: View live survey list in TOBI
-    Given I am a Telephone Operations (TO) Interviewer
+    Given I am a Telephone Operations TO Interviewer
     When I launch TOBI
-    Then I will be able to view all live surveys with questionnaires loaded in Blaise, identified by their three letter acronym (TLA), i.e. OPN, LMS
+    Then I will be able to view all live surveys with questionnaires loaded in Blaise, identified by their three letter acronym TLA, i.e. OPN, LMS
 
   # Scenario 2
   Scenario: Select survey
