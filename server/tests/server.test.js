@@ -236,3 +236,73 @@ describe("Get list of instruments endpoint fails", () => {
         mock.reset();
     });
 });
+
+
+import {defineFeature, loadFeature} from "jest-cucumber";
+import {cleanup, fireEvent, render, screen, waitFor} from "@testing-library/react";
+import React from "react";
+
+
+const feature = loadFeature("./src/features/TO_Interviewer_Happy_Path.feature", {tagFilter: "@server"});
+
+defineFeature(feature, test => {
+
+
+    /**
+     *  Scenario 3b
+     **/
+    test("Do not show expired surveys in TOBI", ({given, when, then}) => {
+        let selectedSurvey;
+        let response;
+
+        given("a survey questionnaire end date has passed", async () => {
+            const apiInstrumentList = [
+                {
+                    activeToday: true,
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    name: "OPN2007T",
+                    serverParkName: "LocalDevelopment"
+                },
+                {
+                    // this one is inactive
+                    activeToday: false,
+                    expired: false,
+                    installDate: "2020-12-11T11:53:55.5612856+00:00",
+                    name: "OPN2004A",
+                    serverParkName: "LocalDevelopment"
+                }
+            ];
+
+            mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/cati/instruments").reply(200,
+                apiInstrumentList,
+            );
+            response = await request.get("/api/instruments");
+        });
+
+        when("I select the survey I am working on", async () => {
+            selectedSurvey = response.body[0].instruments;
+        });
+
+        then("I will not see that questionnaire listed for the survey", () => {
+            // Only the one active survey is returned
+            expect(selectedSurvey).toHaveLength(1);
+
+            const instrumentListReturned = [
+                    {
+                        activeToday: true,
+                        fieldPeriod: "July 2020",
+                        expired: false,
+                        installDate: "2020-12-11T11:53:55.5612856+00:00",
+                        link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
+                        name: "OPN2007T",
+                        serverParkName: "LocalDevelopment",
+                        "surveyTLA": "OPN",
+                    }
+                ]
+            ;
+            expect(selectedSurvey).toStrictEqual(instrumentListReturned);
+        });
+    });
+
+});

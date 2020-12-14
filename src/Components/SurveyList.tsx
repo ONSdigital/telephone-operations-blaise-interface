@@ -39,7 +39,7 @@ function SurveyList(props: Props): ReactElement {
                                     {item.survey}
                                 </td>
                                 <td className="table__cell ">
-                                    <Link to={"/survey/" + item.survey}>Active questionnaires</Link>
+                                    <Link to={"/survey/" + item.survey}>View active questionnaires</Link>
                                 </td>
                             </tr>
                         );

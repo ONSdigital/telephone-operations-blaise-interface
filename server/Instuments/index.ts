@@ -9,10 +9,6 @@ export default function InstrumentRouter(BLAISE_API_URL: string, VM_EXTERNAL_WEB
     "use strict";
     const instrumentRouter = express.Router();
 
-    instrumentRouter.get("/", function (req: Request, res: Response) {
-        res.send("Hello ExternalRoutes!");
-    });
-
 
     // An api endpoint that returns list of installed instruments
     instrumentRouter.get("/instruments", (req: Request, res: Response) => {

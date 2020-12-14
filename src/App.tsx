@@ -100,20 +100,18 @@ function App(): ReactElement {
                             <ExternalLink text={"Link to CATI dashboard"}
                                           link={externalCATIUrl}/>
                         </p>
-                        <Router>
-                            <Switch>
-                                <Route path="/survey/:survey">
-                                    <ErrorBoundary errorMessageText={"Unable to load questionnaire table correctly"}>
-                                        <InstrumentList list={surveys} listError={listError}/>
-                                    </ErrorBoundary>
-                                </Route>
-                                <Route path="/">
-                                    <ErrorBoundary errorMessageText={"Unable to load survey table correctly"}>
-                                        <SurveyList list={surveys} listError={listError}/>
-                                    </ErrorBoundary>
-                                </Route>
-                            </Switch>
-                        </Router>
+                        <Switch>
+                            <Route path="/survey/:survey">
+                                <ErrorBoundary errorMessageText={"Unable to load questionnaire table correctly"}>
+                                    <InstrumentList list={surveys} listError={listError}/>
+                                </ErrorBoundary>
+                            </Route>
+                            <Route path="/">
+                                <ErrorBoundary errorMessageText={"Unable to load survey table correctly"}>
+                                    <SurveyList list={surveys} listError={listError}/>
+                                </ErrorBoundary>
+                            </Route>
+                        </Switch>
                     </DefaultErrorBoundary>
                 </main>
             </div>

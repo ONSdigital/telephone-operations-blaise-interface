@@ -1,6 +1,7 @@
 interface Instrument {
     installDate: string
     name: string
+    expired: boolean
     serverParkName: string
     activeToday: boolean
     surveyDays: string[]
