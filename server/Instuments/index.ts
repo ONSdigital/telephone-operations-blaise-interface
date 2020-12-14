@@ -1,4 +1,4 @@
-import express, {NextFunction, Request, Response, Router} from "express";
+import express, {Request, Response, Router} from "express";
 import {Instrument, Survey} from "../../Interfaces";
 import axios, {AxiosResponse} from "axios";
 import _ from "lodash";
