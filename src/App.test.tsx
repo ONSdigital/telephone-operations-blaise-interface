@@ -1,6 +1,6 @@
 import React from "react";
 import Enzyme from "enzyme";
-import {render, waitFor, fireEvent} from "@testing-library/react";
+import {render, waitFor, fireEvent, screen} from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./App";
 import "@testing-library/jest-dom";
@@ -40,13 +40,36 @@ describe("React homepage", () => {
     });
 
 
-    it("matches Snapshot", async () => {
+    it("view surveys page matches Snapshot", async () => {
         const history = createMemoryHistory();
         const wrapper = render(
             <Router history={history}>
                 <App/>
             </Router>
         );
+
+        await act(async () => {
+            await flushPromises();
+        });
+
+        await waitFor(() => {
+            expect(wrapper).toMatchSnapshot();
+        });
+    });
+
+    it("view questionnaires page matches Snapshot", async () => {
+        const history = createMemoryHistory();
+        const wrapper = render(
+            <Router history={history}>
+                <App/>
+            </Router>
+        );
+
+        await act(async () => {
+            await flushPromises();
+        });
+
+        await fireEvent.click(screen.getByText(/View active questionnaires/i));
 
         await act(async () => {
             await flushPromises();
