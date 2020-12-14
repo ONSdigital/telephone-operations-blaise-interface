@@ -1,6 +1,6 @@
 import React from "react";
-import Enzyme, { shallow} from "enzyme";
-import {render, waitFor,screen, fireEvent} from "@testing-library/react";
+import Enzyme from "enzyme";
+import {render, waitFor, fireEvent} from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./App";
 import "@testing-library/jest-dom";

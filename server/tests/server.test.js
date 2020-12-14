@@ -239,8 +239,6 @@ describe("Get list of instruments endpoint fails", () => {
 
 
 import {defineFeature, loadFeature} from "jest-cucumber";
-import {cleanup, fireEvent, render, screen, waitFor} from "@testing-library/react";
-import React from "react";
 
 
 const feature = loadFeature("./src/features/TO_Interviewer_Happy_Path.feature", {tagFilter: "@server"});
