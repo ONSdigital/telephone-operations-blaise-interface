@@ -3,7 +3,6 @@ import Header from "./Components/ONSDesignSystem/Header";
 import BetaBanner from "./Components/ONSDesignSystem/BetaBanner";
 import ExternalLink from "./Components/ONSDesignSystem/ExternalLink";
 import {DefaultErrorBoundary} from "./Components/ErrorHandling/DefaultErrorBoundary";
-import "./App.css";
 import Footer from "./Components/ONSDesignSystem/Footer";
 import ONSErrorPanel from "./Components/ONSDesignSystem/ONSErrorPanel";
 import {isDevEnv} from "./Functions";
@@ -29,6 +28,9 @@ interface window extends Window {
     CATI_DASHBOARD_URL: string
 }
 
+const divStyle = {
+    minHeight: "calc(67vh)"
+};
 
 function App(): ReactElement {
 
@@ -81,7 +83,7 @@ function App(): ReactElement {
         <>
             <BetaBanner/>
             <Header title={"Telephone Operations Blaise Interface"}/>
-            <div id={"body"} className="page__container container">
+            <div style={divStyle} className="page__container container">
                 <main id="main-content" className="page__main">
                     <DefaultErrorBoundary>
                         <h1>Interviewing</h1>
