@@ -11,7 +11,7 @@ import flushPromises from "../../tests/utils";
 import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 
-const feature = loadFeature("./src/features/TO_Interviewer_Happy_Path.feature", {tagFilter: "not @server"});
+const feature = loadFeature("./src/features/TO_Interviewer_Happy_Path.feature", {tagFilter: "not @server and not @integration"});
 
 defineFeature(feature, test => {
 
@@ -106,25 +106,6 @@ defineFeature(feature, test => {
     });
 
     /**
-     *  Scenario 3a
-     **/
-    test("Select questionnaire", ({given, when, then}) => {
-        cleanup();
-        given("I can view a list of live questionnaires for the survey I am allocated to", () => {
-            console.log(".");
-        });
-
-        when("I select a link to interview against the questionnaire with the survey dates I am working on", () => {
-            console.log(".");
-        });
-
-        then("I am presented with the Blaise log in", () => {
-            expect(true).toBe(true);
-
-        });
-    });
-
-    /**
      *  Scenario 3b
      **/
     test("Do not show expired surveys in TOBI", ({given, when, then}) => {
@@ -204,23 +185,6 @@ defineFeature(feature, test => {
 
             expect(screen.getByText(/OPN/i)).toBeDefined();
             expect(screen.getByText(/Surveys/i)).toBeDefined();
-        });
-    });
-
-    /**
-     *  Scenario 4
-     **/
-    test("Accessing questionnaire data entry", ({given, when, then}) => {
-        given("I am a TO Interviewer that has been presented with the Blaise log in", () => {
-            console.log(".");
-        });
-
-        when("I enter my credentials", () => {
-            console.log(".");
-        });
-
-        then("I am presented with a case in the daybatch of the selected survey", () => {
-            expect(true).toBe(true);
         });
     });
 });

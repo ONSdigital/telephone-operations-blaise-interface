@@ -14,6 +14,7 @@ Feature: TOBI UI
     And listed in order with latest installed questionnaire first
 
   # Scenario 3a
+  @integration
   Scenario: Select questionnaire
     Given I can view a list of live questionnaires for the survey I am allocated to
     When I select a link to interview against the questionnaire with the survey dates I am working on
@@ -33,6 +34,7 @@ Feature: TOBI UI
     Then I am able to go back to view the list of surveys
 
   # Scenario 4
+  @integration
   Scenario: Accessing questionnaire data entry
     Given I am a TO Interviewer that has been presented with the Blaise log in
     When I enter my credentials
