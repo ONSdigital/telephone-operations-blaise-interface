@@ -11,7 +11,7 @@ import {
     Route,
 
 } from "react-router-dom";
-import InstrumentList from "./Components/InstumentList";
+import InstrumentList from "./Components/InstrumentList";
 import SurveyList from "./Components/SurveyList";
 import {Survey} from "../Interfaces";
 import {ErrorBoundary} from "./Components/ErrorHandling/ErrorBoundary";
