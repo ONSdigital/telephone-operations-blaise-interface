@@ -188,6 +188,7 @@ Object {
             >
               <tr
                 class="table__row"
+                data-testid="instrument-table-row"
               >
                 <td
                   class="table__cell "
@@ -471,6 +472,7 @@ Object {
           >
             <tr
               class="table__row"
+              data-testid="instrument-table-row"
             >
               <td
                 class="table__cell "
@@ -796,6 +798,7 @@ Object {
             >
               <tr
                 class="table__row"
+                data-testid="survey-table-row"
               >
                 <td
                   class="table__cell "
@@ -1041,6 +1044,7 @@ Object {
           >
             <tr
               class="table__row"
+              data-testid="survey-table-row"
             >
               <td
                 class="table__cell "

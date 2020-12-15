@@ -3,7 +3,7 @@ import {cleanup, fireEvent, render, screen, waitFor} from "@testing-library/reac
 import App from "../../App";
 import React from "react";
 import {
-    survey_list_with_OPN_and_LMS_with_one_active_instrument_each,
+    survey_list_with_OPN_and_LMS_with_one_active_instrument_each, survey_list_with_OPN_with_three_active_instruments,
     survey_list_with_OPN_with_two_active_instruments
 } from "./API_Mock_Objects";
 import {act} from "react-dom/test-utils";
@@ -69,7 +69,7 @@ defineFeature(feature, test => {
             global.fetch = jest.fn(() =>
                 Promise.resolve({
                     status: 200,
-                    json: () => Promise.resolve(survey_list_with_OPN_with_two_active_instruments),
+                    json: () => Promise.resolve(survey_list_with_OPN_with_three_active_instruments),
                 })
             );
             const history = createMemoryHistory();
@@ -95,11 +95,24 @@ defineFeature(feature, test => {
                 expect(screen.getByText(/Telephone Operations Blaise Interface/i)).toBeDefined();
                 expect(screen.getByText(/OPN2004A/i)).toBeDefined();
                 expect(screen.getByText(/OPN2007T/i)).toBeDefined();
+                expect(screen.getByText(/OPN2101A/i)).toBeDefined();
             });
         });
 
         and("listed in order with latest installed questionnaire first", () => {
-            expect(true).toBe(true);
+            const list = screen.queryAllByTestId(/instrument-table-row/i);
+
+            const listItemOne = list[0];
+            const firstRowData = listItemOne.firstChild.textContent;
+            expect(firstRowData).toEqual("OPN2101A");
+
+            const listItemTwo = list[1];
+            const secondRowData = listItemTwo.firstChild.textContent;
+            expect(secondRowData).toEqual("OPN2004A");
+
+            const listItemThree = list[2];
+            const thirdRowData = listItemThree.firstChild.textContent;
+            expect(thirdRowData).toEqual("OPN2007T");
         });
 
 

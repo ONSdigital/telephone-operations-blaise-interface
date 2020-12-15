@@ -35,6 +35,8 @@ function InstrumentList(props: Props): ReactElement {
         listError.message = "Unable to load questionnaires for survey " + survey;
     }
 
+    surveyInstruments.sort((a: Instrument,b: Instrument) => Date.parse(b.installDate) - Date.parse(a.installDate));
+
     return <>
         <p>
             <Link to={"/"}>Return to survey list</Link>
@@ -62,7 +64,7 @@ function InstrumentList(props: Props): ReactElement {
                     ?
                     surveyInstruments.map((item: Instrument) => {
                         return (
-                            <tr className="table__row" key={item.name}>
+                            <tr className="table__row" key={item.name} data-testid={"instrument-table-row"}>
                                 <td className="table__cell ">
                                     {item.name}
                                 </td>

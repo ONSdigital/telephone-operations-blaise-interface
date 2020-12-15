@@ -34,7 +34,7 @@ function SurveyList(props: Props): ReactElement {
                     ?
                     list.map((item: Survey) => {
                         return (
-                            <tr className="table__row" key={item.survey}>
+                            <tr className="table__row" key={item.survey} data-testid={"survey-table-row"}>
                                 <td className="table__cell ">
                                     {item.survey}
                                 </td>

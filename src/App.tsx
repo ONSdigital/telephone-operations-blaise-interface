@@ -7,7 +7,6 @@ import Footer from "./Components/ONSDesignSystem/Footer";
 import ONSErrorPanel from "./Components/ONSDesignSystem/ONSErrorPanel";
 import {isDevEnv} from "./Functions";
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
 
