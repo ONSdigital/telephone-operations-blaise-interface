@@ -8,8 +8,8 @@ def slack_alert():
     attachments = []
 
     attachments.append({
-        'color': 'good',
-        'title': 'Deployed',
+        'color': '#767676',
+        'title': 'Deployed to ' + os.getenv('PROJECT_ID'),
         'text': '\n' + os.getenv('REPO_NAME')
     })
 

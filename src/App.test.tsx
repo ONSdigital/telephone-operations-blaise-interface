@@ -1,7 +1,5 @@
 import React from "react";
-import Enzyme from "enzyme";
 import {render, waitFor, fireEvent, screen, cleanup} from "@testing-library/react";
-import Adapter from "enzyme-adapter-react-16";
 import App from "./App";
 import "@testing-library/jest-dom";
 import flushPromises from "./tests/utils";
@@ -39,7 +37,6 @@ function mock_server_request(returnedStatus: number, returnedJSON: any) {
 }
 
 describe("React homepage", () => {
-    Enzyme.configure({adapter: new Adapter()});
 
     beforeAll(() => {
         mock_server_request(200, surveyListReturned);
@@ -125,7 +122,6 @@ describe("React homepage", () => {
 
 
 describe("Given the API returns malformed json", () => {
-    Enzyme.configure({adapter: new Adapter()});
 
     beforeAll(() => {
         mock_server_request(200, {text: "Hello"});
@@ -156,7 +152,6 @@ describe("Given the API returns malformed json", () => {
 });
 
 describe("Given the API returns an empty list", () => {
-    Enzyme.configure({adapter: new Adapter()});
 
     beforeAll(() => {
         mock_server_request(200, []);

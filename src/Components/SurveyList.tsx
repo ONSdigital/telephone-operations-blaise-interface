@@ -1,3 +1,4 @@
+import { ONSPanel } from "blaise-design-system-react-components";
 import React, {ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {Survey} from "../../Interfaces";
@@ -49,11 +50,9 @@ function SurveyList(props: Props): ReactElement {
                     </tbody>
                 </table>
                 :
-                <div className="panel panel--info panel--simple u-mb-m">
-                    <div className="panel__body">
-                        <p>{listError.message}</p>
-                    </div>
-                </div>
+                <ONSPanel>
+                    <p>{listError.message}</p>
+                </ONSPanel>
         }
     </>;
 }

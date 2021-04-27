@@ -1,7 +1,7 @@
-import ExternalLink from "./ONSDesignSystem/ExternalLink";
 import React, {ReactElement} from "react";
 import {Link, useParams} from "react-router-dom";
 import {Instrument, Survey} from "../../Interfaces";
+import {ExternalLink, ONSPanel} from "blaise-design-system-react-components";
 
 
 interface listError {
@@ -83,11 +83,9 @@ function InstrumentList(props: Props): ReactElement {
                     </tbody>
                 </table>
                 :
-                <div className="panel panel--info panel--simple u-mb-m">
-                    <div className="panel__body">
-                        <p>{listError.message}</p>
-                    </div>
-                </div>
+                <ONSPanel>
+                    <p>{listError.message}</p>
+                </ONSPanel>
         }
     </>;
 }

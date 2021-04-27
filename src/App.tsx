@@ -1,21 +1,12 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import Header from "./Components/ONSDesignSystem/Header";
-import BetaBanner from "./Components/ONSDesignSystem/BetaBanner";
-import ExternalLink from "./Components/ONSDesignSystem/ExternalLink";
 import {DefaultErrorBoundary} from "./Components/ErrorHandling/DefaultErrorBoundary";
-import Footer from "./Components/ONSDesignSystem/Footer";
-import ONSErrorPanel from "./Components/ONSDesignSystem/ONSErrorPanel";
 import {isDevEnv} from "./Functions";
-import {
-    Switch,
-    Route,
-
-} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import InstrumentList from "./Components/InstrumentList";
 import SurveyList from "./Components/SurveyList";
 import {Survey} from "../Interfaces";
 import {ErrorBoundary} from "./Components/ErrorHandling/ErrorBoundary";
-
+import {Footer, Header, BetaBanner, ONSErrorPanel, ExternalLink} from "blaise-design-system-react-components";
 
 interface listError {
     error: boolean,
