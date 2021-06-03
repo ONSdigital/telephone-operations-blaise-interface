@@ -3,20 +3,10 @@
  */
 import app from "../server"; // Link to your server file
 import supertest from "supertest";
-import MockAdapter from "axios-mock-adapter";
-import axios from "axios";
 import BlaiseRestApi from "../../rest_api";
 jest.mock("../../rest_api");
 
 let request = supertest(app);
-
-// This sets the mock adapter on the default instance
-const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
-
-
-// Mock any GET request to /api/instruments
-// arguments for reply are (status, data, headers)
-
 
 describe("Given the API returns 2 instruments with only one that is active", () => {
     beforeAll(() => {
@@ -286,9 +276,6 @@ defineFeature(feature, test => {
                 }
             ];
 
-            mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/cati/instruments").reply(200,
-                apiInstrumentList,
-            );
             BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
                 return apiInstrumentList;
             });
@@ -317,10 +304,8 @@ defineFeature(feature, test => {
                     serverParkName: "LocalDevelopment",
                     "surveyTLA": "OPN",
                 }
-            ]
-                ;
+            ];
             expect(selectedSurvey).toStrictEqual(instrumentListReturned);
         });
     });
-
 });
