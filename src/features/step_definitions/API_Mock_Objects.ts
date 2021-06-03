@@ -1,4 +1,4 @@
-import { Survey } from "../../../Interfaces";
+import { Survey } from "../../../interfaces";
 
 export const survey_list_with_OPN_and_LMS_with_one_active_instrument_each: Survey[] = [
     {

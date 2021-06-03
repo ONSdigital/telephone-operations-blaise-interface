@@ -31,3 +31,5 @@ class BlaiseRestApi {
 }
 
 export default BlaiseRestApi;
+
+export type { Instrument };

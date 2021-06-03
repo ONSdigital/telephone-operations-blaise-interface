@@ -1,8 +1,8 @@
 import express, { Request, Response, Router } from "express";
-import { Instrument, Survey } from "../../Interfaces";
+import { Survey } from "../../interfaces";
 import _ from "lodash";
 import Functions from "../Functions";
-import BlaiseApiRest from "../../rest_api";
+import BlaiseApiRest, { Instrument } from "../../rest_api";
 
 
 export default function InstrumentRouter(BLAISE_API_URL: string, VM_EXTERNAL_WEB_URL: string): Router {

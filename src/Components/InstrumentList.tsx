@@ -1,7 +1,8 @@
-import React, {ReactElement} from "react";
-import {Link, useParams} from "react-router-dom";
-import {Instrument, Survey} from "../../Interfaces";
-import {ExternalLink, ONSPanel} from "blaise-design-system-react-components";
+import { ReactElement } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Survey } from "../../interfaces";
+import { Instrument } from "../../rest_api";
+import { ExternalLink, ONSPanel } from "blaise-design-system-react-components";
 
 
 interface listError {
@@ -19,8 +20,8 @@ interface Params {
 }
 
 function InstrumentList(props: Props): ReactElement {
-    const {list, listError}: Props = props;
-    const {survey}: Params = useParams();
+    const { list, listError }: Props = props;
+    const { survey }: Params = useParams();
 
     const filteredSurvey: Survey[] = list.filter((obj: Survey) => {
         return obj.survey === survey;
@@ -48,38 +49,38 @@ function InstrumentList(props: Props): ReactElement {
                 ?
                 <table id="instrument-table" className="table ">
                     <thead className="table__head u-mt-m">
-                    <tr className="table__row">
-                        <th scope="col" className="table__header ">
-                            <span>Questionnaire</span>
-                        </th>
-                        <th scope="col" className="table__header ">
-                            <span>Field period</span>
-                        </th>
-                        <th scope="col" className="table__header ">
-                            <span>Link to interview</span>
-                        </th>
-                    </tr>
+                        <tr className="table__row">
+                            <th scope="col" className="table__header ">
+                                <span>Questionnaire</span>
+                            </th>
+                            <th scope="col" className="table__header ">
+                                <span>Field period</span>
+                            </th>
+                            <th scope="col" className="table__header ">
+                                <span>Link to interview</span>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody className="table__body">
-                    {
-                        surveyInstruments.map((item: Instrument) => {
-                            return (
-                                <tr className="table__row" key={item.name} data-testid={"instrument-table-row"}>
-                                    <td className="table__cell ">
-                                        {item.name}
-                                    </td>
-                                    <td className="table__cell ">
-                                        {item.fieldPeriod}
-                                    </td>
-                                    <td className="table__cell ">
-                                        <ExternalLink text={"Interview"}
-                                                      link={item.link}
-                                                      ariaLabel={"Launch interview for instrument " + item.name + " " + item.fieldPeriod}/>
-                                    </td>
-                                </tr>
-                            );
-                        })
-                    }
+                        {
+                            surveyInstruments.map((item: Instrument) => {
+                                return (
+                                    <tr className="table__row" key={item.name} data-testid={"instrument-table-row"}>
+                                        <td className="table__cell ">
+                                            {item.name}
+                                        </td>
+                                        <td className="table__cell ">
+                                            {item.fieldPeriod}
+                                        </td>
+                                        <td className="table__cell ">
+                                            <ExternalLink text={"Interview"}
+                                                link={item.link}
+                                                ariaLabel={"Launch interview for instrument " + item.name + " " + item.fieldPeriod} />
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        }
                     </tbody>
                 </table>
                 :

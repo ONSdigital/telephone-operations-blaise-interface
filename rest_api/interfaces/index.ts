@@ -10,9 +10,5 @@ interface Instrument {
     surveyTLA: string
 }
 
-interface Survey {
-    instruments: Instrument[]
-    survey: string
-}
 
-export type { Instrument, Survey };
+export type { Instrument };
