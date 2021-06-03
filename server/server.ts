@@ -1,14 +1,11 @@
-import express, {NextFunction, Request, Response} from "express";
-import axios from "axios";
+import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import ejs from "ejs";
 import dotenv from "dotenv";
 import InstrumentRouter from "./Instuments";
-import {getEnvironmentVariables} from "./Config";
+import { getEnvironmentVariables } from "./Config";
 
 const server = express();
-
-axios.defaults.timeout = 10000;
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
@@ -18,7 +15,7 @@ if (process.env.NODE_ENV !== "production") {
 const buildFolder = "../../build";
 
 // load the .env variables in the server
-const {VM_EXTERNAL_CLIENT_URL, VM_EXTERNAL_WEB_URL, BLAISE_API_URL, CATI_DASHBOARD_URL} = getEnvironmentVariables();
+const { VM_EXTERNAL_CLIENT_URL, VM_EXTERNAL_WEB_URL, BLAISE_API_URL, CATI_DASHBOARD_URL } = getEnvironmentVariables();
 
 // treat the index.html as a template and substitute the values at runtime
 server.set("views", path.join(__dirname, buildFolder));
@@ -34,7 +31,7 @@ server.use("/api", InstrumentRouter(BLAISE_API_URL, VM_EXTERNAL_WEB_URL));
 // Health Check endpoint
 server.get("/health_check", async function (req: Request, res: Response) {
     console.log("Heath Check endpoint called");
-    res.status(200).json({status: 200});
+    res.status(200).json({ status: 200 });
 });
 
 server.get("*", function (req: Request, res: Response) {
