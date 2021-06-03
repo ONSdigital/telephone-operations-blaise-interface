@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Survey } from "../../interfaces";
 import { Instrument } from "../../rest_api";
