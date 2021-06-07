@@ -4,7 +4,7 @@ import { isDevEnv } from "./Functions";
 import { Switch, Route } from "react-router-dom";
 import InstrumentList from "./Components/InstrumentList";
 import SurveyList from "./Components/SurveyList";
-import { Survey } from "../interfaces";
+import { Survey } from "../rest_api";
 import { ErrorBoundary } from "./Components/ErrorHandling/ErrorBoundary";
 import { Footer, Header, BetaBanner, ONSErrorPanel, ExternalLink } from "blaise-design-system-react-components";
 

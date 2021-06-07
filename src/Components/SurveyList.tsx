@@ -1,7 +1,7 @@
 import { ONSPanel } from "blaise-design-system-react-components";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { Survey } from "../../interfaces";
+import { Survey } from "../../rest_api";
 
 interface listError {
     error: boolean,

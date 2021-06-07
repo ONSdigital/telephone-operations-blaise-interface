@@ -7,7 +7,7 @@ const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 const blaiseApiRest = new BlaiseApiRest(`http://${process.env.BLAISE_API_URL}`);
 
 describe("BlaiseApiRest", () => {
-  describe("getInstruments", () => {
+  describe("getAllInstrumentsWithCatiData", () => {
     const apiInstrumentList = [
       {
         activeToday: true,
@@ -25,25 +25,25 @@ describe("BlaiseApiRest", () => {
       }
     ];
 
-    beforeAll(() => {
-      mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/cati/instruments").reply(200,
+    beforeEach(() => {
+      mock.onGet(`http://${process.env.BLAISE_API_URL}/api/v1/cati/instruments`).reply(200,
         apiInstrumentList,
       );
     });
 
-    afterAll(() => {
+    afterEach(() => {
       mock.reset();
     });
 
-    it("returns a list of all instruments", async done => {
-      let instruments = await blaiseApiRest.getInstruments();
+    it("returns a list of all instruments including CATI data", async done => {
+      let instruments = await blaiseApiRest.getAllInstrumentsWithCatiData();
 
       expect(instruments).toEqual(apiInstrumentList);
       done();
     });
   });
 
-  describe("getLiveData", () => {
+  describe("getLiveDate", () => {
     let liveDate = null;
 
     const instrument = {
@@ -101,6 +101,47 @@ describe("BlaiseApiRest", () => {
         expect(liveDate).toEqual(NaN);
         done();
       });
+    });
+  });
+
+
+  describe("getDiagnostics", () => {
+    const diagnosticsJSON = `[
+      {
+        "health check type": "Connection model",
+          "status": "OK"
+      },
+      {
+        "health check type": "Blaise connection",
+          "status": "OK"
+      },
+      {
+        "health check type": "Remote data server connection",
+          "status": "OK"
+      },
+      {
+        "health check type": "Remote Cati management connection",
+          "status": "OK"
+      }
+    ]`;
+
+    beforeAll(() => {
+      mock.onGet("http://" + process.env.BLAISE_API_URL + "/api/v1/health/diagnosis").reply(200,
+        diagnosticsJSON,
+      );
+    });
+
+    afterAll(() => {
+      mock.reset();
+    });
+
+    it("returns a list of diagnostics", async done => {
+      let diagnostics = await blaiseApiRest.getDiagnostics();
+
+      expect(diagnostics).toHaveLength(4);
+      expect(diagnostics[0].status).toEqual("OK");
+      expect(diagnostics[0]["health check type"]).toEqual("Connection model");
+      done();
     });
   });
 });

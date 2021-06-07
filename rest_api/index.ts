@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { Instrument } from "./interfaces";
+import { Instrument, Diagnostic, InstallInstrument, Survey } from "./interfaces";
 
 class BlaiseRestApi {
   blaise_api_url: string;
@@ -11,25 +11,60 @@ class BlaiseRestApi {
     this.httpClient.defaults.timeout = 10000;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async get(url: string): Promise<any> {
-    const response = await this.httpClient.get(url);
-    return response.data;
+  async getAllInstrumentsWithCatiData(): Promise<Instrument[]> {
+    return this.get("/api/v1/cati/instruments");
   }
 
-  async getInstruments(): Promise<Instrument[]> {
-    return this.get(`${this.blaise_api_url}/api/v1/cati/instruments`);
+  async getInstrumentsWithCatiData(serverpark: string): Promise<Instrument[]> {
+    return this.get(`/api/v1/cati/serverparks/${serverpark}/instruments`);
+  }
+
+  async getInstrumentWithCatiData(serverpark: string, instrumentName: string): Promise<Instrument> {
+    return this.get(`/api/v1/cati/serverparks/${serverpark}instruments/${instrumentName}`);
+  }
+
+  async installInstrument(serverpark: string, instrument: Instrument): Promise<Instrument> {
+    return this.post(`/api/v1/serverparks/${serverpark}/instruments`, instrument);
+  }
+
+  async deleteInstrument(serverpark: string, instrumentName: string): Promise<string> {
+    return this.delete(`/api/v1/serverparks/${serverpark}/instruments/${instrumentName}?name=${instrumentName}`);
   }
 
   async getLiveDate(instrument: Instrument): Promise<number | null> {
-    const date = await this.get(`${this.blaise_api_url}/api/v1/serverparks/${instrument.serverParkName}/instruments/${instrument.name}/liveDate`);
+    const date = await this.get(`/api/v1/serverparks/${instrument.serverParkName}/instruments/${instrument.name}/liveDate`);
     if (date === null) {
       return null;
     }
     return Date.parse(date);
   }
+
+  async getDiagnostics(): Promise<Diagnostic[]> {
+    return this.get("/api/v1/health/diagnosis");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async get(url: string): Promise<any> {
+    if (!url.startsWith("/")) {
+      url = `/${url}`;
+    }
+    const response = await this.httpClient.get(`${this.blaise_api_url}${url}`);
+    return response.data;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+  private async post(url: string, data: any): Promise<any> {
+    const response = await this.httpClient.post(`${this.blaise_api_url}${url}`, data);
+    return response.data;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async delete(url: string): Promise<any> {
+    const response = await this.httpClient.delete(`${this.blaise_api_url}${url}`);
+    return response.data;
+  }
 }
 
 export default BlaiseRestApi;
 
-export type { Instrument };
+export type { Instrument, InstallInstrument, Diagnostic, Survey };

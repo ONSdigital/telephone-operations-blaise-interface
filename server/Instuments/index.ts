@@ -1,8 +1,7 @@
 import express, { Request, Response, Router } from "express";
-import { Survey } from "../../interfaces";
 import _ from "lodash";
 import Functions from "../Functions";
-import BlaiseApiRest, { Instrument } from "../../rest_api";
+import BlaiseApiRest, { Instrument, Survey } from "../../rest_api";
 
 
 export default function InstrumentRouter(BLAISE_API_URL: string, VM_EXTERNAL_WEB_URL: string): Router {
@@ -25,7 +24,7 @@ export default function InstrumentRouter(BLAISE_API_URL: string, VM_EXTERNAL_WEB
             return false;
         }
 
-        blaiseApiRest.getInstruments().then(async allInstruments => {
+        blaiseApiRest.getAllInstrumentsWithCatiData().then(async allInstruments => {
             const activeInstruments: Instrument[] = [];
             // Add interviewing link and date of instrument to array objects
             await Promise.all(allInstruments.map(async function (instrument: Instrument) {

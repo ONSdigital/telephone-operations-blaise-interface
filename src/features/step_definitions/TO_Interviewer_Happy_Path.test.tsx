@@ -15,7 +15,7 @@ import {
 } from "./API_Mock_Objects";
 // App components
 import App from "../../App";
-import { Survey } from "../../../interfaces";
+import { Survey } from "../../../rest_api";
 
 // Load in feature details from .feature file
 const feature = loadFeature(

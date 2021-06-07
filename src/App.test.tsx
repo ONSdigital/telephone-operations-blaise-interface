@@ -6,7 +6,7 @@ import flushPromises from "./tests/utils";
 import { act } from "react-dom/test-utils";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
-import { Survey } from "../interfaces";
+import { Survey } from "../rest_api";
 
 const surveyListReturned: Survey[] = [
     {

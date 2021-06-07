@@ -10,7 +10,7 @@ let request = supertest(app);
 
 describe("Given the API returns 2 instruments with only one that is active", () => {
     beforeAll(() => {
-        BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
+        BlaiseRestApi.prototype.getAllInstrumentsWithCatiData.mockImplementation(async () => {
             return apiInstrumentList;
         });
         BlaiseRestApi.prototype.getLiveDate.mockImplementation(async () => {
@@ -71,7 +71,7 @@ describe("Given the API returns 2 instruments with only one that is active", () 
 
 describe("Given the API returns 2 active instruments for the survey OPN", () => {
     beforeAll(() => {
-        BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
+        BlaiseRestApi.prototype.getAllInstrumentsWithCatiData.mockImplementation(async () => {
             return apiInstrumentList;
         });
         BlaiseRestApi.prototype.getLiveDate.mockImplementation(async () => {
@@ -144,7 +144,7 @@ describe("Given the API returns 2 active instruments for the survey OPN", () => 
 
 describe("Given the API returns 2 active instruments for 2 separate surveys ", () => {
     beforeAll(() => {
-        BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
+        BlaiseRestApi.prototype.getAllInstrumentsWithCatiData.mockImplementation(async () => {
             return apiInstrumentList;
         });
         BlaiseRestApi.prototype.getLiveDate.mockImplementation(async () => {
@@ -222,7 +222,7 @@ describe("Given the API returns 2 active instruments for 2 separate surveys ", (
 
 describe("Get list of instruments endpoint fails", () => {
     beforeAll(() => {
-        BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
+        BlaiseRestApi.prototype.getAllInstrumentsWithCatiData.mockImplementation(async () => {
             throw "(Network Error)";
         });
         BlaiseRestApi.prototype.getLiveDate.mockImplementation(async () => {
@@ -276,7 +276,7 @@ defineFeature(feature, test => {
                 }
             ];
 
-            BlaiseRestApi.prototype.getInstruments.mockImplementation(async () => {
+            BlaiseRestApi.prototype.getAllInstrumentsWithCatiData.mockImplementation(async () => {
                 return apiInstrumentList;
             });
             BlaiseRestApi.prototype.getLiveDate.mockImplementation(async () => {

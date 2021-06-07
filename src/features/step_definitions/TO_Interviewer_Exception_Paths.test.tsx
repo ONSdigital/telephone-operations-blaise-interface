@@ -1,5 +1,5 @@
 import { defineFeature, loadFeature } from "jest-cucumber";
-import { Survey } from "../../../interfaces";
+import { Survey } from "../../../rest_api";
 import { createMemoryHistory } from "history";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Router } from "react-router";
