@@ -43,6 +43,185 @@ describe("BlaiseApiRest", () => {
     });
   });
 
+
+  describe("getInstrumentsWithCatiData", () => {
+    const apiInstrumentList = [
+      {
+        activeToday: true,
+        expired: false,
+        installDate: "2020-12-11T11:53:55.5612856+00:00",
+        name: "OPN2007T",
+        serverParkName: "LocalDevelopment"
+      },
+      {
+        activeToday: false,
+        expired: false,
+        installDate: "2020-12-11T11:53:55.5612856+00:00",
+        name: "OPN2004A",
+        serverParkName: "LocalDevelopment"
+      }
+    ];
+    const serverpark = "test";
+
+    beforeEach(() => {
+      mock.onGet(`http://${process.env.BLAISE_API_URL}/api/v1/cati/serverparks/${serverpark}/instruments`).reply(200,
+        apiInstrumentList,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("returns a list of all instruments including CATI data within a serverpark", async done => {
+      let instruments = await blaiseApiRest.getInstrumentsWithCatiData(serverpark);
+
+      expect(instruments).toEqual(apiInstrumentList);
+      done();
+    });
+  });
+
+  describe("getInstrumentWithCatiData", () => {
+    const apiInstrument = {
+      activeToday: false,
+      expired: false,
+      installDate: "2020-12-11T11:53:55.5612856+00:00",
+      name: "OPN2004A",
+      serverParkName: "LocalDevelopment"
+    };
+    const serverpark = "test";
+
+    beforeEach(() => {
+      mock.onGet(`http://${process.env.BLAISE_API_URL}/api/v1/cati/serverparks/${serverpark}/instruments/${apiInstrument.name}`).reply(200,
+        apiInstrument,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("returns an instrument including CATI data", async done => {
+      let instrument = await blaiseApiRest.getInstrumentWithCatiData(serverpark, apiInstrument.name);
+
+      expect(instrument).toEqual(apiInstrument);
+      done();
+    });
+  });
+
+  describe("getInstruments", () => {
+    const apiInstrumentList = [
+      {
+        expired: false,
+        installDate: "2020-12-11T11:53:55.5612856+00:00",
+        name: "OPN2007T",
+        serverParkName: "LocalDevelopment"
+      },
+      {
+        expired: false,
+        installDate: "2020-12-11T11:53:55.5612856+00:00",
+        name: "OPN2004A",
+        serverParkName: "LocalDevelopment"
+      }
+    ];
+    const serverpark = "test";
+
+    beforeEach(() => {
+      mock.onGet(`http://${process.env.BLAISE_API_URL}/api/v1/serverparks/${serverpark}/instruments`).reply(200,
+        apiInstrumentList,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("returns a list of instruments in a serverpark", async done => {
+      let instruments = await blaiseApiRest.getInstruments(serverpark);
+
+      expect(instruments).toEqual(apiInstrumentList);
+      done();
+    });
+  });
+
+  describe("getInstrument", () => {
+    const apiInstrument = {
+      expired: false,
+      installDate: "2020-12-11T11:53:55.5612856+00:00",
+      name: "OPN2004A",
+      serverParkName: "LocalDevelopment"
+    };
+    const serverpark = "test";
+
+    beforeEach(() => {
+      mock.onGet(`http://${process.env.BLAISE_API_URL}/api/v1/serverparks/${serverpark}/instruments/${apiInstrument.name}`).reply(200,
+        apiInstrument,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("returns an instrument", async done => {
+      let instrument = await blaiseApiRest.getInstrument(serverpark, apiInstrument.name);
+
+      expect(instrument).toEqual(apiInstrument);
+      done();
+    });
+  });
+
+  describe("installInstrument", () => {
+    const installInstrument = {
+      instrumentName: "OPN2004A",
+      instrumentFile: "OPN2004A.bpkg",
+      bucketPath: "/"
+    };
+    const serverpark = "test";
+    const apiInstallInstrumentResponse = {
+      instrumentFile: "OPN2004A.bpkg"
+    };
+
+    beforeEach(() => {
+      mock.onPost(`http://${process.env.BLAISE_API_URL}/api/v1/serverparks/${serverpark}/instruments`).reply(201,
+        apiInstallInstrumentResponse,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("installs an instrument and returns the instrument file", async done => {
+      let instrument = await blaiseApiRest.installInstrument(serverpark, installInstrument);
+
+      expect(instrument).toEqual(apiInstallInstrumentResponse);
+      done();
+    });
+  });
+
+  describe("deleteInstrument", () => {
+    const serverpark = "test";
+    const instrumentName = "OPN2004A";
+
+    beforeEach(() => {
+      mock.onDelete(`http://${process.env.BLAISE_API_URL}/api/v1/serverparks/${serverpark}/instruments/${instrumentName}?name=${instrumentName}`).reply(204,
+        null,
+      );
+    });
+
+    afterEach(() => {
+      mock.reset();
+    });
+
+    it("deletes an instrument", async done => {
+      let instrument = await blaiseApiRest.deleteInstrument(serverpark, instrumentName);
+
+      expect(instrument).toBeNull();
+      done();
+    });
+  });
+
   describe("getLiveDate", () => {
     let liveDate = null;
 

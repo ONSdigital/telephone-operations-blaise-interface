@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { Instrument, Diagnostic, InstallInstrument, Survey } from "./interfaces";
+import { Instrument, Diagnostic, InstallInstrument, InstallInstrumentResponse, Survey } from "./interfaces";
 
 class BlaiseRestApi {
   blaise_api_url: string;
@@ -20,14 +20,22 @@ class BlaiseRestApi {
   }
 
   async getInstrumentWithCatiData(serverpark: string, instrumentName: string): Promise<Instrument> {
-    return this.get(`/api/v1/cati/serverparks/${serverpark}instruments/${instrumentName}`);
+    return this.get(`/api/v1/cati/serverparks/${serverpark}/instruments/${instrumentName}`);
   }
 
-  async installInstrument(serverpark: string, instrument: Instrument): Promise<Instrument> {
+  async getInstruments(serverpark: string): Promise<Instrument[]> {
+    return this.get(`/api/v1/serverparks/${serverpark}/instruments`);
+  }
+
+  async getInstrument(serverpark: string, instrumentName: string): Promise<Instrument> {
+    return this.get(`/api/v1/serverparks/${serverpark}/instruments/${instrumentName}`);
+  }
+
+  async installInstrument(serverpark: string, instrument: InstallInstrument): Promise<InstallInstrumentResponse> {
     return this.post(`/api/v1/serverparks/${serverpark}/instruments`, instrument);
   }
 
-  async deleteInstrument(serverpark: string, instrumentName: string): Promise<string> {
+  async deleteInstrument(serverpark: string, instrumentName: string): Promise<null> {
     return this.delete(`/api/v1/serverparks/${serverpark}/instruments/${instrumentName}?name=${instrumentName}`);
   }
 
@@ -43,28 +51,32 @@ class BlaiseRestApi {
     return this.get("/api/v1/health/diagnosis");
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async get(url: string): Promise<any> {
+  private url(url: string): string {
     if (!url.startsWith("/")) {
       url = `/${url}`;
     }
-    const response = await this.httpClient.get(`${this.blaise_api_url}${url}`);
+    return url;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async get(url: string): Promise<any> {
+    const response = await this.httpClient.get(`${this.blaise_api_url}${this.url(url)}`);
     return response.data;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   private async post(url: string, data: any): Promise<any> {
-    const response = await this.httpClient.post(`${this.blaise_api_url}${url}`, data);
+    const response = await this.httpClient.post(`${this.blaise_api_url}${this.url(url)}`, data);
     return response.data;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async delete(url: string): Promise<any> {
-    const response = await this.httpClient.delete(`${this.blaise_api_url}${url}`);
+    const response = await this.httpClient.delete(`${this.blaise_api_url}${this.url(url)}`);
     return response.data;
   }
 }
 
 export default BlaiseRestApi;
 
-export type { Instrument, InstallInstrument, Diagnostic, Survey };
+export type { Instrument, InstallInstrument, InstallInstrumentResponse, Diagnostic, Survey };

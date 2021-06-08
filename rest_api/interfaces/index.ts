@@ -20,6 +20,10 @@ interface InstallInstrument {
     bucketPath: string
 }
 
+interface InstallInstrumentResponse {
+    instrumentFile: string
+}
+
 interface Diagnostic {
     "health check type": string
     status: string
@@ -31,4 +35,4 @@ interface Survey {
 }
 
 
-export type { Instrument, InstallInstrument, Diagnostic, Survey };
+export type { Instrument, InstallInstrument, InstallInstrumentResponse, Diagnostic, Survey };
