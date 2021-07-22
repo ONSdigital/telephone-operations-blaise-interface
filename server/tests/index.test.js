@@ -9,7 +9,7 @@ describe("Test Heath Endpoint", () => {
         const response = await request.get("/tobi-ui/version/health");
 
         expect(response.statusCode).toEqual(200);
-        expect(response.body).toStrictEqual({status: 200});
+        expect(response.body).toStrictEqual({healthy: true});
         done();
     });
 });
