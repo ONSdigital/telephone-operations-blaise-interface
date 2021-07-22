@@ -37,7 +37,7 @@ server.use(
 server.use("/api", InstrumentRouter(BLAISE_API_URL, VM_EXTERNAL_WEB_URL, BIMS_CLIENT_ID, BIMS_API_URL));
 
 // Health Check endpoint
-server.get("tobi-ui/*/health", async function (req: Request, res: Response) {
+server.get("tobi-ui/:version/health", async function (req: Request, res: Response) {
     console.log("Heath Check endpoint called");
     res.status(200).json({healthy: true});
 });
