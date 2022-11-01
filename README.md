@@ -50,14 +50,16 @@ Create a new .env file and add the following variables.
 | VM_EXTERNAL_CLIENT_URL | External link to connect to Blaise remotely through Blaise Server Manager.                                                                                                                                                                                                        | tel-web-server.uk    |
 | BLAISE_API_URL         | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to.                                                                                                                                                                     | localhost:90         |
 | BIMS_API_URL           | Url that the [Blaise Information Metadata Services](https://github.com/ONSdigital/blaise-instrument-metadata-service) is running on to send calls to.                                                                                                                             | https://bims.com     |
+| BIMS_CLIENT_ID           | Client ID to authenticate with BIMS - navigate to the GCP console, search for Identity-Aware Proxy, click the three dots on right of the service and select OAuth. Client Id will be on the right.                                                                                                                             | https://bims.com     |
 
 The `.env` file should be setup as below
 
 ```.env
-VM_EXTERNAL_WEB_URL='tel-client-server.uk'
-VM_EXTERNAL_CLIENT_URL='tel-web-server.uk'
-BLAISE_API_URL='localhost:90'
-BIMS_API_URL='https://bims-url'
+VM_EXTERNAL_WEB_URL=tel-client-server.uk
+VM_EXTERNAL_CLIENT_URL=tel-web-server.uk
+BLAISE_API_URL=localhost:90
+BIMS_API_URL=https://bims-url
+BIMS_CLIENT_ID=12345.apps.googleusercontent.com
 ```
 
 Install required modules
@@ -80,14 +82,7 @@ The following run commands are available, these are all setup in the `package.js
 
 ##### Simple setup for local development
 
-Setup express project that handles the requests to the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest).
-By default, will be running on PORT 5000.
-
-```shell script
-yarn start-server
-```
-
-Next to make sure the React project make requests the express server make sure the proxy option is set to the right port
+To ensure the React project makes requests to the express server, set the proxy option to the right port
 in the 'package.json'
 
 ```.json
@@ -98,14 +93,7 @@ Run the React project for local development. By default, this will be running
 on [http://localhost:3000/](http://localhost:3000/)
 
 ```shell script
-yarn start-react
-```
-
-To test express sever serving the React project, you need to compile the React project, then you can see it running
-at [http://localhost:5000/](http://localhost:5000/)
-
-```shell script
-yarn build-react
+yarn dev
 ```
 
 ### Tests
