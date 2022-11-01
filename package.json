@@ -9,7 +9,8 @@
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
     "test": "jest --coverage --watchAll=false",
-    "gcp-build": "react-scripts build && tsc --project tsconfig.server.json"
+    "gcp-build": "react-scripts build && tsc --project tsconfig.server.json",
+    "dev": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start-react\""
   },
   "proxy": "http://localhost:5000",
   "keywords": [],
