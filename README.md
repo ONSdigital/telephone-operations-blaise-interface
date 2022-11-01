@@ -30,7 +30,7 @@ can [create an IAP tunnel](https://cloud.google.com/sdk/gcloud/reference/compute
 Instance running the rest API in a sandbox.
 
 ```shell
-gcloud compute start-iap-tunnel restapi 90 --local-host-port=localhost:90 --zone europe-west2-a
+gcloud compute start-iap-tunnel restapi-1 80 --local-host-port=localhost:8011
 ```
 
 #### Setup locally steps
