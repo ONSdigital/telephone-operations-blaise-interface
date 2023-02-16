@@ -51,7 +51,7 @@ Create a new .env file and add the following variables.
 | BLAISE_API_URL         | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to.                                                                                                                                                                     | localhost:90         |
 | BIMS_API_URL           | Url that the [Blaise Information Metadata Services](https://github.com/ONSdigital/blaise-instrument-metadata-service) is running on to send calls to.                                                                                                                             | https://bims.com     |
 
-The `.env` file should be setup as below
+The `.env` file should be setup as below 
 
 ```.env
 VM_EXTERNAL_WEB_URL='tel-client-server.uk'
