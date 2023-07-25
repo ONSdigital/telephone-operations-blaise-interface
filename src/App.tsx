@@ -59,6 +59,7 @@ function App(): ReactElement {
                             throw "Json response is not a list";
                         }
                         console.log("Retrieved instrument list, " + json.length + " items/s");
+                        console.log("And I'm doing something else, functionally, to trigger deploy changes to a sandbox");
                         isDevEnv() && console.log(json);
                         setSurveys(json);
                         setListError({error: false, message: ""});

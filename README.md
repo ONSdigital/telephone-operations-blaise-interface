@@ -129,5 +129,3 @@ gcloud builds submit --substitutions=_PROJECT_ID=ons-blaise-v2-dev-matt-54,_VM_I
 ```
 
 Copyright (c) 2021 Crown Copyright (Government Digital Service)
-
-# Here are some updates to the README to trigger deployment but should definitely not be promoted to main :eyes::confused_el: 
