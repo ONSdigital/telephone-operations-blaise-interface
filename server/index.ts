@@ -1,12 +1,7 @@
 import BlaiseApiClient from "blaise-api-node-client";
 import nodeServer from "./server";
-import * as profiler from "@google-cloud/profiler";
 import { getEnvironmentVariables } from "./Config";
 import dotenv from "dotenv";
-
-profiler.start({ logLevel: 4 }).catch((err: unknown) => {
-    console.log(`Failed to start profiler: ${err}`);
-});
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
