@@ -7,3 +7,5 @@
 /coverage/
 /yarn-error.log
 /.eslintcache
+.yarn/cache/
+.yarn/*.gz

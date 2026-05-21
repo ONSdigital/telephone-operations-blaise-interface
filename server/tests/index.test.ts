@@ -1,3 +1,4 @@
+import { TextDecoder, TextEncoder } from "util";
 import supertest from "supertest";
 import { IMock, Mock} from "typemoq";
 import BlaiseApiClient from "blaise-api-node-client";
