@@ -14,7 +14,7 @@ import {
 } from "./API_Mock_Objects";
 // App components
 import App from "../../App";
-import Survey from "blaise-api-node-client";
+import { Survey } from "blaise-api-node-client";
 
 // Load in feature details from .feature file
 const feature = loadFeature(

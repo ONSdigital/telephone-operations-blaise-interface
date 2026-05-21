@@ -31,7 +31,7 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "axios": "^1.16.1",
-    "blaise-api-node-client": "https://github.com/ONSdigital/blaise-api-node-client",
+    "blaise-api-node-client": "git+https://github.com/ONSdigital/blaise-api-node-client#2.0.2",
     "blaise-design-system-react-components": "git+https://github.com/ONSdigital/blaise-design-system-react-components#0.14.1",
     "concurrently": "^9.2.1",
     "dotenv": "^17.4.2",
