@@ -36,7 +36,6 @@ defineFeature(feature, test => {
     afterEach(() => {
         jest.clearAllMocks();
         cleanup();
-        jest.resetModules();
     });
 
     beforeEach(() => {
