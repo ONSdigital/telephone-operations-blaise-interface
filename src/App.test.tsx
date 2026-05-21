@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import flushPromises from "./tests/utils";
 import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
-import { Survey } from "blaise-api-node-client";
+import Survey from "blaise-api-node-client";
 import App from "./App";
 
 const surveyListReturned: Survey[] = [
