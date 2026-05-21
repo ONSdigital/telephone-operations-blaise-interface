@@ -110,7 +110,7 @@ describe("QuestionnaireRouter", () => {
             ...questionnaire,
             fieldPeriod: "November 2022",
             link: `https://vm.com/${questionnaire.name}?LayoutSet=CATI-Interviewer_Large`,
-            surveyTLA: "OPN",
+            surveyTla: "OPN",
         };
 
         blaiseApiMock.setup((api) => api.getAllQuestionnairesWithCatiData()).returns(async () => [questionnaire]);
@@ -173,7 +173,7 @@ describe("QuestionnaireRouter", () => {
             ...questionnaire,
             fieldPeriod: "November 2022",
             link: `https://vm.com/${questionnaire.name}?LayoutSet=CATI-Interviewer_Large`,
-            surveyTLA: "OPN",
+            surveyTla: "OPN",
             activeToday: true
         };
 
@@ -215,7 +215,7 @@ describe("QuestionnaireRouter", () => {
             ...questionnaire,
             fieldPeriod: "November 2022",
             link: `https://vm.com/${questionnaire.name}?LayoutSet=CATI-Interviewer_Large`,
-            surveyTLA: "OPN",
+            surveyTla: "OPN",
             activeToday: true
         };
 
@@ -341,7 +341,7 @@ describe("QuestionnaireRouter", () => {
             ...questionnaire,
             fieldPeriod: "November 2022",
             link: `https://vm.com/${questionnaire.name}?LayoutSet=CATI-Interviewer_Large`,
-            surveyTLA: "OPN",
+            surveyTla: "OPN",
             activeToday: true
         };
 
@@ -424,7 +424,7 @@ describe("QuestionnaireRouter", () => {
                     link: "https://vm.com/XXXXX05?LayoutSet=CATI-Interviewer_Large",
                     name: "XXXXX05",
                     serverParkName: "example-park",
-                    surveyTLA: "XXX",
+                    surveyTla: "XXX",
                 }],
                 survey: "XXX"
             }

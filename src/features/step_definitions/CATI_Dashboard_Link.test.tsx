@@ -4,11 +4,11 @@ import {cleanup, render, screen, waitFor} from "@testing-library/react";
 import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
 import flushPromises from "../../tests/utils";
+import {Survey} from "../../types/Survey";
 
 
 import App from "../../App";
 import {survey_list_with_OPN_and_LMS_with_one_active_instrument_each} from "./API_Mock_Objects";
-import {Survey} from "blaise-api-node-client";
 
 const feature = loadFeature(
     "./src/features/CATI_Dashboard_Link.feature",

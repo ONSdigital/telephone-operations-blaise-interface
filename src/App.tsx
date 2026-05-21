@@ -4,9 +4,9 @@ import { isDevEnv, isTrainingEnv } from "./Functions";
 import { Routes, Route } from "react-router-dom";
 import InstrumentList from "./Components/InstrumentList";
 import SurveyList from "./Components/SurveyList";
-import { Survey } from "blaise-api-node-client";
 import { ErrorBoundary } from "./Components/ErrorHandling/ErrorBoundary";
 import { Footer, Header, ONSErrorPanel, ExternalLink } from "blaise-design-system-react-components";
+import { Survey } from "./types/Survey";
 
 interface listError {
     error: boolean,

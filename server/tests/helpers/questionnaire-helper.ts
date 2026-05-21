@@ -22,7 +22,7 @@ export class QuestionnaireHelper {
                     link: link,
                     name: name,
                     serverParkName: "LocalDevelopment",
-                    "surveyTLA": survey
+                    surveyTla: survey
                 };
 
         return questionnaire;
