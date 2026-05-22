@@ -116,7 +116,7 @@ export default function QuestionnaireRouter(
         } catch(error) {
             log.error("Failed to retrieve instrument list");
             log.error(error);
-            res.status(500).json(error);
+            res.status(500).json({ message: "Failed to retrieve instrument list" });
         }
     });
 
