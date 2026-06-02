@@ -38,7 +38,7 @@ export default function nodeServer(environmentVariables: EnvironmentVariables, b
         res.status(200).json({ healthy: true });
     });
 
-    server.get("*", function (req: Request, res: Response) {
+    server.get(/.*/, function (req: Request, res: Response) {
         const clientUrl = environmentVariables.VM_EXTERNAL_CLIENT_URL;
         const dashboardUrl = environmentVariables.CATI_DASHBOARD_URL;
         res.render("index.html", {

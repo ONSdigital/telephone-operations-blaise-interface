@@ -1,11 +1,6 @@
-import pino from "pino-http";
-module.exports = pino({});
-
-import { P } from "pino";
-
 export interface Logger {
-    debug: P.LogFn;
-    info: P.LogFn;
-    warn: P.LogFn;
-    error: P.LogFn;
+    debug: (...args: unknown[]) => void;
+    info: (...args: unknown[]) => void;
+    warn: (...args: unknown[]) => void;
+    error: (...args: unknown[]) => void;
 }

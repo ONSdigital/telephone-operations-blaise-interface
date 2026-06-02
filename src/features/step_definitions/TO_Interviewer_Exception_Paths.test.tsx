@@ -1,11 +1,11 @@
 import { defineFeature, loadFeature } from "jest-cucumber";
-import { Survey } from "blaise-api-node-client";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "../../App";
 import { act } from "react";
 import flushPromises from "../../tests/utils";
 import React from "react";
+import { Survey } from "../../types/Survey";
 
 const feature = loadFeature(
     "./src/features/TO_Interviewer_Exception_Paths.feature",
