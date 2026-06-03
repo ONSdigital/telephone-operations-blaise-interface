@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import BlaiseApiClient, { Questionnaire , Survey } from "blaise-api-node-client";
+import BlaiseApiClient, { Questionnaire } from "blaise-api-node-client";
 import axios, { AxiosResponse } from "axios";
 import _ from "lodash";
 import { fieldPeriodToText } from "../Functions";
@@ -7,9 +7,14 @@ import AuthProvider from "../AuthProvider";
 import { Logger } from "../Logger";
 import { EnvironmentVariables } from "../Config";
 
-function groupBySurvey(activeInstruments: Questionnaire[]) {
+interface SurveyGroup {
+    survey: string;
+    questionnaires: Questionnaire[];
+}
+
+function groupBySurvey(activeInstruments: Questionnaire[]): SurveyGroup[] {
     return _.chain(activeInstruments)
-        .groupBy("surveyTLA")
+        .groupBy("surveyTla")
         .map((value: Questionnaire[], key: string) => ({ survey: key, questionnaires: value }))
         .value();
 }
@@ -55,7 +60,7 @@ export default function QuestionnaireRouter(
             
             return {
                 ...questionnaire,
-                surveyTLA: questionnaire.name.substr(0, 3),
+                surveyTla: questionnaire.name.substring(0, 3),
                 link: `https://${ vmExternalWebUrl }/${ questionnaire.name }?LayoutSet=CATI-Interviewer_Large`,
                 fieldPeriod: fieldPeriodToText(questionnaire.name),
             };
@@ -98,7 +103,7 @@ export default function QuestionnaireRouter(
             return await blaiseApiClient.getAllQuestionnairesWithCatiData();
         }
 
-        async function getSurveys(): Promise<Survey[]> {
+        async function getSurveys(): Promise<SurveyGroup[]> {
             const allQuestionnaires = await getAllQuestionnaires();
             console.log("gotAll Questionnaires"+allQuestionnaires);
             const activeQuestionnaires = await getActiveTodayQuestionnaires(allQuestionnaires);
@@ -111,7 +116,7 @@ export default function QuestionnaireRouter(
         } catch(error) {
             log.error("Failed to retrieve instrument list");
             log.error(error);
-            res.status(500).json(error);
+            res.status(500).json({ message: "Failed to retrieve instrument list" });
         }
     });
 

@@ -34,7 +34,7 @@ it("We can get back Auth headers with a token", async () => {
     const authHeader = await googleAuthProvider.getAuthHeader();
 
     expect(authHeader).toEqual({Authorization: `Bearer ${uniqueToken}`});
-    expect(mockedGetGoogleAuthToken).toBeCalledWith("BIMS_CLIENT_ID");
+    expect(mockedGetGoogleAuthToken).toHaveBeenCalledWith("BIMS_CLIENT_ID");
 });
 
 

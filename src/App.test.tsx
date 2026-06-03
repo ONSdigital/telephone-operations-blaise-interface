@@ -4,8 +4,8 @@ import "@testing-library/jest-dom";
 import flushPromises from "./tests/utils";
 import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
-import { Survey } from "blaise-api-node-client";
 import App from "./App";
+import { Survey } from "./types/Survey";
 
 const surveyListReturned: Survey[] = [
     {
@@ -18,7 +18,7 @@ const surveyListReturned: Survey[] = [
                 link: "https://external-web-url/OPN2007T?LayoutSet=CATI-Interviewer_Large",
                 name: "OPN2007T",
                 serverParkName: "LocalDevelopment",
-                "surveyTLA": "OPN"
+                surveyTla: "OPN"
             }
         ]
     }
