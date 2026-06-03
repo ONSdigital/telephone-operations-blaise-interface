@@ -1,7 +1,8 @@
 import React, {ReactElement} from "react";
 import {Link, useParams} from "react-router-dom";
-import { Questionnaire ,Survey } from "blaise-api-node-client";
+import { Questionnaire } from "blaise-api-node-client";
 import {ExternalLink, ONSPanel} from "blaise-design-system-react-components";
+import { Survey } from "../types/Survey";
 
 
 interface listError {
