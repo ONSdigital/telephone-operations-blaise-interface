@@ -1,139 +1,179 @@
-import express, { Request, Response, Router } from "express";
-import BlaiseApiClient, { Questionnaire } from "blaise-api-node-client";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import { type BlaiseApiClient } from "blaise-api-node-client";
+import express from "express";
 import _ from "lodash";
-import { fieldPeriodToText } from "../Functions";
-import AuthProvider from "../AuthProvider";
-import { Logger } from "../Logger";
-import { EnvironmentVariables } from "../Config";
+
+import AuthProvider from "../AuthProvider/index.js";
+import { fieldPeriodToText } from "../Functions.js";
+
+import type { EnvironmentVariables } from "../Config.js";
+import type { Logger } from "../Logger.js";
+import type { AxiosResponse } from "axios";
+import type { Questionnaire } from "blaise-api-node-client";
+import type { Request, Response, Router } from "express";
 
 interface SurveyGroup {
-    survey: string;
-    questionnaires: Questionnaire[];
+  survey: string;
+  questionnaires: Questionnaire[];
 }
 
 function groupBySurvey(activeInstruments: Questionnaire[]): SurveyGroup[] {
-    return _.chain(activeInstruments)
-        .groupBy("surveyTla")
-        .map((value: Questionnaire[], key: string) => ({ survey: key, questionnaires: value }))
-        .value();
+  return _.chain(activeInstruments)
+    .groupBy("surveyTla")
+    .map((value: Questionnaire[], key: string) => ({ survey: key, questionnaires: value }))
+    .value();
 }
 
 export default function QuestionnaireRouter(
-    environmentVariables: EnvironmentVariables,
-    blaiseApiClient: BlaiseApiClient
+  environmentVariables: EnvironmentVariables,
+  blaiseApiClient: BlaiseApiClient,
 ): Router {
-    "use strict";
-    const questionnaireRouter = express.Router();
+  "use strict";
+  const questionnaireRouter = express.Router();
 
-    questionnaireRouter.get("/questionnaires", async (req: Request, res: Response) => {
-        const log: Logger = req.log;
-        const bimsClientId = environmentVariables.BIMS_CLIENT_ID;
-        const bimsApiUrl = environmentVariables.BIMS_API_URL;
-        const canUseBims =
-            bimsClientId.trim() !== "" &&
-            bimsApiUrl.trim() !== "" &&
-            bimsClientId !== "ENV_VAR_NOT_SET" &&
-            bimsApiUrl !== "ENV_VAR_NOT_SET";
+  questionnaireRouter.get("/questionnaires", async (req: Request, res: Response) => {
+    const log: Logger = req.log;
+    const bimsClientId = environmentVariables.BIMS_CLIENT_ID;
+    const bimsApiUrl = environmentVariables.BIMS_API_URL;
+    const canUseBims =
+      bimsClientId.trim() !== "" &&
+      bimsApiUrl.trim() !== "" &&
+      bimsClientId !== "ENV_VAR_NOT_SET" &&
+      bimsApiUrl !== "ENV_VAR_NOT_SET";
 
-        const authProvider: AuthProvider = new AuthProvider(bimsClientId, log);
+    const authProvider: AuthProvider = new AuthProvider(bimsClientId, log);
 
-        async function getToStartDate(questionnaire: Questionnaire) {
-            if (!canUseBims) {
-                log.debug("Skipping BIMS to-start-date lookup due to missing BIMS env vars");
-                return null;
-            }
+    async function getToStartDate(questionnaire: Questionnaire) {
+      if (!canUseBims) {
+        log.debug("Skipping BIMS to-start-date lookup due to missing BIMS env vars");
 
-            try {
-                const authHeader = await authProvider.getAuthHeader();
-                const response: AxiosResponse = await axios.get(
-                    `${bimsApiUrl}/tostartdate/${questionnaire.name}`,
-                    {
-                        headers: authHeader,
-                        validateStatus: function (status) { return status >= 200; }
-                    });
+        return null;
+      }
 
-                const logMessage = `The BIMS request responded with a status of ${ response.status } and a body of ${ response.data }`;
+      try {
+        const authHeader = await authProvider.getAuthHeader();
+        const response: AxiosResponse = await axios.get(
+          `${bimsApiUrl}/tostartdate/${questionnaire.name}`,
+          {
+            headers: authHeader,
+            validateStatus: function (status) {
+              return status >= 200;
+            },
+          },
+        );
 
-                if (response.status !== 200) {
-                    log.error(logMessage);
-                    return null;
-                }
+        const logMessage = `The BIMS request responded with a status of ${response.status} and a body of ${response.data}`;
 
-                log.debug(logMessage);
+        if (response.status !== 200) {
+          log.error(logMessage);
 
-                return response.headers["content-type"] == "application/json" ? response.data.tostartdate : null;
-            } catch (error) {
-                log.warn({ questionnaireName: questionnaire.name, error }, "Failed BIMS to-start-date lookup, falling back to Blaise activeToday");
-                return null;
-            }
+          return null;
         }
 
-        
-        function addExtraQuestionnaireFields(questionnaire: Questionnaire): Questionnaire {
-            const vmExternalWebUrl = environmentVariables.VM_EXTERNAL_WEB_URL;
-            
-            return {
-                ...questionnaire,
-                surveyTla: questionnaire.name.substring(0, 3),
-                link: `https://${ vmExternalWebUrl }/${ questionnaire.name }?LayoutSet=CATI-Interviewer_Large`,
-                fieldPeriod: fieldPeriodToText(questionnaire.name),
-            };
-        }
-        
+        log.debug(logMessage);
 
-        async function activeToday(questionnaire: Questionnaire) {
-            const telOpsStartDate = await getToStartDate(questionnaire);
-          
-            if (telOpsStartDate == null) {               
-                log.debug(`the instrument ${questionnaire.name} is live for TO (TO start date = Not set) (Active today = ${questionnaire.activeToday})`);
-                return questionnaire.activeToday;
-            }
+        return response.headers["content-type"] == "application/json"
+          ? response.data.tostartdate
+          : null;
+      } catch (error) {
+        log.warn(
+          { questionnaireName: questionnaire.name, error },
+          "Failed BIMS to-start-date lookup, falling back to Blaise activeToday",
+        );
 
-            if (Date.parse(telOpsStartDate) <= Date.now()) {
-                log.debug(`the instrument ${questionnaire.name} is live for TO (TO start date = ${telOpsStartDate}) (Active today = ${questionnaire.activeToday})`);
-                return questionnaire.activeToday;
-            }
+        return null;
+      }
+    }
 
-            log.debug(`the instrument ${questionnaire.name} is not currently live for TO (TO start date = ${telOpsStartDate}) (Active today = ${questionnaire.activeToday})`);
-            return false;
-        }
+    function addExtraQuestionnaireFields(questionnaire: Questionnaire): Questionnaire {
+      const vmExternalWebUrl = environmentVariables.VM_EXTERNAL_WEB_URL;
 
-        async function getActiveTodayQuestionnaire(questionnaire: Questionnaire): Promise<Questionnaire | null> {
-            const active = await activeToday(questionnaire);
-            log.info(`Active today outputted (${active}) for instrument (${questionnaire.name}) type of (${typeof active})`);
-            
-            return active ? questionnaire : null;
-        }
+      return {
+        ...questionnaire,
+        surveyTla: questionnaire.name.substring(0, 3),
+        link: `https://${vmExternalWebUrl}/${questionnaire.name}?LayoutSet=CATI-Interviewer_Large`,
+        fieldPeriod: fieldPeriodToText(questionnaire.name),
+      };
+    }
 
-        async function getActiveTodayQuestionnaires(allallQuestionnaires: Questionnaire[]): Promise<Questionnaire[]> {
-            const activeQuestionnaires = await Promise.all(allallQuestionnaires.map(getActiveTodayQuestionnaire));
-            const filteredQuestionnaires = activeQuestionnaires.filter((result) => result !== null) as Questionnaire[];
+    async function activeToday(questionnaire: Questionnaire) {
+      const telOpsStartDate = await getToStartDate(questionnaire);
+      // @ts-expect-error - activeToday is returned by the API but not in the type definition
+      const activeTodayValue = questionnaire.activeToday;
 
-            return (filteredQuestionnaires);
-                
-        }
+      if (telOpsStartDate == null) {
+        log.debug(
+          `the instrument ${questionnaire.name} is live for TO (TO start date = Not set) (Active today = ${activeTodayValue})`,
+        );
 
-        async function getAllQuestionnaires(): Promise<Questionnaire[]> {
-            return await blaiseApiClient.getAllQuestionnairesWithCatiData();
-        }
+        return activeTodayValue;
+      }
 
-        async function getSurveys(): Promise<SurveyGroup[]> {
-            const allQuestionnaires = await getAllQuestionnaires();
-            console.log("gotAll Questionnaires"+allQuestionnaires);
-            const activeQuestionnaires = await getActiveTodayQuestionnaires(allQuestionnaires);
-            log.info(`Retrieved active instruments, ${activeQuestionnaires.length} item/s`);
-            return groupBySurvey(activeQuestionnaires.map(addExtraQuestionnaireFields));
-        }
+      if (Date.parse(telOpsStartDate) <= Date.now()) {
+        log.debug(
+          `the instrument ${questionnaire.name} is live for TO (TO start date = ${telOpsStartDate}) (Active today = ${activeTodayValue})`,
+        );
 
-        try {
-            res.json(await getSurveys());
-        } catch(error) {
-            log.error("Failed to retrieve instrument list");
-            log.error(error);
-            res.status(500).json({ message: "Failed to retrieve instrument list" });
-        }
-    });
+        return activeTodayValue;
+      }
 
-    return questionnaireRouter;
+      log.debug(
+        `the instrument ${questionnaire.name} is not currently live for TO (TO start date = ${telOpsStartDate}) (Active today = ${activeTodayValue})`,
+      );
+
+      return false;
+    }
+
+    async function getActiveTodayQuestionnaire(
+      questionnaire: Questionnaire,
+    ): Promise<Questionnaire | null> {
+      const active = await activeToday(questionnaire);
+
+      log.info(
+        `Active today outputted (${active}) for instrument (${questionnaire.name}) type of (${typeof active})`,
+      );
+
+      return active ? questionnaire : null;
+    }
+
+    async function getActiveTodayQuestionnaires(
+      allallQuestionnaires: Questionnaire[],
+    ): Promise<Questionnaire[]> {
+      const activeQuestionnaires = await Promise.all(
+        allallQuestionnaires.map(getActiveTodayQuestionnaire),
+      );
+      const filteredQuestionnaires = activeQuestionnaires.filter(
+        (result) => result !== null,
+      ) as Questionnaire[];
+
+      return filteredQuestionnaires;
+    }
+
+    async function getAllQuestionnaires(): Promise<Questionnaire[]> {
+      const result = await blaiseApiClient.getAllQuestionnairesWithCatiData();
+
+      return Array.isArray(result) ? result : [...result];
+    }
+
+    async function getSurveys(): Promise<SurveyGroup[]> {
+      const allQuestionnaires = await getAllQuestionnaires();
+
+      console.log("gotAll Questionnaires" + allQuestionnaires);
+      const activeQuestionnaires = await getActiveTodayQuestionnaires(allQuestionnaires);
+
+      log.info(`Retrieved active instruments, ${activeQuestionnaires.length} item/s`);
+
+      return groupBySurvey(activeQuestionnaires.map(addExtraQuestionnaireFields));
+    }
+
+    try {
+      res.json(await getSurveys());
+    } catch (error) {
+      log.error("Failed to retrieve instrument list");
+      log.error(error);
+      res.status(500).json({ message: "Failed to retrieve instrument list" });
+    }
+  });
+
+  return questionnaireRouter;
 }

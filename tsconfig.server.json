@@ -1,24 +1,17 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "ignoreDeprecations": "5.0",
-    "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "rootDir": "src/server", 
     "outDir": "build/server",
-    "strict": true,
-    "esModuleInterop": true,   
+    "rootDir": "src/server",
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": true,
+    "target": "ESNext"
   },
+  "exclude": ["node_modules", "server/tests", "server/**/*.test.ts", "**/*.test.ts"],
   "extends": "./tsconfig.base.json",
-  "include": [
-    "src/server"
-  ],
-  "exclude": [
-    "node_modules",
-    "server/tests",
-    "server/**/*.test.ts",
-    "**/*.test.ts"
-  ]
+  "include": ["src/server"]
 }

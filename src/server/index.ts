@@ -1,11 +1,13 @@
 import { BlaiseApiClient } from "blaise-api-node-client";
-import nodeServer from "./server";
-import { getEnvironmentVariables } from "./Config";
 import dotenv from "dotenv";
 
+import { getEnvironmentVariables } from "./Config.js";
+import nodeServer from "./server.js";
+
 if (process.env.NODE_ENV !== "production") {
-    dotenv.config();
+  dotenv.config();
 }
+
 // load the .env variables in the server
 const environmentVariables = getEnvironmentVariables();
 

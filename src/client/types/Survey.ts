@@ -1,6 +1,6 @@
-import { Questionnaire } from "blaise-api-node-client";
+import type { Questionnaire } from "blaise-api-node-client";
 
 export interface Survey {
-    survey: string;
-    questionnaires: Questionnaire[];
+  survey: string;
+  questionnaires: Questionnaire[];
 }

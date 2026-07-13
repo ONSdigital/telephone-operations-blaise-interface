@@ -111,6 +111,22 @@ export default tseslint.config(
     },
   },
 
+  {
+    files: ["**/*.test.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+
+  {
+    files: ["**/*.config.js", "jest.setup.js"],
+    languageOptions: { globals: { ...globals.node } },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "import-x/no-extraneous-dependencies": "off",
+    },
+  },
+
   ...pluginJsonc.configs["flat/recommended-with-jsonc"],
 
   {

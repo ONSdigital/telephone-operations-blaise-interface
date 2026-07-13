@@ -1,9 +1,9 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: "gcr.io/cloud-builders/gcloud"
     id: Generate manifest
-    entrypoint: 'bash'
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         sed "s#_PROJECT_ID#${_PROJECT_ID}#g" appengine_templates/app.yaml.tpl | \
         sed "s#_VM_INTERNAL_URL#${_VM_INTERNAL_URL}#g" | \
@@ -11,11 +11,11 @@ steps:
         sed "s#_VM_EXTERNAL_CLIENT_URL#${_VM_EXTERNAL_CLIENT_URL}#g" | \
         sed "s#_BLAISE_API_URL#${_BLAISE_API_URL}#g" > app.yaml
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: "gcr.io/cloud-builders/gcloud"
     id: Print Output
     entrypoint: /bin/sh
     args:
-      - '-c'
+      - "-c"
       - |
         cat app.yaml
 
@@ -24,11 +24,11 @@ steps:
     args: ["app", "deploy"]
     timeout: "1600s"
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: "gcr.io/cloud-builders/gcloud"
     id: Clean Up Old Versions
-    entrypoint: 'bash'
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         versions=$(gcloud app versions list --service "tobi-ui" --sort-by '~version' --format 'value(VERSION.ID)' --project "${_PROJECT_ID}" | tail -n +11)
 
@@ -48,10 +48,10 @@ steps:
       - |
         python3 -u slack/slack-notify.py;
     env:
-      - 'PROJECT_ID=$PROJECT_ID'
-      - 'BUILD_ID=$BUILD_ID'
-      - 'REPO_NAME=$REPO_NAME'
-      - 'COMMIT_SHA=$COMMIT_SHA'
-      - 'SHORT_SHA=$SHORT_SHA'
-      - 'SLACK_CHANNEL=$_SLACK_CHANNEL'
-      - 'SLACK_WEBHOOK=$_SLACK_WEBHOOK'
+      - "PROJECT_ID=$PROJECT_ID"
+      - "BUILD_ID=$BUILD_ID"
+      - "REPO_NAME=$REPO_NAME"
+      - "COMMIT_SHA=$COMMIT_SHA"
+      - "SHORT_SHA=$SHORT_SHA"
+      - "SLACK_CHANNEL=$_SLACK_CHANNEL"
+      - "SLACK_WEBHOOK=$_SLACK_WEBHOOK"

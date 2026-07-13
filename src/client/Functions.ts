@@ -1,9 +1,10 @@
 function isDevEnv(): boolean {
-    return process.env.NODE_ENV === "development";
+  // Check for development environment via window object since this is client-side code
+  return (window as Window & { __DEV__?: boolean }).__DEV__ === true || import.meta.env.DEV;
 }
 
 function isTrainingEnv(): boolean {
-    return window.location.href.includes("training");
+  return window.location.href.includes("training");
 }
 
-export {isDevEnv, isTrainingEnv};
+export { isDevEnv, isTrainingEnv };

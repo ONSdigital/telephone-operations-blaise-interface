@@ -1,38 +1,31 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "es6"
-    ],
-    "outDir": "build",
-    "sourceMap": true,
-    "rootDir": ".",
     "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "5.0",
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext", "es6"],
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "build",
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5"
   },
-  "include": [
-    "src"
-  ],
   "exclude": [
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/client/setupTests.ts",
     "src/client/features/**",
     "src/client/tests/**"
-  ]
+  ],
+  "include": ["src"]
 }
