@@ -1,28 +1,19 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-    /* Basic Options */
     "ignoreDeprecations": "5.0",
-    "target": "es5",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-    "module": "NodeNext",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+    "target": "es5",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "rootDir": "./server",                    /* Set the common source directory for emitted server files. */
-    "outDir": "./dist",                        /* Redirect output structure to the directory. */
-
-    /* Strict Type-Checking Options */
-    "strict": true,                           /* Enable all strict type-checking options. */
-
-    /* Module Resolution Options */
-
-    "esModuleInterop": true,                  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-
-    /* Advanced Options */
-    "skipLibCheck": true,                     /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
+    "rootDir": "src/server", 
+    "outDir": "build/server",
+    "strict": true,
+    "esModuleInterop": true,   
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
+  "extends": "./tsconfig.base.json",
   "include": [
-    "server"
+    "src/server"
   ],
   "exclude": [
     "node_modules",
