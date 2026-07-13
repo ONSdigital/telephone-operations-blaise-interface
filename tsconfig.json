@@ -31,8 +31,8 @@
   "exclude": [
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
-    "src/setupTests.ts",
-    "src/features/**",
-    "src/tests/**"
+    "src/client/setupTests.ts",
+    "src/client/features/**",
+    "src/client/tests/**"
   ]
 }
