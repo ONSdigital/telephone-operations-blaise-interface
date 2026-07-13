@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
-    "target": "es5",
+    "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "rootDir": "src/server", 
