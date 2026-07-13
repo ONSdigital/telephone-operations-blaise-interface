@@ -30,28 +30,43 @@ export default function QuestionnaireRouter(
         const log: Logger = req.log;
         const bimsClientId = environmentVariables.BIMS_CLIENT_ID;
         const bimsApiUrl = environmentVariables.BIMS_API_URL;
+        const canUseBims =
+            bimsClientId.trim() !== "" &&
+            bimsApiUrl.trim() !== "" &&
+            bimsClientId !== "ENV_VAR_NOT_SET" &&
+            bimsApiUrl !== "ENV_VAR_NOT_SET";
 
         const authProvider: AuthProvider = new AuthProvider(bimsClientId, log);
 
         async function getToStartDate(questionnaire: Questionnaire) {
-            const authHeader = await authProvider.getAuthHeader();
-            const response: AxiosResponse = await axios.get(
-                `${bimsApiUrl}/tostartdate/${questionnaire.name}`,
-                {
-                    headers: authHeader,
-                    validateStatus: function (status) { return status >= 200; }
-                });
-
-            const logMessage = `The BIMS request responded with a status of ${ response.status } and a body of ${ response.data }`;
-
-            if (response.status !== 200) {
-                log.error(logMessage);
+            if (!canUseBims) {
+                log.debug("Skipping BIMS to-start-date lookup due to missing BIMS env vars");
                 return null;
             }
 
-            log.debug(logMessage);
+            try {
+                const authHeader = await authProvider.getAuthHeader();
+                const response: AxiosResponse = await axios.get(
+                    `${bimsApiUrl}/tostartdate/${questionnaire.name}`,
+                    {
+                        headers: authHeader,
+                        validateStatus: function (status) { return status >= 200; }
+                    });
 
-            return response.headers["content-type"] == "application/json" ? response.data.tostartdate : null;
+                const logMessage = `The BIMS request responded with a status of ${ response.status } and a body of ${ response.data }`;
+
+                if (response.status !== 200) {
+                    log.error(logMessage);
+                    return null;
+                }
+
+                log.debug(logMessage);
+
+                return response.headers["content-type"] == "application/json" ? response.data.tostartdate : null;
+            } catch (error) {
+                log.warn({ questionnaireName: questionnaire.name, error }, "Failed BIMS to-start-date lookup, falling back to Blaise activeToday");
+                return null;
+            }
         }
 
         
