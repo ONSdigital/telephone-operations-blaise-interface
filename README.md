@@ -60,7 +60,7 @@ BLAISE_API_URL='http://localhost:5011'
 BIMS_API_URL='https://bims-url'
 ```
 
-Install required modules 
+Install required modules
 
 ```shell script
 yarn
