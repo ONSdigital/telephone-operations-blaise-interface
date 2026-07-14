@@ -4,9 +4,9 @@ import { Route, Routes } from "react-router-dom";
 
 import { DefaultErrorBoundary } from "./Components/ErrorHandling/DefaultErrorBoundary";
 import { ErrorBoundary } from "./Components/ErrorHandling/ErrorBoundary";
-import InstrumentList from "./Components/InstrumentList";
-import SurveyList from "./Components/SurveyList";
 import { isDevEnv, isTrainingEnv } from "./Functions";
+import InstrumentList from "./pages/InstrumentListPage";
+import SurveyList from "./pages/SurveyListPage";
 
 import type { Survey } from "./types/Survey";
 import type { ReactElement } from "react";

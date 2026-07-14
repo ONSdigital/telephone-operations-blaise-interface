@@ -2,7 +2,7 @@ import { ErrorPanel } from "blaise-design-system-react-components";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import type { Survey } from "../types/Survey";
+import type { Survey } from "../../types/Survey";
 import type { ReactElement } from "react";
 
 interface listError {

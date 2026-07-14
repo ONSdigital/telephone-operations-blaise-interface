@@ -2,7 +2,7 @@ import { ErrorPanel, ExternalLink } from "blaise-design-system-react-components"
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-import type { Survey } from "../types/Survey";
+import type { Survey } from "../../types/Survey";
 import type { Questionnaire } from "blaise-api-node-client";
 import type { ReactElement } from "react";
 
