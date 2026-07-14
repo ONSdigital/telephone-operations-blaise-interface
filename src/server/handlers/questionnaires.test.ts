@@ -8,15 +8,15 @@ import { type P } from "pino";
 import supertest from "supertest";
 import { type IMock, Mock } from "typemoq";
 
-import getGoogleAuthToken from "../AuthProvider/GoogleTokenProvider";
 import { type EnvironmentVariables } from "../Config";
+import getGoogleAuthToken from "../helpers/AuthProvider/GoogleTokenProvider";
 import { type Logger } from "../Logger.js";
 
-import QuestionnaireRouter from "./index";
+import QuestionnaireRouter from "./questionnaires";
 
 import type { NextFunction, Request, Response } from "express";
 
-vi.mock("../AuthProvider/GoogleTokenProvider");
+vi.mock("../helpers/AuthProvider/GoogleTokenProvider");
 const blaiseApiMock: IMock<BlaiseApiClient> = Mock.ofType<BlaiseApiClient>();
 
 describe("QuestionnaireRouter", () => {

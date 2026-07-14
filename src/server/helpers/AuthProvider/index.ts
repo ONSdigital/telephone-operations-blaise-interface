@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 import getGoogleAuthToken from "./GoogleTokenProvider.js";
 
-import type { Logger } from "../Logger.js";
+import type { Logger } from "../../Logger.js";
 
 export default class AuthProvider {
   private token: string;

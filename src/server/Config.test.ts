@@ -1,4 +1,4 @@
-import { getEnvironmentVariables } from "../Config";
+import { getEnvironmentVariables } from "./Config";
 
 const originalEnv = process.env;
 

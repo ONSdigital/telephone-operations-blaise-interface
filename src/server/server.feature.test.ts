@@ -9,14 +9,13 @@ import { defineFeature, type DefineStepFunction, loadFeature } from "jest-cucumb
 import supertest from "supertest";
 import { type IMock, Mock } from "typemoq";
 
-import { type EnvironmentVariables } from "../Config";
-import nodeServer from "../server";
-
-import { IsoDateHelper } from "./helpers/iso-date-helper";
-import { QuestionnaireHelper } from "./helpers/questionnaire-helper";
+import { type EnvironmentVariables } from "./Config";
+import nodeServer from "./server";
+import { IsoDateHelper } from "./test-utils/iso-date-helper";
+import { QuestionnaireHelper } from "./test-utils/questionnaire-helper";
 import "jest-extended";
 
-vi.mock("../AuthProvider/GoogleTokenProvider");
+vi.mock("./helpers/AuthProvider/GoogleTokenProvider");
 const blaiseApiMock: IMock<BlaiseApiClient> = Mock.ofType<BlaiseApiClient>();
 
 const environmentVariables: EnvironmentVariables = {

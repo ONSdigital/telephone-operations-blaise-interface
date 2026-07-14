@@ -4,7 +4,7 @@ import getGoogleAuthToken from "./GoogleTokenProvider";
 
 import AuthProvider from "./index";
 
-import type { Logger } from "../Logger.js";
+import type { Logger } from "../../Logger.js";
 
 vi.mock("./GoogleTokenProvider");
 

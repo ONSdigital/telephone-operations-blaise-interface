@@ -11,7 +11,7 @@ import pinoLogger from "pino-http";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import QuestionnaireRouter from "./Questionnaires/index.js";
+import QuestionnaireRouter from "./handlers/questionnaires.js";
 
 import type { EnvironmentVariables } from "./Config.js";
 import type { BlaiseApiClient } from "blaise-api-node-client";

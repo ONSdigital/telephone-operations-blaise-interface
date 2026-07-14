@@ -2,11 +2,11 @@ import { ErrorPanel, ExternalLink, Footer, Header } from "blaise-design-system-r
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { DefaultErrorBoundary } from "./Components/ErrorHandling/DefaultErrorBoundary";
-import { ErrorBoundary } from "./Components/ErrorHandling/ErrorBoundary";
-import { isDevEnv, isTrainingEnv } from "./Functions";
 import InstrumentList from "./pages/InstrumentListPage";
 import SurveyList from "./pages/SurveyListPage";
+import { DefaultErrorBoundary } from "./utils/ErrorHandling/DefaultErrorBoundary";
+import { ErrorBoundary } from "./utils/ErrorHandling/ErrorBoundary";
+import { isDevEnv, isTrainingEnv } from "./utils/Functions";
 
 import type { Survey } from "./types/Survey";
 import type { ReactElement } from "react";

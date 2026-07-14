@@ -1,4 +1,4 @@
-import type { Survey } from "../../types/Survey";
+import type { Survey } from "../types/Survey";
 
 export const survey_list_with_OPN_and_LMS_with_one_active_instrument_each: Survey[] = [
   {

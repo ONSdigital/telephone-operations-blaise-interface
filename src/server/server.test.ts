@@ -2,8 +2,8 @@ import { type BlaiseApiClient } from "blaise-api-node-client";
 import supertest from "supertest";
 import { type IMock, Mock } from "typemoq";
 
-import { type EnvironmentVariables } from "../Config";
-import nodeServer from "../server";
+import { type EnvironmentVariables } from "./Config";
+import nodeServer from "./server";
 
 const blaiseApiMock: IMock<BlaiseApiClient> = Mock.ofType<BlaiseApiClient>();
 const environmentVariables: EnvironmentVariables = {

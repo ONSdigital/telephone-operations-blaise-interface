@@ -3,8 +3,8 @@ import { type BlaiseApiClient } from "blaise-api-node-client";
 import express from "express";
 import _ from "lodash";
 
-import AuthProvider from "../AuthProvider/index.js";
-import { fieldPeriodToText } from "../Functions.js";
+import AuthProvider from "../helpers/AuthProvider/index.js";
+import { fieldPeriodToText } from "../utils/functions.js";
 
 import type { EnvironmentVariables } from "../Config.js";
 import type { Logger } from "../Logger.js";

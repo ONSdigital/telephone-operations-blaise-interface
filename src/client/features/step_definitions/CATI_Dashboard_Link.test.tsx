@@ -6,9 +6,8 @@ import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
 import App from "../../App";
-import flushPromises from "../../tests/utils";
-
-import { survey_list_with_OPN_and_LMS_with_one_active_instrument_each } from "./API_Mock_Objects";
+import flushPromises from "../../test-utils";
+import { survey_list_with_OPN_and_LMS_with_one_active_instrument_each } from "../../test-utils/API_Mock_Objects";
 
 import type { Survey } from "../../types/Survey";
 

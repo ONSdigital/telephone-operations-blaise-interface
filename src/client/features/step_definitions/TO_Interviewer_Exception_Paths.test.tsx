@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
 import App from "../../App";
-import flushPromises from "../../tests/utils";
+import flushPromises from "../../test-utils";
 
 import type { Survey } from "../../types/Survey";
 

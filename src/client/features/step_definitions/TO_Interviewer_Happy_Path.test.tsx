@@ -8,14 +8,13 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, vi } from "vitest";
 
 import App from "../../App";
-import flushPromises from "../../tests/utils";
-
+import flushPromises from "../../test-utils";
 // Mock elements
 import {
   survey_list_with_OPN_and_LMS_with_one_active_instrument_each,
   survey_list_with_OPN_with_three_active_instruments,
   survey_list_with_OPN_with_two_active_instruments,
-} from "./API_Mock_Objects";
+} from "../../test-utils/API_Mock_Objects";
 
 // App components
 
