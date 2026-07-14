@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => {
       "import.meta.env.VITE_VM_EXTERNAL_CLIENT_URL": JSON.stringify(
         env.VITE_VM_EXTERNAL_CLIENT_URL ?? env.VM_EXTERNAL_CLIENT_URL ?? "",
       ),
-      "import.meta.env.VITE_CATI_DASHBOARD_URL": JSON.stringify(
-        env.VITE_CATI_DASHBOARD_URL ?? env.CATI_DASHBOARD_URL ?? "",
+      "import.meta.env.VITE_APP_CATI_DASHBOARD_URL": JSON.stringify(
+        env.VITE_APP_CATI_DASHBOARD_URL ?? env.CATI_DASHBOARD_URL ?? "",
       ),
     },
     build: {

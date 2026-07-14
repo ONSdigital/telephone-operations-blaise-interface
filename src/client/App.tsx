@@ -41,28 +41,36 @@ function App(): ReactElement {
     function retrieveVariables() {
       const runtimeWindow = window as unknown as window;
 
+      // 1. Notice we are using VITE_APP_... to match your .env file
+      // 2. We use the hardcoded fallback strings directly rather than referencing the state variables 
+      //    to avoid React dependency warnings and infinite loops.
       const resolvedClientUrl = isDevEnv()
-        ? import.meta.env.VITE_VM_EXTERNAL_CLIENT_URL ||
+        ? import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
           runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
-          externalClientUrl
+          "External URL should be here"
         : runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
-          import.meta.env.VITE_VM_EXTERNAL_CLIENT_URL ||
-          externalClientUrl;
+          import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
+          "External URL should be here";
 
       const resolvedCatiUrl = isDevEnv()
-        ? import.meta.env.VITE_CATI_DASHBOARD_URL ||
+        ? import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
           runtimeWindow.CATI_DASHBOARD_URL ||
-          externalCATIUrl
+          "/Blaise/CaseInfo"
         : runtimeWindow.CATI_DASHBOARD_URL ||
-          import.meta.env.VITE_CATI_DASHBOARD_URL ||
-          externalCATIUrl;
+          import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
+          "/Blaise/CaseInfo";
+
+      console.log(`cati url = ${resolvedCatiUrl}`);
+      console.log(`client url = ${resolvedClientUrl}`);
 
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalCATIUrl(resolvedCatiUrl);
     },
-    [externalCATIUrl, externalClientUrl],
+    // 3. We use an empty dependency array so this only runs once when the app mounts.
+    // Environment variables and window globals don't change after the page loads.
+    [],
   );
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
