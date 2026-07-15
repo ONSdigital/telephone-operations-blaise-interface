@@ -41,9 +41,6 @@ function App(): ReactElement {
     function retrieveVariables() {
       const runtimeWindow = window as unknown as window;
 
-      // 1. Notice we are using VITE_APP_... to match your .env file
-      // 2. We use the hardcoded fallback strings directly rather than referencing the state variables 
-      //    to avoid React dependency warnings and infinite loops.
       const resolvedClientUrl = isDevEnv()
         ? import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
           runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
@@ -68,9 +65,7 @@ function App(): ReactElement {
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalCATIUrl(resolvedCatiUrl);
     },
-    // 3. We use an empty dependency array so this only runs once when the app mounts.
-    // Environment variables and window globals don't change after the page loads.
-    [],
+    [externalClientUrl, externalCATIUrl],
   );
 
   const [surveys, setSurveys] = useState<Survey[]>([]);

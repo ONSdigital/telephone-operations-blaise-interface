@@ -1,7 +1,7 @@
 process.env = Object.assign(process.env, {
   NODE_ENV: "development",
-  REACT_APP_CATI_DASHBOARD_URL: "cati-dashboard-url/Blaise/CaseInfo",
-  REACT_APP_VM_EXTERNAL_CLIENT_URL: "external-client-url",
+  VITE_APP_CATI_DASHBOARD_URL: "cati-dashboard-url/Blaise/CaseInfo",
+  VITE_APP_VM_EXTERNAL_CLIENT_URL: "external-client-url",
   VM_EXTERNAL_CLIENT_URL: "external-client-url",
   VM_EXTERNAL_WEB_URL: "external-web-url",
   BLAISE_API_URL: "mock",

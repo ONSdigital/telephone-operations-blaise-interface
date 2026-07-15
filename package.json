@@ -8,7 +8,7 @@
   "scripts": {
     "build": "yarn build:client && yarn build:server",
     "build-react": "react-scripts build",
-    "build:client": "yarn vite build && node scripts/fix-html-template.js",
+    "build:client": "yarn vite build",
     "build:server": "yarn tsc --project tsconfig.server.build.json",
     "dev": "yarn concurrently --kill-others-on-fail --names \"server,web\" \"yarn dev:server\" \"yarn dev:client\"",
     "dev:client": "yarn vite",

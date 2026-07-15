@@ -1,4 +1,4 @@
-import { ErrorPanel } from "blaise-design-system-react-components";
+import { LoadingPanel } from "blaise-design-system-react-components";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -60,7 +60,7 @@ function SurveyList(props: Props): ReactElement {
           </tbody>
         </table>
       ) : (
-        <ErrorPanel text={listError.message} />
+        <LoadingPanel message={listError.message} />
       )}
     </>
   );
