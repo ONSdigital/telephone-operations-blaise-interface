@@ -1,4 +1,4 @@
-import { ErrorPanel, ExternalLink, Footer, Header } from "blaise-design-system-react-components";
+import { LoadingPanel, ExternalLink, Footer, Header } from "blaise-design-system-react-components";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -132,7 +132,7 @@ function App(): ReactElement {
               Please note, the table containing information on active questionnaires may take a few
               seconds to load.
             </p>
-            {listError.error && <ErrorPanel text={listError.message} />}
+            {listError.error && <LoadingPanel message={listError.message} />}
             <p className="ons-u-mt-m">
               <ExternalLink
                 text={"Link to CATI dashboard"}
