@@ -1,4 +1,4 @@
-import { LoadingPanel, ExternalLink, Footer, Header } from "blaise-design-system-react-components";
+import { ExternalLink, Footer, Header, LoadingPanel } from "blaise-design-system-react-components";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -58,7 +58,9 @@ function App(): ReactElement {
           "/Blaise/CaseInfo";
 
       console.log(`App.tsx CATI_DASHBOARD_URL = ${runtimeWindow.CATI_DASHBOARD_URL}`);
-      console.log(`App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`);
+      console.log(
+        `App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`,
+      );
 
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
