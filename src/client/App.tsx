@@ -49,7 +49,7 @@ function App(): ReactElement {
           import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
           "External URL should be here";
 
-      const resolvedCatiUrl = isDevEnv()
+      let resolvedCatiUrl = isDevEnv()
         ? import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
           runtimeWindow.CATI_DASHBOARD_URL ||
           "/Blaise/CaseInfo"
@@ -62,15 +62,19 @@ function App(): ReactElement {
         `App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`,
       );
 
+      console.log(`before ${resolvedCatiUrl}`);
+
       // Replace "tobi" with "cati" in the URL if present
-      const correctedCatiUrl = resolvedCatiUrl.includes("tobi")
+      resolvedCatiUrl = resolvedCatiUrl.includes("tobi")
         ? resolvedCatiUrl.replace(/tobi/gi, "cati")
         : resolvedCatiUrl;
+
+        console.log(`after ${resolvedCatiUrl}`);
 
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
       // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalCATIUrl(correctedCatiUrl);
+      setExternalCATIUrl(resolvedCatiUrl);
     },
     [externalClientUrl, externalCATIUrl],
   );
