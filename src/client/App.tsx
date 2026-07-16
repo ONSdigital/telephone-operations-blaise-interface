@@ -21,6 +21,18 @@ interface window extends Window {
   CATI_DASHBOARD_URL: string;
 }
 
+function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
+  if (/^https?:\/\//i.test(maybeRelativeUrl)) {
+    return maybeRelativeUrl;
+  }
+
+  try {
+    return new URL(maybeRelativeUrl, baseUrl).toString();
+  } catch {
+    return maybeRelativeUrl;
+  }
+}
+
 const divStyle = {
   minHeight: "calc(67vh)",
 };
@@ -57,6 +69,8 @@ function App(): ReactElement {
           import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
           "/Blaise/CaseInfo";
 
+      resolvedCatiUrl = resolveUrlFromBase(resolvedClientUrl, resolvedCatiUrl);
+
       console.log(`App.tsx CATI_DASHBOARD_URL = ${runtimeWindow.CATI_DASHBOARD_URL}`);
       console.log(
         `App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`,
@@ -78,7 +92,7 @@ function App(): ReactElement {
 
       console.log(`externalClientUrl = ${externalClientUrl}`);
     },
-    [externalClientUrl, externalCATIUrl],
+    [],
   );
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
