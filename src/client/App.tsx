@@ -62,10 +62,15 @@ function App(): ReactElement {
         `App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`,
       );
 
+      // Replace "tobi" with "cati" in the URL if present
+      const correctedCatiUrl = resolvedCatiUrl.includes("tobi")
+        ? resolvedCatiUrl.replace(/tobi/gi, "cati")
+        : resolvedCatiUrl;
+
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
       // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalCATIUrl(resolvedCatiUrl);
+      setExternalCATIUrl(correctedCatiUrl);
     },
     [externalClientUrl, externalCATIUrl],
   );
