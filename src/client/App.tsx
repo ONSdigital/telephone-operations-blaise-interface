@@ -163,7 +163,7 @@ function App(): ReactElement {
             <p className="ons-u-mt-m">
               <ExternalLink
                 text={"Link to CATI dashboard"}
-                link={externalCATIUrl}
+                link={`https://${externalClientUrl}${externalCATIUrl}`}
                 id={"cati-dashboard"}
               />
             </p>

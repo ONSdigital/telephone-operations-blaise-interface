@@ -25,8 +25,9 @@ export function getEnvironmentVariables(): EnvironmentVariables {
       ? CATI_EXTERNAL_URL + "Blaise/CaseInfo"
       : CATI_EXTERNAL_URL + "/Blaise/CaseInfo";
   } else {
-    // Fallback to constructing from VM_EXTERNAL_WEB_URL
-    CATI_DASHBOARD_URL = "https://" + VM_EXTERNAL_WEB_URL + "/Blaise/CaseInfo";
+    // Fallback to constructing from VM_EXTERNAL_WEB_URL and replace tobi with cati if needed
+    const catiUrl = VM_EXTERNAL_WEB_URL ? VM_EXTERNAL_WEB_URL.replace(/tobi/gi, "cati") : VM_EXTERNAL_WEB_URL;
+    CATI_DASHBOARD_URL = "https://" + catiUrl + "/Blaise/CaseInfo";
   }
 
   if (BLAISE_API_URL === undefined) {
