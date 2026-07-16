@@ -259,7 +259,7 @@ exports[`React homepage > view questionnaires page matches Snapshot 1`] = `
             <a
               class="ons-external-link"
               data-testid="cati-dashboard-external-link"
-              href="/Blaise/CaseInfo"
+              href="https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"
               id="cati-dashboard"
               rel="noopener noreferrer"
               target="_blank"
@@ -856,7 +856,7 @@ exports[`React homepage > view questionnaires page matches Snapshot 1`] = `
           <a
             class="ons-external-link"
             data-testid="cati-dashboard-external-link"
-            href="/Blaise/CaseInfo"
+            href="https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"
             id="cati-dashboard"
             rel="noopener noreferrer"
             target="_blank"
@@ -1510,7 +1510,7 @@ exports[`React homepage > view surveys page matches Snapshot 1`] = `
             <a
               class="ons-external-link"
               data-testid="cati-dashboard-external-link"
-              href="/Blaise/CaseInfo"
+              href="https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"
               id="cati-dashboard"
               rel="noopener noreferrer"
               target="_blank"
@@ -2051,7 +2051,7 @@ exports[`React homepage > view surveys page matches Snapshot 1`] = `
           <a
             class="ons-external-link"
             data-testid="cati-dashboard-external-link"
-            href="/Blaise/CaseInfo"
+            href="https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"
             id="cati-dashboard"
             rel="noopener noreferrer"
             target="_blank"

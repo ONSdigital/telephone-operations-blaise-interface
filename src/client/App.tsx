@@ -83,7 +83,7 @@ function App(): ReactElement {
         ? resolvedCatiUrl.replace(/tobi/gi, "cati")
         : resolvedCatiUrl;
 
-        console.log(`after ${resolvedCatiUrl}`);
+      console.log(`after ${resolvedCatiUrl}`);
 
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
@@ -92,7 +92,7 @@ function App(): ReactElement {
 
       console.log(`externalClientUrl = ${externalClientUrl}`);
     },
-    [],
+    [externalCATIUrl, externalClientUrl],
   );
 
   const [surveys, setSurveys] = useState<Survey[]>([]);

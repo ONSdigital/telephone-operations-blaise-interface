@@ -13,20 +13,25 @@ export function getEnvironmentVariables(): EnvironmentVariables {
     VM_EXTERNAL_CLIENT_URL,
     VM_EXTERNAL_WEB_URL,
     BLAISE_API_URL,
-    CATI_EXTERNAL_URL,
     BIMS_CLIENT_ID,
     BIMS_API_URL,
   } = process.env;
 
+  const { CATI_EXTERNAL_URL } = process.env;
+
   let CATI_DASHBOARD_URL: string;
+
   if (CATI_EXTERNAL_URL) {
     // If CATI_EXTERNAL_URL is provided by Terraform, use it as the base
-    CATI_DASHBOARD_URL = CATI_EXTERNAL_URL.endsWith('/')
+    CATI_DASHBOARD_URL = CATI_EXTERNAL_URL.endsWith("/")
       ? CATI_EXTERNAL_URL + "Blaise/CaseInfo"
       : CATI_EXTERNAL_URL + "/Blaise/CaseInfo";
   } else {
     // Fallback to constructing from VM_EXTERNAL_WEB_URL and replace tobi with cati if needed
-    const catiUrl = VM_EXTERNAL_WEB_URL ? VM_EXTERNAL_WEB_URL.replace(/tobi/gi, "cati") : VM_EXTERNAL_WEB_URL;
+    const catiUrl = VM_EXTERNAL_WEB_URL
+      ? VM_EXTERNAL_WEB_URL.replace(/tobi/gi, "cati")
+      : VM_EXTERNAL_WEB_URL;
+
     CATI_DASHBOARD_URL = "https://" + catiUrl + "/Blaise/CaseInfo";
   }
 
