@@ -2,6 +2,7 @@ export interface EnvironmentVariables {
   VM_EXTERNAL_CLIENT_URL: string;
   VM_EXTERNAL_WEB_URL: string;
   BLAISE_API_URL: string;
+  CATI_EXTERNAL_URL?: string;
   CATI_DASHBOARD_URL: string;
   BIMS_CLIENT_ID: string;
   BIMS_API_URL: string;
@@ -12,10 +13,21 @@ export function getEnvironmentVariables(): EnvironmentVariables {
     VM_EXTERNAL_CLIENT_URL,
     VM_EXTERNAL_WEB_URL,
     BLAISE_API_URL,
+    CATI_EXTERNAL_URL,
     BIMS_CLIENT_ID,
     BIMS_API_URL,
   } = process.env;
-  const CATI_DASHBOARD_URL = "https://" + VM_EXTERNAL_WEB_URL + "/Blaise/CaseInfo";
+
+  let CATI_DASHBOARD_URL: string;
+  if (CATI_EXTERNAL_URL) {
+    // If CATI_EXTERNAL_URL is provided by Terraform, use it as the base
+    CATI_DASHBOARD_URL = CATI_EXTERNAL_URL.endsWith('/')
+      ? CATI_EXTERNAL_URL + "Blaise/CaseInfo"
+      : CATI_EXTERNAL_URL + "/Blaise/CaseInfo";
+  } else {
+    // Fallback to constructing from VM_EXTERNAL_WEB_URL
+    CATI_DASHBOARD_URL = "https://" + VM_EXTERNAL_WEB_URL + "/Blaise/CaseInfo";
+  }
 
   if (BLAISE_API_URL === undefined) {
     console.error("BLAISE_API_URL environment variable has not been set");
