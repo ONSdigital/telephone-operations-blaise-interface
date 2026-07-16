@@ -75,6 +75,8 @@ function App(): ReactElement {
       setExternalClientUrl(resolvedClientUrl);
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalCATIUrl(resolvedCatiUrl);
+
+      console.log(`externalClientUrl = ${externalClientUrl}`);
     },
     [externalClientUrl, externalCATIUrl],
   );
@@ -147,7 +149,7 @@ function App(): ReactElement {
             <p className="ons-u-mt-m">
               <ExternalLink
                 text={"Link to CATI dashboard"}
-                link={externalCATIUrl}
+                link={`${externalClientUrl}/${externalCATIUrl}`}
                 id={"cati-dashboard"}
               />
             </p>
