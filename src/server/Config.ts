@@ -51,6 +51,8 @@ export function getEnvironmentVariables(): EnvironmentVariables {
     BIMS_API_URL,
   };
 
+  console.log(`Config.ts CATI_DASHBOARD_URL = ${CATI_DASHBOARD_URL}`);
+
   assertResolvedRequiredEnv(resolvedEnv);
 
   return resolvedEnv;

@@ -57,8 +57,8 @@ function App(): ReactElement {
           import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
           "/Blaise/CaseInfo";
 
-      console.log(`cati url = ${resolvedCatiUrl}`);
-      console.log(`client url = ${resolvedClientUrl}`);
+      console.log(`App.tsx CATI_DASHBOARD_URL = ${runtimeWindow.CATI_DASHBOARD_URL}`);
+      console.log(`App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`);
 
       // eslint-disable-next-line @eslint-react/set-state-in-effect
       setExternalClientUrl(resolvedClientUrl);
