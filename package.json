@@ -4,10 +4,8 @@
   "license": "ISC",
   "type": "module",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "build": "yarn build:client && yarn build:server",
-    "build-react": "react-scripts build",
     "build:client": "yarn vite build",
     "build:server": "yarn tsc --project tsconfig.server.build.json",
     "dev": "yarn concurrently --kill-others-on-fail --names \"server,web\" \"yarn dev:server\" \"yarn dev:client\"",
@@ -18,7 +16,6 @@
     "lint-fix": "yarn eslint . --fix && yarn prettier --write . && yarn knip --fix",
     "spellcheck": "yarn cspell \"**/*.{ts,tsx,json,jsonc,yml,yaml,md}\" --no-progress --no-summary",
     "start": "node ./build/server/index.js",
-    "start-react": "react-scripts start",
     "start-server": "tsc --project tsconfig.server.json && node ./dist/index.js",
     "test": "yarn vitest run --coverage",
     "test-watch": "yarn vitest",
