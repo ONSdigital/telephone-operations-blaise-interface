@@ -70,8 +70,8 @@ yarn
 
 The following run commands are available, these are all setup in the `package.json` under `scripts`.
 
-| Command | Description |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Command           | Description                                      |
+| ----------------- | ------------------------------------------------ |
 | `yarn dev`        | Run frontend + backend in watch mode             |
 | `yarn build`      | Build client and server                          |
 | `yarn lint`       | Run typecheck, ESLint, Prettier checks, and knip |
