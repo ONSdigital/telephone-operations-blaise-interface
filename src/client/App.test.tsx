@@ -5,10 +5,24 @@ import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import App from "./App";
+import App, { buildCatiHref, resolveUrlFromBase } from "./App";
 import flushPromises from "./test-utils";
 
 import type { Survey } from "./types/Survey";
+
+describe("App URL helpers", () => {
+  it("returns absolute URL unchanged when resolving from base", () => {
+    const absoluteUrl = "https://external-cati.example/Blaise/CaseInfo";
+
+    expect(resolveUrlFromBase("https://external-tobi.example", absoluteUrl)).toBe(absoluteUrl);
+  });
+
+  it("returns absolute CATI URL unchanged when building href", () => {
+    const absoluteUrl = "https://external-cati.example/Blaise/CaseInfo";
+
+    expect(buildCatiHref("external-tobi.example", absoluteUrl)).toBe(absoluteUrl);
+  });
+});
 
 const surveyListReturned: Survey[] = [
   {

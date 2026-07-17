@@ -21,7 +21,7 @@ interface window extends Window {
   CATI_DASHBOARD_URL: string;
 }
 
-function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
+export function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
   if (/^https?:\/\//i.test(maybeRelativeUrl)) {
     return maybeRelativeUrl;
   }
@@ -33,7 +33,7 @@ function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
   }
 }
 
-function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): string {
+export function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): string {
   if (/^https?:\/\//i.test(externalCATIUrl)) {
     return externalCATIUrl;
   }
