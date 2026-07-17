@@ -9,6 +9,11 @@ export default defineConfig({
           globals: true,
           clearMocks: true,
           environment: "jsdom",
+          environmentOptions: {
+            jsdom: {
+              url: "https://dev-ben1-tobi.social-surveys.gcp.onsdigital.uk",
+            },
+          },
           setupFiles: ["./src/client/setupTests.ts"],
           include: ["src/client/**/*.test.{ts,tsx}"],
         },
