@@ -70,12 +70,14 @@ yarn
 
 The following run commands are available, these are all setup in the `package.json` under `scripts`.
 
-| Command             | Description                                                                                                                                                                         |
+| Command | Description |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `yarn start-server` | Start the express server, Note: For the website to be rendered the React Project will need to be built.                                                                             |
-| `yarn start-react`  | Starts react project in local development setup with quick reloading on making changes. Note: For instruments to be shown the server needs to be running.                           |
-| `yarn build-react`  | Compiles build project ready to be served by express. The build in outputted to the the `build` directory which express points to with the var `buildFolder` in `server/server.js`. |
-| `yarn test`         | Runs all tests for server and React Components and outputs coverage statistics.                                                                                                     |
+| `yarn dev`        | Run frontend + backend in watch mode             |
+| `yarn build`      | Build client and server                          |
+| `yarn lint`       | Run typecheck, ESLint, Prettier checks, and knip |
+| `yarn lint-fix`   | Auto-fix lint/prettier issues and run knip fix   |
+| `yarn test`       | Run Vitest suite with coverage                   |
+| `yarn spellcheck` | Run cspell over code/config/docs files           |
 
 ##### Simple setup for local development
 
@@ -83,7 +85,7 @@ Setup express project that handles the requests to the [Blaise Rest API](https:/
 By default, will be running on PORT 5000.
 
 ```shell script
-yarn start-server
+yarn dev:server
 ```
 
 Next to make sure the React project make requests the express server make sure the proxy option is set to the right port
@@ -97,14 +99,14 @@ Run the React project for local development. By default, this will be running
 on [http://localhost:3000/](http://localhost:3000/)
 
 ```shell script
-yarn start-react
+yarn dev:client
 ```
 
 To test express sever serving the React project, you need to compile the React project, then you can see it running
 at [http://localhost:5000/](http://localhost:5000/)
 
 ```shell script
-yarn build-react
+yarn build
 ```
 
 ### Tests
