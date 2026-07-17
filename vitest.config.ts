@@ -11,7 +11,7 @@ export default defineConfig({
           environment: "jsdom",
           environmentOptions: {
             jsdom: {
-              url: "https://dev-ben1-tobi.social-surveys.gcp.onsdigital.uk",
+              url: "https://dev-tobi.social-surveys.gcp.onsdigital.uk",
             },
           },
           setupFiles: ["./src/client/setupTests.ts"],
