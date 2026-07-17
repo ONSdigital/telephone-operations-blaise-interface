@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
       - run: yarn install
       - run: yarn run test
       - name: Codecov
@@ -41,5 +43,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
       - run: yarn install
       - run: yarn run lint
