@@ -33,6 +33,21 @@ function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
   }
 }
 
+function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): string {
+  if (/^https?:\/\//i.test(externalCATIUrl)) {
+    return externalCATIUrl;
+  }
+
+  const hasValidClientHost =
+    externalClientUrl.trim() !== "" && externalClientUrl !== "External URL should be here";
+
+  if (!hasValidClientHost) {
+    return externalCATIUrl;
+  }
+
+  return `https://${externalClientUrl}${externalCATIUrl}`;
+}
+
 const divStyle = {
   minHeight: "calc(67vh)",
 };
@@ -163,7 +178,7 @@ function App(): ReactElement {
             <p className="ons-u-mt-m">
               <ExternalLink
                 text={"Link to CATI dashboard"}
-                link={`https://${externalClientUrl}${externalCATIUrl}`}
+                link={buildCatiHref(externalClientUrl, externalCATIUrl)}
                 id={"cati-dashboard"}
               />
             </p>
