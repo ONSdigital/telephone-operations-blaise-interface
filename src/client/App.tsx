@@ -34,17 +34,6 @@ function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
 }
 
 function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): string {
-  if (/^https?:\/\//i.test(externalCATIUrl)) {
-    return externalCATIUrl;
-  }
-
-  const hasValidClientHost =
-    externalClientUrl.trim() !== "" && externalClientUrl !== "External URL should be here";
-
-  if (!hasValidClientHost) {
-    return externalCATIUrl;
-  }
-
   return `https://${externalClientUrl}${externalCATIUrl}`;
 }
 
