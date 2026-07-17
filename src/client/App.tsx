@@ -42,14 +42,18 @@ function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): stri
     externalClientUrl.trim() !== "" && externalClientUrl !== "External URL should be here";
 
   if (!hasValidClientHost) {
-    return new URL(externalCATIUrl, window.location.origin).toString();
+    const origin = window.location.origin.replace(/tobi/gi, "cati");
+
+    return new URL(externalCATIUrl, origin).toString();
   }
 
   const baseUrl = /^https?:\/\//i.test(externalClientUrl)
     ? externalClientUrl
     : `https://${externalClientUrl}`;
 
-  return new URL(externalCATIUrl, baseUrl).toString();
+  const catiBaseUrl = baseUrl.replace(/tobi/gi, "cati");
+
+  return new URL(externalCATIUrl, catiBaseUrl).toString();
 }
 
 const divStyle = {
