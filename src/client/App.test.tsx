@@ -22,6 +22,28 @@ describe("App URL helpers", () => {
 
     expect(buildCatiHref("external-tobi.example", absoluteUrl)).toBe(absoluteUrl);
   });
+
+  it("resolves relative URL from valid base URL", () => {
+    expect(resolveUrlFromBase("https://external-tobi.example", "/Blaise/CaseInfo")).toBe(
+      "https://external-tobi.example/Blaise/CaseInfo",
+    );
+  });
+
+  it("returns original relative URL when base URL is invalid", () => {
+    expect(resolveUrlFromBase("not-a-valid-url", "/Blaise/CaseInfo")).toBe("/Blaise/CaseInfo");
+  });
+
+  it("builds CATI href from placeholder host using current origin", () => {
+    expect(buildCatiHref("External URL should be here", "/Blaise/CaseInfo")).toBe(
+      "https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo",
+    );
+  });
+
+  it("builds CATI href by replacing tobi with cati in host", () => {
+    expect(
+      buildCatiHref("dev-ben1-tobi.social-surveys.gcp.onsdigital.uk", "/Blaise/CaseInfo"),
+    ).toBe("https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo");
+  });
 });
 
 const surveyListReturned: Survey[] = [
