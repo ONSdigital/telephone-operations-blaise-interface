@@ -34,7 +34,22 @@ function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
 }
 
 function buildCatiHref(externalClientUrl: string, externalCATIUrl: string): string {
-  return `https://${externalClientUrl}${externalCATIUrl}`;
+  if (/^https?:\/\//i.test(externalCATIUrl)) {
+    return externalCATIUrl;
+  }
+
+  const hasValidClientHost =
+    externalClientUrl.trim() !== "" && externalClientUrl !== "External URL should be here";
+
+  if (!hasValidClientHost) {
+    return new URL(externalCATIUrl, window.location.origin).toString();
+  }
+
+  const baseUrl = /^https?:\/\//i.test(externalClientUrl)
+    ? externalClientUrl
+    : `https://${externalClientUrl}`;
+
+  return new URL(externalCATIUrl, baseUrl).toString();
 }
 
 const divStyle = {
