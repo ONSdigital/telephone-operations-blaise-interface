@@ -1,9 +1,9 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: "gcr.io/cloud-builders/gcloud"
     id: Generate manifest
-    entrypoint: 'bash'
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         sed "s#_PROJECT_ID#${_PROJECT_ID}#g" appengine_templates/app.yaml.tpl | \
         sed "s#_VM_INTERNAL_URL#${_VM_INTERNAL_URL}#g" | \
@@ -11,11 +11,11 @@ steps:
         sed "s#_VM_EXTERNAL_CLIENT_URL#${_VM_EXTERNAL_CLIENT_URL}#g" | \
         sed "s#_BLAISE_API_URL#${_BLAISE_API_URL}#g" > app.yaml
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: "gcr.io/cloud-builders/gcloud"
     id: Print Output
     entrypoint: /bin/sh
     args:
-      - '-c'
+      - "-c"
       - |
         cat app.yaml
 
@@ -23,4 +23,3 @@ steps:
     id: Deploy service for testing
     args: ["app", "deploy", "--version", "pull-request-number-$_PR_NUMBER-test", "--no-promote"]
     timeout: "1600s"
-    
