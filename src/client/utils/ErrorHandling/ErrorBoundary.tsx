@@ -8,7 +8,6 @@ interface Props {
 }
 
 interface State {
-  error?: Error;
   errorInfo: ErrorInfo;
 }
 
@@ -17,7 +16,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({
-      error: error,
       errorInfo: errorInfo,
     });
   }
