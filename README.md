@@ -44,7 +44,7 @@ git clone https://github.com/ONSdigital/telephone-operations-blaise-interface.gi
 Create a new .env file and add the following variables.
 
 | Variable               | Description                                                                                                                                                                                                                                                                       | Var Example          |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | PORT                   | Optional variable, specify the Port for express server to run on. If not passed in this is set as 5000 by default. <br><br>It's best not to set this as the react project will try and use the variable as well and conflict. By default React project locally runs on port 3000. | 5009                 |
 | VM_EXTERNAL_WEB_URL    | External Url used for CATI dashboard and survey links.                                                                                                                                                                                                                            | tel-client-server.uk |
 | VM_EXTERNAL_CLIENT_URL | External link to connect to Blaise remotely through Blaise Server Manager.                                                                                                                                                                                                        | tel-web-server.uk    |
@@ -60,7 +60,7 @@ BLAISE_API_URL='http://localhost:5011'
 BIMS_API_URL='https://bims-url'
 ```
 
-Install required modules
+Install required modules yarn
 
 ```shell script
 yarn
@@ -70,12 +70,14 @@ yarn
 
 The following run commands are available, these are all setup in the `package.json` under `scripts`.
 
-| Command                        | Description                                                                                                                                               |
-|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `yarn start-server`            | Start the express server, Note: For the website to be rendered the React Project will need to be built.                                                   |
-| `yarn start-react`             | Starts react project in local development setup with quick reloading on making changes. Note: For instruments to be shown the server needs to be running. |
-| `yarn build-react`             | Compiles build project ready to be served by express. The build in outputted to the the `build` directory which express points to with the var `buildFolder` in `server/server.js`.                       |
-| `yarn test`                    | Runs all tests for server and React Components and outputs coverage statistics.                                                                           |
+| Command           | Description                                      |
+| ----------------- | ------------------------------------------------ |
+| `yarn dev`        | Run frontend + backend in watch mode             |
+| `yarn build`      | Build client and server                          |
+| `yarn lint`       | Run typecheck, ESLint, Prettier checks, and knip |
+| `yarn lint-fix`   | Auto-fix lint/prettier issues and run knip fix   |
+| `yarn test`       | Run Vitest suite with coverage                   |
+| `yarn spellcheck` | Run cspell over code/config/docs files           |
 
 ##### Simple setup for local development
 
@@ -83,7 +85,7 @@ Setup express project that handles the requests to the [Blaise Rest API](https:/
 By default, will be running on PORT 5000.
 
 ```shell script
-yarn start-server
+yarn dev:server
 ```
 
 Next to make sure the React project make requests the express server make sure the proxy option is set to the right port
@@ -97,14 +99,14 @@ Run the React project for local development. By default, this will be running
 on [http://localhost:3000/](http://localhost:3000/)
 
 ```shell script
-yarn start-react
+yarn dev:client
 ```
 
 To test express sever serving the React project, you need to compile the React project, then you can see it running
 at [http://localhost:5000/](http://localhost:5000/)
 
 ```shell script
-yarn build-react
+yarn build
 ```
 
 ### Tests
