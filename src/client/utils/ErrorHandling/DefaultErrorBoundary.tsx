@@ -7,16 +7,14 @@ interface Props {
 }
 
 interface State {
-  error?: Error;
   errorInfo: ErrorInfo;
 }
 
 export class DefaultErrorBoundary extends React.Component<Props, State> {
   state = { errorInfo: { componentStack: "Fine" } };
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  componentDidCatch(_error: Error, errorInfo: ErrorInfo): void {
     this.setState({
-      error: error,
       errorInfo: errorInfo,
     });
   }
