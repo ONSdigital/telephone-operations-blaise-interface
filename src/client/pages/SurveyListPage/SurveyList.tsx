@@ -61,8 +61,10 @@ function SurveyList(props: Props): ReactElement {
         </table>
       ) : listError.error ? (
         <ErrorPanel text={listError.message} />
-      ) : (
+      ) : listError.message === "Loading ..." ? (
         <LoadingPanel message={listError.message} />
+      ) : (
+        <p>{listError.message}</p>
       )}
     </>
   );
