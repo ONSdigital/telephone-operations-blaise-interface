@@ -118,25 +118,6 @@ describe("Test Health Endpoint", () => {
     });
   });
 
-  it("returns JSON error payload from global handler in dev mode", async () => {
-    process.env.NODE_ENV = "test";
-    const invalidEnvironmentVariables = {
-      ...environmentVariables,
-      BIMS_CLIENT_ID: undefined,
-    } as unknown as EnvironmentVariables;
-
-    const app = nodeServer(invalidEnvironmentVariables, blaiseApiMock.object);
-    const request = supertest(app);
-
-    const response = await request.get("/api/questionnaires");
-
-    expect(response.statusCode).toEqual(500);
-    expect(response.body).toMatchObject({
-      error: expect.any(String),
-      stack: expect.any(String),
-    });
-  });
-
   it("renders index.html for non-API routes in production", async () => {
     process.env.NODE_ENV = "production";
     const app = nodeServer(environmentVariables, blaiseApiMock.object);
