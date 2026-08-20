@@ -71,6 +71,7 @@ export default function nodeServer(
 
           if (isHashedAsset) {
             res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+
             return;
           }
 
