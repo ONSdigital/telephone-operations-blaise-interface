@@ -91,7 +91,7 @@ export default function nodeServer(
         etag: true,
         setHeaders: (res: ServerResponse, filePath: string) => {
           const fileName = path.basename(filePath);
-          const isHashedAsset = /\.[0-9a-f]{8,}\./i.test(fileName);
+          const isHashedAsset = /-[0-9a-f]{8,}\./i.test(fileName);
 
           if (isHashedAsset) {
             res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
