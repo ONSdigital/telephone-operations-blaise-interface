@@ -1,7 +1,11 @@
+import fs from "fs";
+import os from "os";
+import path from "path";
+
 import { type BlaiseApiClient } from "blaise-api-node-client";
 import supertest from "supertest";
 import { type IMock, Mock } from "typemoq";
-import { afterEach } from "vitest";
+import { afterAll, afterEach, beforeAll } from "vitest";
 
 import { type EnvironmentVariables } from "./Config";
 import nodeServer from "./server";
@@ -20,6 +24,74 @@ const originalNodeEnv = process.env.NODE_ENV;
 
 afterEach(() => {
   process.env.NODE_ENV = originalNodeEnv;
+});
+
+describe("Production cache helpers", () => {
+  let tempDir = "";
+  let buildClientDir = "";
+
+  beforeAll(() => {
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "tobi-server-test-"));
+    buildClientDir = path.join(tempDir, "build", "client");
+
+    const assetsDir = path.join(buildClientDir, "assets");
+    const indexHtmlPath = path.join(buildClientDir, "index.html");
+    const hashedAssetPath = path.join(assetsDir, "app-12345678.js");
+
+    fs.mkdirSync(assetsDir, { recursive: true });
+    fs.writeFileSync(hashedAssetPath, `console.log("test hashed asset");`);
+    fs.writeFileSync(
+      indexHtmlPath,
+      `<!doctype html><html><body><div id="root"></div></body></html>`,
+    );
+  });
+
+  afterAll(() => {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
+
+  it("serves hashed static asset requests in production", async () => {
+    process.env.NODE_ENV = "production";
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
+    const request = supertest(app);
+
+    const response = await request.get("/assets/app-12345678.js");
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.headers["cache-control"]).toEqual("public, max-age=31536000, immutable");
+    expect(response.headers["content-type"]).toContain("javascript");
+  });
+
+  it("returns the app page when a user visits a direct URL like /surveys/123", async () => {
+    process.env.NODE_ENV = "production";
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
+    const request = supertest(app);
+
+    const response = await request.get("/surveys/123");
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.headers["content-type"]).toContain("text/html");
+    expect(response.text).toContain('<div id="root"></div>');
+  });
+
+  it("serves index.html directly with no-cache headers in production", async () => {
+    process.env.NODE_ENV = "production";
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
+    const request = supertest(app);
+
+    const response = await request.get("/index.html");
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.headers["cache-control"]).toEqual("no-cache, no-store, must-revalidate");
+    expect(response.headers.pragma).toEqual("no-cache");
+    expect(response.headers.expires).toEqual("0");
+  });
 });
 
 describe("Test Health Endpoint", () => {
