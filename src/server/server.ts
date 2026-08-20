@@ -43,6 +43,18 @@ export default function nodeServer(
 
   const isDev = process.env.NODE_ENV !== "production";
 
+  const renderIndexHtml = (res: Response): void => {
+    const clientUrl = environmentVariables.VM_EXTERNAL_CLIENT_URL;
+    const dashboardUrl = environmentVariables.CATI_DASHBOARD_URL;
+
+    setNoCacheHeaders(res);
+
+    res.render("index.html", {
+      clientUrl,
+      dashboardUrl,
+    });
+  };
+
   // where ever the react built package is (relative to project root, not __dirname)
   const buildFolder = options.buildFolder ?? path.resolve(__dirname, "../../build/client");
 
@@ -67,8 +79,15 @@ export default function nodeServer(
     // treat the index.html as a template and substitute the values at runtime
     server.set("views", buildFolder);
     server.engine("html", ejs.renderFile);
+
+    // Always render /index.html through EJS so runtime values are injected.
+    server.get("/index.html", function (req: Request, res: Response) {
+      renderIndexHtml(res);
+    });
+
     server.use(
       express.static(buildFolder, {
+        index: false,
         etag: true,
         setHeaders: (res: ServerResponse, filePath: string) => {
           const fileName = path.basename(filePath);
@@ -98,15 +117,7 @@ export default function nodeServer(
 
   if (!isDev) {
     server.get(/.*/, function (req: Request, res: Response) {
-      const clientUrl = environmentVariables.VM_EXTERNAL_CLIENT_URL;
-      const dashboardUrl = environmentVariables.CATI_DASHBOARD_URL;
-
-      setNoCacheHeaders(res);
-
-      res.render("index.html", {
-        clientUrl,
-        dashboardUrl,
-      });
+      renderIndexHtml(res);
     });
   } else {
     // In dev mode, provide helpful message for non-API routes
