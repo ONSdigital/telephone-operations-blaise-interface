@@ -29,7 +29,7 @@ export default function nodeServer(
 ): Express {
   const server = express();
 
-  const setNoCacheHeaders = (res: ServerResponse | Response): void => {
+  const setNoCacheHeaders = (res: ServerResponse): void => {
     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
@@ -97,10 +97,6 @@ export default function nodeServer(
             res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
 
             return;
-          }
-
-          if (fileName === "index.html") {
-            setNoCacheHeaders(res);
           }
         },
       }),
