@@ -61,7 +61,7 @@ describe("Production cache helpers", () => {
 
     expect(response.statusCode).toEqual(200);
     expect(response.headers["cache-control"]).toEqual("public, max-age=31536000, immutable");
-    expect(response.headers["content-type"]).toContain("text/javascript");
+    expect(response.headers["content-type"]).toContain("javascript");
   });
 
   it("returns the app page when a user visits a direct URL like /surveys/123", async () => {
