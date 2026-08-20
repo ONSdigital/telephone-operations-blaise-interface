@@ -16,12 +16,19 @@ import QuestionnaireRouter from "./handlers/questionnaires.js";
 import type { EnvironmentVariables } from "./Config.js";
 import type { BlaiseApiClient } from "blaise-api-node-client";
 import type { Express, Request, Response } from "express";
+import type { ServerResponse } from "http";
 
 export default function nodeServer(
   environmentVariables: EnvironmentVariables,
   blaiseApiClient: BlaiseApiClient,
 ): Express {
   const server = express();
+
+  const setNoCacheHeaders = (res: ServerResponse | Response): void => {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+  };
 
   axios.defaults.timeout = 15000;
 
@@ -55,7 +62,24 @@ export default function nodeServer(
     // treat the index.html as a template and substitute the values at runtime
     server.set("views", buildFolder);
     server.engine("html", ejs.renderFile);
-    server.use(express.static(buildFolder));
+    server.use(
+      express.static(buildFolder, {
+        etag: true,
+        setHeaders: (res: ServerResponse, filePath: string) => {
+          const fileName = path.basename(filePath);
+          const isHashedAsset = /\.[0-9a-f]{8,}\./i.test(fileName);
+
+          if (isHashedAsset) {
+            res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+            return;
+          }
+
+          if (fileName === "index.html") {
+            setNoCacheHeaders(res);
+          }
+        },
+      }),
+    );
   }
 
   // Load api Instruments routes from QuestionnaireRouter
@@ -70,6 +94,8 @@ export default function nodeServer(
     server.get(/.*/, function (req: Request, res: Response) {
       const clientUrl = environmentVariables.VM_EXTERNAL_CLIENT_URL;
       const dashboardUrl = environmentVariables.CATI_DASHBOARD_URL;
+
+      setNoCacheHeaders(res);
 
       res.render("index.html", {
         clientUrl,
