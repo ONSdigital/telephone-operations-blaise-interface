@@ -4,10 +4,10 @@ import { Route, Routes } from "react-router-dom";
 
 import InstrumentList from "./pages/InstrumentListPage";
 import SurveyList from "./pages/SurveyListPage";
-import { getRuntimeAppConfig } from "./utils/runtimeConfig";
 import { DefaultErrorBoundary } from "./utils/ErrorHandling/DefaultErrorBoundary";
 import { ErrorBoundary } from "./utils/ErrorHandling/ErrorBoundary";
 import { isDevEnv, isTrainingEnv } from "./utils/Functions";
+import { getRuntimeAppConfig } from "./utils/runtimeConfig";
 
 import type { Survey } from "./types/Survey";
 import type { ReactElement } from "react";
@@ -68,40 +68,37 @@ function App(): ReactElement {
   const [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
   const [externalCATIUrl, setExternalCATIUrl] = useState<string>("/Blaise/CaseInfo");
 
-  useEffect(
-    function retrieveVariables() {
-      const runtimeConfig = getRuntimeAppConfig();
-      const runtimeWindow = window as Window & {
-        VM_EXTERNAL_CLIENT_URL?: string;
-        CATI_DASHBOARD_URL?: string;
-      };
+  useEffect(function retrieveVariables() {
+    const runtimeConfig = getRuntimeAppConfig();
+    const runtimeWindow = window as Window & {
+      VM_EXTERNAL_CLIENT_URL?: string;
+      CATI_DASHBOARD_URL?: string;
+    };
 
-      const resolvedClientUrl =
-        runtimeConfig.vmExternalClientUrl ||
-        import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
-        runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
-        "External URL should be here";
+    const resolvedClientUrl =
+      runtimeConfig.vmExternalClientUrl ||
+      import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
+      runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
+      "External URL should be here";
 
-      let resolvedCatiUrl =
-        runtimeConfig.catiDashboardUrl ||
-        import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
-        runtimeWindow.CATI_DASHBOARD_URL ||
-        "/Blaise/CaseInfo";
+    let resolvedCatiUrl =
+      runtimeConfig.catiDashboardUrl ||
+      import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
+      runtimeWindow.CATI_DASHBOARD_URL ||
+      "/Blaise/CaseInfo";
 
-      resolvedCatiUrl = resolveUrlFromBase(resolvedClientUrl, resolvedCatiUrl);
+    resolvedCatiUrl = resolveUrlFromBase(resolvedClientUrl, resolvedCatiUrl);
 
-      // Replace "tobi" with "cati" in the URL if present
-      resolvedCatiUrl = resolvedCatiUrl.includes("tobi")
-        ? resolvedCatiUrl.replace(/tobi/gi, "cati")
-        : resolvedCatiUrl;
+    // Replace "tobi" with "cati" in the URL if present
+    resolvedCatiUrl = resolvedCatiUrl.includes("tobi")
+      ? resolvedCatiUrl.replace(/tobi/gi, "cati")
+      : resolvedCatiUrl;
 
-      // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalClientUrl(resolvedClientUrl);
-      // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalCATIUrl(resolvedCatiUrl);
-    },
-    [],
-  );
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
+    setExternalClientUrl(resolvedClientUrl);
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
+    setExternalCATIUrl(resolvedCatiUrl);
+  }, []);
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [listError, setListError] = useState<listError>({ error: false, message: "Loading ..." });
