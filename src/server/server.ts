@@ -18,9 +18,14 @@ import type { BlaiseApiClient } from "blaise-api-node-client";
 import type { Express, Request, Response } from "express";
 import type { ServerResponse } from "http";
 
+type NodeServerOptions = {
+  buildFolder?: string;
+};
+
 export default function nodeServer(
   environmentVariables: EnvironmentVariables,
   blaiseApiClient: BlaiseApiClient,
+  options: NodeServerOptions = {},
 ): Express {
   const server = express();
 
@@ -39,7 +44,7 @@ export default function nodeServer(
   const isDev = process.env.NODE_ENV !== "production";
 
   // where ever the react built package is (relative to project root, not __dirname)
-  const buildFolder = path.resolve(__dirname, "../../build/client");
+  const buildFolder = options.buildFolder ?? path.resolve(__dirname, "../../build/client");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   server.use((pinoLogger as any)());

@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 
 import { type BlaiseApiClient } from "blaise-api-node-client";
@@ -26,60 +27,48 @@ afterEach(() => {
 });
 
 describe("Production cache helpers", () => {
-  const buildClientDir = path.resolve(process.cwd(), "build/client");
-  const assetsDir = path.join(buildClientDir, "assets");
-  const indexHtmlPath = path.join(buildClientDir, "index.html");
-  const hashedAssetPath = path.join(assetsDir, "app.12345678.js");
-  const createdPaths: string[] = [];
-
-  const createFileIfMissing = (filePath: string, contents: string): void => {
-    try {
-      fs.writeFileSync(filePath, contents, { flag: "wx" });
-      createdPaths.push(filePath);
-    } catch (error) {
-      // Ignore if another process created the file first.
-      if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
-        throw error;
-      }
-    }
-  };
+  let tempDir = "";
+  let buildClientDir = "";
 
   beforeAll(() => {
-    fs.mkdirSync(assetsDir, { recursive: true });
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "tobi-server-test-"));
+    buildClientDir = path.join(tempDir, "build", "client");
 
-    createFileIfMissing(hashedAssetPath, `console.log("test hashed asset");`);
-    createFileIfMissing(
+    const assetsDir = path.join(buildClientDir, "assets");
+    const indexHtmlPath = path.join(buildClientDir, "index.html");
+    const hashedAssetPath = path.join(assetsDir, "app.12345678.js");
+
+    fs.mkdirSync(assetsDir, { recursive: true });
+    fs.writeFileSync(hashedAssetPath, `console.log("test hashed asset");`);
+    fs.writeFileSync(
       indexHtmlPath,
       `<!doctype html><html><body><div id="root"></div></body></html>`,
     );
   });
 
   afterAll(() => {
-    for (const filePath of createdPaths) {
-      try {
-        fs.unlinkSync(filePath);
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
-          throw error;
-        }
-      }
-    }
+    fs.rmSync(tempDir, { recursive: true, force: true });
   });
 
   it("serves hashed static asset requests in production", async () => {
     process.env.NODE_ENV = "production";
-    const app = nodeServer(environmentVariables, blaiseApiMock.object);
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
     const request = supertest(app);
 
     const response = await request.get("/assets/app.12345678.js");
 
     expect(response.statusCode).toEqual(200);
+    expect(response.headers["cache-control"]).toEqual("public, max-age=31536000, immutable");
     expect(response.headers["content-type"]).toContain("text/javascript");
   });
 
   it("returns the app page when a user visits a direct URL like /surveys/123", async () => {
     process.env.NODE_ENV = "production";
-    const app = nodeServer(environmentVariables, blaiseApiMock.object);
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
     const request = supertest(app);
 
     const response = await request.get("/surveys/123");
@@ -91,7 +80,9 @@ describe("Production cache helpers", () => {
 
   it("serves index.html directly with no-cache headers in production", async () => {
     process.env.NODE_ENV = "production";
-    const app = nodeServer(environmentVariables, blaiseApiMock.object);
+    const app = nodeServer(environmentVariables, blaiseApiMock.object, {
+      buildFolder: buildClientDir,
+    });
     const request = supertest(app);
 
     const response = await request.get("/index.html");
