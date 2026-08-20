@@ -32,27 +32,36 @@ describe("Production cache helpers", () => {
   const hashedAssetPath = path.join(assetsDir, "app.12345678.js");
   const createdPaths: string[] = [];
 
+  const createFileIfMissing = (filePath: string, contents: string): void => {
+    try {
+      fs.writeFileSync(filePath, contents, { flag: "wx" });
+      createdPaths.push(filePath);
+    } catch (error) {
+      // Ignore if another process created the file first.
+      if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+        throw error;
+      }
+    }
+  };
+
   beforeAll(() => {
     fs.mkdirSync(assetsDir, { recursive: true });
 
-    if (!fs.existsSync(hashedAssetPath)) {
-      fs.writeFileSync(hashedAssetPath, `console.log("test hashed asset");`);
-      createdPaths.push(hashedAssetPath);
-    }
-
-    if (!fs.existsSync(indexHtmlPath)) {
-      fs.writeFileSync(
-        indexHtmlPath,
-        `<!doctype html><html><body><div id="root"></div></body></html>`,
-      );
-      createdPaths.push(indexHtmlPath);
-    }
+    createFileIfMissing(hashedAssetPath, `console.log("test hashed asset");`);
+    createFileIfMissing(
+      indexHtmlPath,
+      `<!doctype html><html><body><div id="root"></div></body></html>`,
+    );
   });
 
   afterAll(() => {
     for (const filePath of createdPaths) {
-      if (fs.existsSync(filePath)) {
+      try {
         fs.unlinkSync(filePath);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+          throw error;
+        }
       }
     }
   });
