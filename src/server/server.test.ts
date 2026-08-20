@@ -36,7 +36,7 @@ describe("Production cache helpers", () => {
 
     const assetsDir = path.join(buildClientDir, "assets");
     const indexHtmlPath = path.join(buildClientDir, "index.html");
-    const hashedAssetPath = path.join(assetsDir, "app.12345678.js");
+    const hashedAssetPath = path.join(assetsDir, "app-12345678.js");
 
     fs.mkdirSync(assetsDir, { recursive: true });
     fs.writeFileSync(hashedAssetPath, `console.log("test hashed asset");`);
@@ -57,7 +57,7 @@ describe("Production cache helpers", () => {
     });
     const request = supertest(app);
 
-    const response = await request.get("/assets/app.12345678.js");
+    const response = await request.get("/assets/app-12345678.js");
 
     expect(response.statusCode).toEqual(200);
     expect(response.headers["cache-control"]).toEqual("public, max-age=31536000, immutable");
