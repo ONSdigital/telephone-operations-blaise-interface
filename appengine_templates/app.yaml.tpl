@@ -18,15 +18,7 @@ automatic_scaling:
   target_cpu_utilization: _TARGET_CPU_UTILIZATION
 
 handlers:
-  # 1. Long-cache hashed static assets
-  - url: /(.*\.(js|css|png|jpg|svg|ico|woff2))$
-    static_files: build/client/\1
-    upload: build/client/(.*\.(js|css|png|jpg|svg|ico|woff2))$
-    secure: always
-    http_headers:
-      Cache-Control: "public, max-age=31536000, immutable"
-
-  # 2. Fallback for API routes, runtime config, and server handling
+  # Fallback for API routes, runtime config, and static assets (served by Express)
   - url: /.*
     script: auto
     secure: always
