@@ -40,9 +40,9 @@ describe("App URL helpers", () => {
   });
 
   it("builds CATI href by replacing tobi with cati in host", () => {
-    expect(
-      buildCatiHref("dev-ben1-tobi.social-surveys.gcp.onsdigital.uk", "/Blaise/CaseInfo"),
-    ).toBe("https://dev-ben1-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo");
+    expect(buildCatiHref("dev-tobi.social-surveys.gcp.onsdigital.uk", "/Blaise/CaseInfo")).toBe(
+      "https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo",
+    );
   });
 });
 

@@ -4,6 +4,12 @@ exports[`React homepage > view questionnaires page matches Snapshot 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
+    <script
+      id="app-config"
+      type="application/json"
+    >
+      {"vmExternalClientUrl":"dev-tobi.social-surveys.gcp.onsdigital.uk","catiDashboardUrl":"https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"}
+    </script>
     <div>
       <header
         class="ons-header ons-header--internal"
@@ -1255,6 +1261,12 @@ exports[`React homepage > view surveys page matches Snapshot 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
+    <script
+      id="app-config"
+      type="application/json"
+    >
+      {"vmExternalClientUrl":"dev-tobi.social-surveys.gcp.onsdigital.uk","catiDashboardUrl":"https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo"}
+    </script>
     <div>
       <header
         class="ons-header ons-header--internal"

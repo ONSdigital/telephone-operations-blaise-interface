@@ -37,7 +37,7 @@ describe("InstrumentList", () => {
             element={
               <InstrumentList
                 list={list}
-                listError={{ error: false, message: "" }}
+                listError={{ error: false, isLoading: false, message: "" }}
               />
             }
           />
@@ -66,7 +66,7 @@ describe("InstrumentList", () => {
             element={
               <InstrumentList
                 list={list}
-                listError={{ error: false, message: "" }}
+                listError={{ error: false, isLoading: false, message: "" }}
               />
             }
           />
