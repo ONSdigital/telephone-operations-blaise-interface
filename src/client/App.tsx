@@ -14,6 +14,7 @@ import type { ReactElement } from "react";
 
 interface listError {
   error: boolean;
+  isLoading: boolean;
   message: string;
 }
 
@@ -101,7 +102,11 @@ function App(): ReactElement {
   }, []);
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
-  const [listError, setListError] = useState<listError>({ error: false, message: "Loading ..." });
+  const [listError, setListError] = useState<listError>({
+    error: false,
+    isLoading: true,
+    message: "Loading ...",
+  });
 
   useEffect(() => {
     getList();
@@ -123,23 +128,23 @@ function App(): ReactElement {
             console.log("Retrieved instrument list, " + json.length + " items/s");
             void (isDevEnv() && console.log(json));
             setSurveys(json);
-            setListError({ error: false, message: "" });
+            setListError({ error: false, isLoading: false, message: "" });
 
             // If the list is empty then show this message in the list
             if (json.length === 0) {
-              setListError({ error: false, message: "No active surveys found." });
+              setListError({ error: false, isLoading: false, message: "No active surveys found." });
             }
           })
           .catch((error) => {
             void (
               isDevEnv() && console.error("Unable to read json from response, error: " + error)
             );
-            setListError({ error: true, message: "Unable to load surveys" });
+            setListError({ error: true, isLoading: false, message: "Unable to load surveys" });
           });
       })
       .catch((error) => {
         void (isDevEnv() && console.error("Failed to retrieve instrument list, error: " + error));
-        setListError({ error: true, message: "Unable to load surveys" });
+        setListError({ error: true, isLoading: false, message: "Unable to load surveys" });
       });
   }
 

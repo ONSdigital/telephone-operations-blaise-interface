@@ -8,6 +8,7 @@ import type { ReactElement } from "react";
 
 interface listError {
   error: boolean;
+  isLoading: boolean;
   message: string;
 }
 

@@ -7,6 +7,7 @@ import type { ReactElement } from "react";
 
 interface listError {
   error: boolean;
+  isLoading: boolean;
   message: string;
 }
 
@@ -61,7 +62,7 @@ function SurveyList(props: Props): ReactElement {
         </table>
       ) : listError.error ? (
         <ErrorPanel text={listError.message} />
-      ) : listError.message === "Loading ..." ? (
+      ) : listError.isLoading ? (
         <LoadingPanel message={listError.message} />
       ) : (
         <Panel status="info">
