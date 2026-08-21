@@ -1,4 +1,4 @@
-import { ExternalLink, Footer, Header, LoadingPanel } from "blaise-design-system-react-components";
+import { ExternalLink, Footer, Header } from "blaise-design-system-react-components";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -7,18 +7,15 @@ import SurveyList from "./pages/SurveyListPage";
 import { DefaultErrorBoundary } from "./utils/ErrorHandling/DefaultErrorBoundary";
 import { ErrorBoundary } from "./utils/ErrorHandling/ErrorBoundary";
 import { isDevEnv, isTrainingEnv } from "./utils/Functions";
+import { getRuntimeAppConfig } from "./utils/runtimeConfig";
 
 import type { Survey } from "./types/Survey";
 import type { ReactElement } from "react";
 
 interface listError {
   error: boolean;
+  isLoading: boolean;
   message: string;
-}
-
-interface window extends Window {
-  VM_EXTERNAL_CLIENT_URL: string;
-  CATI_DASHBOARD_URL: string;
 }
 
 export function resolveUrlFromBase(baseUrl: string, maybeRelativeUrl: string): string {
@@ -72,54 +69,44 @@ function App(): ReactElement {
   const [externalClientUrl, setExternalClientUrl] = useState<string>("External URL should be here");
   const [externalCATIUrl, setExternalCATIUrl] = useState<string>("/Blaise/CaseInfo");
 
-  useEffect(
-    function retrieveVariables() {
-      const runtimeWindow = window as unknown as window;
+  useEffect(function retrieveVariables() {
+    const runtimeConfig = getRuntimeAppConfig();
+    const runtimeWindow = window as Window & {
+      VM_EXTERNAL_CLIENT_URL?: string;
+      CATI_DASHBOARD_URL?: string;
+    };
 
-      const resolvedClientUrl = isDevEnv()
-        ? import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
-          runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
-          "External URL should be here"
-        : runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
-          import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
-          "External URL should be here";
+    const resolvedClientUrl =
+      runtimeConfig.vmExternalClientUrl ||
+      import.meta.env.VITE_APP_VM_EXTERNAL_CLIENT_URL ||
+      runtimeWindow.VM_EXTERNAL_CLIENT_URL ||
+      "External URL should be here";
 
-      let resolvedCatiUrl = isDevEnv()
-        ? import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
-          runtimeWindow.CATI_DASHBOARD_URL ||
-          "/Blaise/CaseInfo"
-        : runtimeWindow.CATI_DASHBOARD_URL ||
-          import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
-          "/Blaise/CaseInfo";
+    let resolvedCatiUrl =
+      runtimeConfig.catiDashboardUrl ||
+      import.meta.env.VITE_APP_CATI_DASHBOARD_URL ||
+      runtimeWindow.CATI_DASHBOARD_URL ||
+      "/Blaise/CaseInfo";
 
-      resolvedCatiUrl = resolveUrlFromBase(resolvedClientUrl, resolvedCatiUrl);
+    resolvedCatiUrl = resolveUrlFromBase(resolvedClientUrl, resolvedCatiUrl);
 
-      console.log(`App.tsx CATI_DASHBOARD_URL = ${runtimeWindow.CATI_DASHBOARD_URL}`);
-      console.log(
-        `App.tsx import.meta.env.VITE_APP_CATI_DASHBOARD_URL = ${import.meta.env.VITE_APP_CATI_DASHBOARD_URL}`,
-      );
+    // Replace "tobi" with "cati" in the URL if present
+    resolvedCatiUrl = resolvedCatiUrl.includes("tobi")
+      ? resolvedCatiUrl.replace(/tobi/gi, "cati")
+      : resolvedCatiUrl;
 
-      console.log(`before ${resolvedCatiUrl}`);
-
-      // Replace "tobi" with "cati" in the URL if present
-      resolvedCatiUrl = resolvedCatiUrl.includes("tobi")
-        ? resolvedCatiUrl.replace(/tobi/gi, "cati")
-        : resolvedCatiUrl;
-
-      console.log(`after ${resolvedCatiUrl}`);
-
-      // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalClientUrl(resolvedClientUrl);
-      // eslint-disable-next-line @eslint-react/set-state-in-effect
-      setExternalCATIUrl(resolvedCatiUrl);
-
-      console.log(`externalClientUrl = ${externalClientUrl}`);
-    },
-    [externalCATIUrl, externalClientUrl],
-  );
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
+    setExternalClientUrl(resolvedClientUrl);
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
+    setExternalCATIUrl(resolvedCatiUrl);
+  }, []);
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
-  const [listError, setListError] = useState<listError>({ error: false, message: "Loading ..." });
+  const [listError, setListError] = useState<listError>({
+    error: false,
+    isLoading: true,
+    message: "Loading ...",
+  });
 
   useEffect(() => {
     getList();
@@ -141,23 +128,23 @@ function App(): ReactElement {
             console.log("Retrieved instrument list, " + json.length + " items/s");
             void (isDevEnv() && console.log(json));
             setSurveys(json);
-            setListError({ error: false, message: "" });
+            setListError({ error: false, isLoading: false, message: "" });
 
             // If the list is empty then show this message in the list
             if (json.length === 0) {
-              setListError({ error: false, message: "No active surveys found." });
+              setListError({ error: false, isLoading: false, message: "No active surveys found." });
             }
           })
           .catch((error) => {
             void (
               isDevEnv() && console.error("Unable to read json from response, error: " + error)
             );
-            setListError({ error: true, message: "Unable to load surveys" });
+            setListError({ error: true, isLoading: false, message: "Unable to load surveys" });
           });
       })
       .catch((error) => {
         void (isDevEnv() && console.error("Failed to retrieve instrument list, error: " + error));
-        setListError({ error: true, message: "Unable to load surveys" });
+        setListError({ error: true, isLoading: false, message: "Unable to load surveys" });
       });
   }
 
@@ -182,7 +169,6 @@ function App(): ReactElement {
               Please note, the table containing information on active questionnaires may take a few
               seconds to load.
             </p>
-            {listError.error && <LoadingPanel message={listError.message} />}
             <p className="ons-u-mt-m">
               <ExternalLink
                 text={"Link to CATI dashboard"}

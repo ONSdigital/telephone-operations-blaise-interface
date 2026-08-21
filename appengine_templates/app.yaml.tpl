@@ -18,7 +18,8 @@ automatic_scaling:
   target_cpu_utilization: _TARGET_CPU_UTILIZATION
 
 handlers:
-- url: /.*
-  script: auto
-  secure: always
-  redirect_http_response_code: 301
+  # Fallback for API routes, runtime config, and static assets (served by Express)
+  - url: /.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301

@@ -12,3 +12,13 @@ const testWindow = window as Window & {
 
 testWindow.VM_EXTERNAL_CLIENT_URL = "dev-tobi.social-surveys.gcp.onsdigital.uk";
 testWindow.CATI_DASHBOARD_URL = "https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo";
+
+const appConfigElement = document.createElement("script");
+
+appConfigElement.id = "app-config";
+appConfigElement.type = "application/json";
+appConfigElement.textContent = JSON.stringify({
+  vmExternalClientUrl: "dev-tobi.social-surveys.gcp.onsdigital.uk",
+  catiDashboardUrl: "https://dev-cati.social-surveys.gcp.onsdigital.uk/Blaise/CaseInfo",
+});
+document.body.appendChild(appConfigElement);
